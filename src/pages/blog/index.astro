@@ -13,6 +13,7 @@ import { getTaxonomy } from "@/lib/taxonomyParser.astro";
 import { sortByDate } from "@/lib/utils/sortFunctions";
 import type { TIndexData } from "@/types";
 import { getEntryBySlug } from "astro:content";
+import { ViewTransitions } from 'astro:transitions';
 
 const { blog_folder } = config.settings;
 const blogIndex = (await getEntryBySlug<any, string>(
