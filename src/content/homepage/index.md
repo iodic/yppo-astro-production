@@ -1,10 +1,10 @@
 ---
 banner:
-  title: "Scale design & dev operations with Avocode Enterprise"
-  content: "A fully integrated suite of authentication & authoriz products, Stytch’s platform removes the headache of."
-  image: /images/banner-img.png
+  title: "Your Portable Personal Ombuds"
+  content: "Helps you resolve conflicts at the workplace with confidence."
+  image: /images/hero.svg
   button:
-    label: Download The Theme
+    label: Get Started
     link: "https://themefisher.com/astro-themes/pinwheel-astro"
     enable: true
 
