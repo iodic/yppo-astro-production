@@ -4,8 +4,8 @@ banner:
   content: "Helps you resolve conflicts at the workplace with confidence."
   image: /images/hero.svg
   button:
-    label: Get Started
-    link: "https://themefisher.com/astro-themes/pinwheel-astro"
+    label: Go to the Conflict Guide
+    link: "/conflict-guide/"
     enable: true
 
 ##key features
