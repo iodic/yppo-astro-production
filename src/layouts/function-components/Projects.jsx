@@ -53,8 +53,8 @@ const Projects = ({ projects }) => {
 
                   <ol className="subitems list-decimal list-outside pl-5">
                     <li><a className="text-[#f3873c]" href="/wiki-sh-nonverbal-intro">Intro</a></li>
-                    <li>Why it's so difficult</li>
-                    <li>Options you have to deal more effectively with the situation</li>
+                    <li><a href="#">Why it's so difficult</a></li>
+                    <li><a href="#">Options you have to deal more effectively with the situation</a></li>
                     <li><a href="#">Bringing in a third party</a></li>
                     <li><a href="#">Additional resources</a></li>
                   </ol>
