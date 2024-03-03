@@ -44,3 +44,19 @@ h6,
 .h6 {
   @apply text-h6;
 }
+
+p {
+  @apply mb-3;
+
+  a {
+    color: #f3873c;
+  }
+}
+
+.list-checkmark {
+
+  li {
+    background: url(/images/check.svg) 8px 8px no-repeat;
+    @apply leading-normal pl-8 pr-2 py-2 mb-3 bg-sky-100 rounded;
+  }
+}

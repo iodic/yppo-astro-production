@@ -177,6 +177,14 @@
 }
 
 // form style
+.form-group {
+  @apply bg-slate-100 p-3 mb-4 border-2 border-slate-100;
+
+  &.card-highlight {
+    @apply bg-sky-100 border-sky-300;
+  }
+}
+
 .form-control,
 .form-select {
   @apply h-[60px] w-full rounded-lg border-border text-dark placeholder:text-[#B0B0B0] focus:border-primary focus:ring-transparent;
@@ -212,6 +220,12 @@ select:invalid {
   }
   &.security {
     @apply bg-[#9c275f];
+  }
+  &.you {
+    @apply bg-[#f3873c];
+  }
+  &.them {
+    @apply bg-[#c068f2];
   }
 }
 // youtube video
@@ -431,6 +445,10 @@ select:invalid {
 
   li > a {
     @apply text-sm hover:text-primary hover:underline;
+  }
+
+  li > .btn {
+    line-height: 36px;
   }
 }
 
@@ -708,5 +726,19 @@ select:invalid {
 .auth-banner-carousel {
   .swiper-slide {
     width: 100% !important;
+  }
+}
+
+// Header logo
+.header-logo {
+
+  &,
+  img {
+    width: 231px;
+    height: 34px;
+
+    @media screen and (min-width: 1024px) {
+      height: 74px;
+    }
   }
 }
