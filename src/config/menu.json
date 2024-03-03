@@ -5,16 +5,16 @@
       "url": "/"
     },
     {
-      "name": "Get Started",
-      "url": "/get-started"
+      "name": "Conflict Guide",
+      "url": "/conflict-guide"
     },
     {
-      "name": "About",
-      "url": "/about"
+      "name": "Wiki",
+      "url": "/wiki"
     },
     {
-      "name": "Features",
-      "url": "/features"
+      "name": "Courses",
+      "url": "/courses"
     },
     {
       "name": "Blog",
@@ -25,6 +25,14 @@
       "url": "",
       "hasChildren": true,
       "children": [
+        {
+          "name": "About",
+          "url": "/about"
+        },
+        {
+          "name": "Features",
+          "url": "/features"
+        },
         {
           "name": "Career",
           "url": "/career"
@@ -66,20 +74,16 @@
 
   "footer": [
     {
-      "name": "About",
-      "url": "/about"
+      "name": "Conflict Guide",
+      "url": "/conflict-guide"
     },
     {
-      "name": "Contact",
-      "url": "/contact"
+      "name": "Wiki",
+      "url": "/wiki"
     },
     {
-      "name": "Elements",
-      "url": "/elements"
-    },
-    {
-      "name": "Changelog",
-      "url": "/changelog"
+      "name": "Courses",
+      "url": "/courses"
     }
   ]
 }
