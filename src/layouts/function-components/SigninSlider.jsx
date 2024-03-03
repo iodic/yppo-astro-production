@@ -42,7 +42,7 @@ const SigninSlider = ({ title }) => {
                 width="667"
                 height="557"
                 className="mx-auto"
-                src="/images/signup-carousel-img-1.png"
+                src="/images/mascots/conflict-guide.png"
                 alt=""
               />
             </SwiperSlide>
