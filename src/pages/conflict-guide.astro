@@ -415,6 +415,15 @@ import SigninSlider from "@/layouts/function-components/SigninSlider.jsx";
         </div>
 
         <script is:inline>
+          // Move to last-seen page on reload
+          savedPage = localStorage.getItem('guide-page');
+
+          if ('' != savedPage) {
+            $('.form-0').slideUp('10', function() {
+              $(savedPage).slideDown();
+            });
+          }
+
           // Move between steps
           $('.go').on('click', function(e) {
             target = '.' + $(this).parents('.form-wrapper').data('back');
@@ -422,6 +431,8 @@ import SigninSlider from "@/layouts/function-components/SigninSlider.jsx";
             if ($(this).hasClass('go-forward')) {
               target = '.' + $(this).parents('.form-wrapper').data('forward');
             }
+
+            localStorage.setItem('guide-page', target);
 
             $(this).parents('.form-wrapper').slideUp('300', function() {
               $('html, body').animate({ scrollTop: 0 }, '400');
