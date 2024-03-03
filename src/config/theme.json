@@ -21,7 +21,7 @@
     "font_family": {
       "primary": "Maven+Pro:wght@400;500;600;700",
       "primary_type": "sans-serif",
-      "secondary": "Lora:wght@600;700",
+      "secondary": "Lora:wght@400;700",
       "secondary_type": "serif"
     },
     "font_size": {
