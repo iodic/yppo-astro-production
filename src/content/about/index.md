@@ -3,7 +3,7 @@ title: "About"
 page_title: "About our company"
 buttons:
   - label: Go to the Conflict Guide
-    link: "/conflict-guide/"
+    link: "/conflict-guide"
     enable: true
   - label: Learn More
     link: "#"
@@ -42,7 +42,7 @@ features:
   title: The six core work <br /> drive everything do
   button:
     label: Go to the Conflict Guide
-    link: "/conflict-guide/"
+    link: "/conflict-guide"
     enable: true
   features_list:
     - title: Accessibility

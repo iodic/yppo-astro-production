@@ -6,7 +6,7 @@ banner:
   image: "/images/features-banner-img.png"
   button:
     label: Go to the Conflict Guide
-    link: "/conflict-guide/"
+    link: "/conflict-guide"
     enable: true
 project_management:
   title: Build collaborative workspaces <br /> for your team
@@ -43,7 +43,7 @@ project_management:
       - Customer Service with 79 languages
     buttons:
       - label: Go to the Conflict Guide
-        link: "/conflict-guide/"
+        link: "/conflict-guide"
         enable: true
       - label: Learn More
         link: "#"

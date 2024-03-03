@@ -5,7 +5,7 @@ banner:
   image: /images/hero.svg
   button:
     label: Go to the Conflict Guide
-    link: "/conflict-guide/"
+    link: "/conflict-guide"
     enable: true
 
 ##key features

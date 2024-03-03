@@ -26,16 +26,16 @@ our_works:
     heading_id: conflict-guide
     image: "/images/mascots/conflict-guide.png"
     intro: Don't know where to start? Answer a few questions and we'll point you in the right direction.
-    button: "/conflict-guide/"
+    button: "/conflict-guide"
   - title: Wiki
     heading_id: wiki
     image: "/images/mascots/wondering.png"
     intro: Dive right into our comprehensive self-help brochure covering all conflict scenarios, divided by theme.
-    button: "/wiki/"
+    button: "/wiki"
   - title: e-Learning
     heading_id: e-learning
     image: "/images/mascots/confused.png"
     intro: Get access to additional e-courses and other resources to learn more.
-    button: "/e-learning/"
+    button: "/courses"
 ---
 Have a conflict but no idea where to find help?
