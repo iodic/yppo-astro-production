@@ -19,10 +19,10 @@
 
   "call_to_action": {
     "title": "Helping individuals resolve workplace conflicts",
-    "description": "Lorem ipsum dolor sit sed dmi amet, consectetur adipiscing. Cdo tellus, sed condimentum volutpat.",
+    "description": "Your Portable Personal Ombuds helps you resolve conflicts at the workplace with confidence.",
     "button": {
       "label": "Go to the Conflict Guide",
-      "link": "/conflict-guide/"
+      "link": "/conflict-guide"
     }
   },
 
@@ -33,7 +33,7 @@
   },
 
   "params": {
-    "footer_description": "Lorem ipsum dolor sit sed dmi amet, consectetur adipiscing. Cdo tellus, sed condimentum volutpat.",
+    "footer_description": "Your Portable Personal Ombuds helps you resolve conflicts at the workplace with confidence.",
     "email": "info@yppo.org",
     "location": "2118 Thornridge Cir. Syracuse, Connecticut 35624",
     "phone": "+704-555-0127",
@@ -42,8 +42,8 @@
   },
 
   "metadata": {
-    "meta_author": "SC",
-    "meta_image": "/images/og-image.png",
-    "meta_description": "pinwheel astro"
+    "meta_author": "yppo",
+    "meta_image": "/images/umino.png",
+    "meta_description": "yppo"
   }
 }
