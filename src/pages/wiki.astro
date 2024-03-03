@@ -1,0 +1,22 @@
+---
+import FeatureBanner from "@/components/features/FeatureBanner.astro";
+import ProjecManagement from "@/components/features/ProjecManagement.astro";
+import Shape from "@/components/Shape.astro";
+import Base from "@/layouts/Base.astro";
+import Cta from "@/layouts/partials/Cta.astro";
+import { getEntryBySlug } from "astro:content";
+
+const wiki = await getEntryBySlug("wiki", "index");
+---
+
+<Base
+  title={wiki.data.title}
+  meta_title={wiki.data.meta_title}
+  description={wiki.data.description}
+  image={wiki.data.image}
+>
+  <Shape />
+  <FeatureBanner features={wiki.data} />
+  <ProjecManagement features={wiki.data} />
+  <Cta />
+</Base>
