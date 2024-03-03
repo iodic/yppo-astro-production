@@ -22,7 +22,15 @@ const { pathname } = Astro.url;
   <nav class="navbar container">
     <!-- logo -->
     <div class="order-0">
-      <Logo />
+      <div class="order-0">
+        <a href="/" class="navbar-brand block">
+          <picture class="header-logo">
+            <source srcset="/images/logo.svg" media="(min-width: 1024px)">
+            <source srcset="/images/logo-small.svg">
+            <img src="/images/logo.svg" data-image-component="true" alt="yppo" width="462" height="148" loading="eager" decoding="async">
+          </picture>
+        </a>
+      </div>
     </div>
     <!-- navbar toggler -->
     <input id="nav-toggle" type="checkbox" class="hidden" />
