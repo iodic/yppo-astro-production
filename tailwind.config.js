@@ -23,6 +23,12 @@ module.exports = {
   safelist: [{ pattern: /^swiper-/ }],
   darkMode: "class",
   theme: {
+    listStyleType: {
+      none: 'none',
+      disc: 'disc',
+      decimal: 'decimal',
+      circle: 'circle',
+    },
     screens: {
       sm: "540px",
       md: "768px",
@@ -45,6 +51,7 @@ module.exports = {
         border: theme.colors.default.theme_color.border,
         "theme-light": theme.colors.default.theme_color.theme_light,
         "theme-dark": theme.colors.default.theme_color.theme_dark,
+        "circle-gray": "#979a9c",
       },
       fontSize: {
         base: font_base + "px",
