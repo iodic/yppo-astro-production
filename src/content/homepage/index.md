@@ -2,7 +2,7 @@
 banner:
   title: "Your Portable Personal Ombuds"
   content: "Helps you resolve conflicts at the workplace with confidence."
-  image: /images/hero.svg
+  image: /images/hero.png
   button:
     label: Go to the Conflict Guide
     link: "/conflict-guide"
