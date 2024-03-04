@@ -45,7 +45,7 @@ content: get_started.body,
         <div class="relative">
           {
           item.video ? (
-          <video class="w-full object-contain" autoplay loop>
+          <video class="w-full object-contain" playsinline autoplay loop>
             <source src={item.video} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
