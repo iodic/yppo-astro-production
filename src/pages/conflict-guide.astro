@@ -10,7 +10,7 @@ import SigninSlider from "@/layouts/function-components/SigninSlider.jsx";
         <div class="min-h-[980px] bg-white py-10 lg:col-6 lg:py-[114px]">
           <div class="mx-auto w-full max-w-[480px]">
             <!-- Intro -->
-            <div class="form-wrapper form-0" data-forward="form-1">
+            <div class="form-wrapper hidden form-0" data-forward="form-1">
               <img class="mb-8 w-20" src="/images/umino.png" alt="" />
               <h1 class="mb-4 font-normal">Welcome to the
                 <span class="font-bold">Conflict Guide</span></h1>
@@ -423,9 +423,9 @@ import SigninSlider from "@/layouts/function-components/SigninSlider.jsx";
           savedPage = localStorage.getItem('guide-page');
 
           if (null != savedPage) {
-            $('.form-0').slideUp('10', function() {
-              $(savedPage).slideDown();
-            });
+            $(savedPage).slideDown(300);
+          } else {
+            $('.form-0').slideDown(300);
           }
 
           // Move between steps
