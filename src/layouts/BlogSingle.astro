@@ -20,11 +20,11 @@ const { Content } = await post.render();
     <div class="row justify-center">
       <div class="lg:col-10">
         <Image
-          class="w-full rounded-xl h-96"
+          class="w-full rounded-xl"
           src={post.data.image}
           alt=""
-          width={920}
-          height={350}
+          width={800}
+          height={500}
         />
       </div>
       <div class="mt-10 max-w-[810px] lg:col-9">
@@ -64,6 +64,10 @@ const { Content } = await post.render();
         </div>
 
         <div class="content">
+          <video class="mb-6" controls>
+            <source src={post.data.video} />
+          </video>
+
           <Content />
         </div>
       </div>
