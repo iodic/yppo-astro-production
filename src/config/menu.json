@@ -17,45 +17,6 @@
       "url": "/courses"
     },
     {
-      "name": "Pages",
-      "url": "",
-      "hasChildren": true,
-      "children": [
-        {
-          "name": "About",
-          "url": "/about"
-        },
-        {
-          "name": "Career",
-          "url": "/career"
-        },
-        {
-          "name": "Integrations",
-          "url": "/integrations"
-        },
-        {
-          "name": "Pricing",
-          "url": "/pricing"
-        },
-        {
-          "name": "Sign In",
-          "url": "/signin"
-        },
-        {
-          "name": "Elements",
-          "url": "/elements"
-        },
-        {
-          "name": "Changelog",
-          "url": "/changelog"
-        },
-        {
-          "name": "Terms And Conditions",
-          "url": "/terms-and-conditions"
-        }
-      ]
-    },
-    {
       "name": "Contact",
       "url": "/contact"
     }
