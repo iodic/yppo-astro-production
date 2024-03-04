@@ -64,7 +64,7 @@ const { Content } = await post.render();
         </div>
 
         <div class="content">
-          <video class="mb-6" controls>
+          <video class="mb-6" controls playsinline poster={post.data.videoposter}>
             <source src={post.data.video} />
           </video>
 
