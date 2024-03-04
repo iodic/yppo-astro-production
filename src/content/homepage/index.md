@@ -10,39 +10,27 @@ banner:
 
 ##key features
 key_features:
-  title: "The Highlighting Part Of Our Solution"
-  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas Werat viverra id et aliquet. vulputate egestas sollicitudin.
+  title: "Get Advice and Solutions Anytime"
+  description: yppo is your personal guide to navigating the most common issues and concerns people face at work. If you have a boss, a colleague, or an employee, YPPO is always there, so that you can feel better and do better.
   feature_list:
+    - icon: "tool"  #icon package react-feather-icon [https://feathericons.com/]
+      title: Learn conflict resolving approaches
+      content: All situations are unique, we help you find the solution.
     - icon: "map"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Live Caption
-      content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    - icon: "lock"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Smart Reply
-      content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    - icon: "link"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Sound Amplifier
-      content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    - icon: "bell"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Sound Amplifier
-      content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      title: Conflict Guide
+      content: Ask for help, confidentially.
+    - icon: "book"  #icon package react-feather-icon [https://feathericons.com/]
+      title: Knowledge base
+      content: Deepen your knowledge in our Wiki.
+    - icon: "user"  #icon package react-feather-icon [https://feathericons.com/]
+      title: Mediation
+      content: A neutral third-party to facilitate the conversation.
     - icon: "monitor"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Smart Reply
-      content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      title: Online Courses
+      content: Learn more in our e-courses and other resource
     - icon: "map"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Live Caption
-      content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    - icon: "link"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Sound Amplifier
-      content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    - icon: "bell"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Sound Amplifier
-      content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    - icon: "map"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Smart Reply
-      content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    - icon: "monitor"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Live Caption
-      content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      title: Conflict Guide
+      content: Ask for help, confidentially.
 
 #service
 service:
@@ -80,52 +68,32 @@ service:
 
 #testimonial
 testimonial:
-  title: Our customers have nice things to say about us
-  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas Werat viverra id et aliquet. vulputate egestas sollicitudin.
+  title: Our satisfied users
+  description: Our testimonials serve as powerful endorsements, encapsulating the satisfaction and trust our clients have placed in our services.
   testimonial_list:
-    - author: David Cameron
-      avatar: "/images/users/user-5.png"
-      organization: meta limited
-      rating: four
-      content: Our platform helps build secure onboarding authentica experiences & engage your users. We build .
-    - author: David Cameron
-      avatar: "/images/users/user-6.png"
-      organization: meta limited
-      rating: four
-      content: Our platform helps build secure onboarding authentica experiences & engage your users. We build .
-    - author: David Cameron
-      avatar: "/images/users/user-2.png"
-      organization: meta limited
-      rating: three
-      content: Our platform helps build secure onboarding authentica experiences & engage your users. We build .
-    - author: David Cameron
-      avatar: "/images/users/user-3.png"
-      organization: meta limited
+    - author: Marko D.
+      avatar: "/images/umino.png"
+      organization: Web Developer and Designer
       rating: five
-      content: Our platform helps build secure onboarding authentica experiences & engage your users. We build .
-    - author: David Cameron
-      avatar: "/images/users/user-4.png"
-      organization: meta limited
+      content: The conflict resolution app revolutionized how we handle disagreements, making collaboration smoother and more effective.
+    - author: Sophia M.
+      avatar: "/images/umino.png"
+      organization: Marketing Manager
       rating: five
-      content: Our platform helps build secure onboarding authentica experiences & engage your users. We build .
-    - author: David Cameron
-      avatar: "/images/users/user-1.png"
-      organization: meta limited
-      rating: three
-      content: Our platform helps build secure onboarding authentica experiences & engage your users. We build .
-    - author: David Cameron
-      avatar: "/images/users/user-5.png"
-      organization: meta limited
+      content: This conflict resolution app streamlined our team's communication, fostering a more harmonious work environment.
+    - author: David S.
+      avatar: "/images/umino.png"
+      organization: Project Manager
       rating: five
-      content: Our platform helps build secure onboarding authentica experiences & engage your users. We build .
-    - author: David Cameron
-      avatar: "/images/users/user-5.png"
-      organization: meta limited
+      content: Thanks to the conflict resolution app, we've mitigated conflicts swiftly, keeping our projects on track and our team morale high.
+    - author: Emily R.
+      avatar: "/images/umino.png"
+      organization: Human Resources Specialist
       rating: five
-      content: Our platform helps build secure onboarding authentica experiences & engage your users. We build .
-    - author: David Cameron
-      avatar: "/images/users/user-5.png"
-      organization: meta limited
+      content: Using the conflict resolution app has empowered our employees to address conflicts constructively, leading to stronger team dynamics.
+    - author: Carlos L.
+      avatar: "/images/umino.png"
+      organization: Operations Coordinator
       rating: five
-      content: Our platform helps build secure onboarding authentica experiences & engage your users. We build .
+      content: Implementing the conflict resolution app has significantly reduced workplace tensions, enhancing productivity across departments.
 ---
