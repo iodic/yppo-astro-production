@@ -17,10 +17,6 @@
       "url": "/courses"
     },
     {
-      "name": "Blog",
-      "url": "/blog"
-    },
-    {
       "name": "Pages",
       "url": "",
       "hasChildren": true,
@@ -30,19 +26,13 @@
           "url": "/about"
         },
         {
-          "name": "Features",
-          "url": "/features"
-        },
-        {
           "name": "Career",
           "url": "/career"
         },
-
         {
           "name": "Integrations",
           "url": "/integrations"
         },
-
         {
           "name": "Pricing",
           "url": "/pricing"
@@ -51,7 +41,6 @@
           "name": "Sign In",
           "url": "/signin"
         },
-
         {
           "name": "Elements",
           "url": "/elements"
