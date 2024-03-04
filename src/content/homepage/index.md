@@ -71,11 +71,6 @@ testimonial:
   title: Our satisfied users
   description: Our testimonials serve as powerful endorsements, encapsulating the satisfaction and trust our clients have placed in our services.
   testimonial_list:
-    - author: Marko D.
-      avatar: "/images/umino.png"
-      organization: Web Developer and Designer
-      rating: five
-      content: The conflict resolution app revolutionized how we handle disagreements, making collaboration smoother and more effective.
     - author: Sophia M.
       avatar: "/images/umino.png"
       organization: Marketing Manager
@@ -86,6 +81,11 @@ testimonial:
       organization: Project Manager
       rating: five
       content: Thanks to the conflict resolution app, we've mitigated conflicts swiftly, keeping our projects on track and our team morale high.
+    - author: Marko D.
+      avatar: "/images/umino.png"
+      organization: Web Developer and Designer
+      rating: five
+      content: The conflict resolution app revolutionized how we handle disagreements, making collaboration smoother and more effective.
     - author: Emily R.
       avatar: "/images/umino.png"
       organization: Human Resources Specialist
