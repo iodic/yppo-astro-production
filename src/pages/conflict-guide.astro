@@ -418,7 +418,7 @@ import SigninSlider from "@/layouts/function-components/SigninSlider.jsx";
           // Move to last-seen page on reload
           savedPage = localStorage.getItem('guide-page');
 
-          if ('' != savedPage) {
+          if (null != savedPage) {
             $('.form-0').slideUp('10', function() {
               $(savedPage).slideDown();
             });
