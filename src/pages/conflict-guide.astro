@@ -555,11 +555,74 @@ const currentPosts = recentPost.slice(0, config.settings.pagination);
                 <a class="go go-forward btn btn-primary block float-right w-40" href="#">Skip to End</a>
               </div>
             </div>
+
+            <!-- Step Final -->
+            <div class="form-wrapper hidden form-final mt-4 clear-both" data-back="form-15" data-forward="form-0">
+              <p class="text-sm font-normal uppercase"><a href="#"><img class="inline align-bottom mr-1" src="/images/listen.svg" alt="Listen"> Listen</a></p>
+              <h2 class="mb-8 font-normal">Additional resources</h2>
+
+              <p>The following online courses have been designed by world-class experts precisely to help you learn more about how to address situations such as the one in this chapter.</p>
+              <p><strong>Enjoy them and do not forget to send us your feedback!</strong> Thanks.</p>
+
+              <Blogs embed=true posts={currentPosts} />
+
+              <p>Also, these selected, publicly available resource will allow you to learn more about this topic.</p>
+
+              <p>
+                <a href="https://hbr.org/2020/05/empower-managers-to-stop-harassment">Empower Managers to Stop Harassment</a>
+                Harvard Business Review (2020)
+              </p>
+
+              <p>
+                <a href="https://www.legalzoom.com/articles/how-to-handle-sexual-harassment-at-work">How to handle sexual harassment at work</a>
+                LegalZoom (2022)
+              </p>
+
+              <p>
+                <a href="https://www.linkedin.com/pulse/reporting-sexual-harassment-workplace-what-/">Reporting Sexual Harassment in the Workplace: What You Need To Know</a>
+                Mariah Flores (LinkedIn) (2022)
+              </p>
+
+              <p>
+                <a href="https://www.linkedin.com/pulse/youve-been-sexually-harassed-work-now-what-michael-murphy/">You've Been Sexually Harassed at Work. Now What?</a>
+                Michael Murphy (LinkedIn) (2021)
+              </p>
+
+              <p>
+                <a href="https://www.linkedin.com/pulse/how-protect-yourself-your-organization-from-sexual-bj-gallagher/">How to Protect Yourself – and Your Organization – from Sexual Harassment</a>
+                BJ Gallagher (LinkedIn) (2021)
+              </p>
+
+              <p>
+                <a href="https://www.linkedin.com/business/talent/blog/talent-engagement/effective-ways-to-combat-workplace-sexual-harassment">7 Impactful Ways to Combat Sexual Harassment in the Workplace</a>
+                Samantha McLaren (LinkedIn) (2019)
+              </p>
+
+              <p>
+                <a href="https://www.americanprogress.org/article/combat-sexual-harassment-workplace/">How to Combat Sexual Harassment in the Workplace</a>
+                CAP (Center for American Progress)
+              </p>
+
+              <p>
+                <a href="https://iwpr.org/iwpr-publications/briefing-paper/sexual-harassment-and-assault-at-work-understanding-the-costs/">Sexual Harassment and Assault at Work: Understanding the Costs</a>
+                Institute for Women's Policy Research
+              </p>
+
+              <p>
+                <a href="https://www.nsvrc.org/blogs/ending-workplace-sexual-harassment-economic-justice">Ending Workplace Sexual Harassment is Economic Justice</a>
+                National Sexual Violence Resource Center (NSVRC)
+              </p>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Finish</a>
+              </div>
+            </div>
           </div>
         </div>
 
         <script is:inline>
-          // Move to last-seen page on reload
+          // Move to last-seen page on page refresh
           savedPage = localStorage.getItem('guide-page');
 
           if (null != savedPage) {
