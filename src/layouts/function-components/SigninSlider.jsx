@@ -11,7 +11,7 @@ const SigninSlider = ({ title }) => {
   const [swiper, setSwiper] = useState(null);
   const paginationRef = useRef(null);
   return (
-    <div className="auth-banner bg-gradient flex flex-col items-center justify-center py-16 lg:col-6 lg:block">
+    <div className="auth-banner bg-gradient hidden flex-col items-center justify-center py-16 lg:col-6 lg:block">
       <img
         className="absolute left-0 top-0 h-full w-full"
         src="/images/login-banner-bg.png"
@@ -43,24 +43,6 @@ const SigninSlider = ({ title }) => {
                 height="557"
                 className="mx-auto"
                 src="/images/mascots/conflict-guide.png"
-                alt=""
-              />
-            </SwiperSlide>
-            <SwiperSlide key={"feature-" + 1}>
-              <img
-                width="667"
-                height="557"
-                className="mx-auto"
-                src="/images/signup-carousel-img-1.png"
-                alt=""
-              />
-            </SwiperSlide>
-            <SwiperSlide key={"feature-" + 2}>
-              <img
-                width="667"
-                height="557"
-                className="mx-auto"
-                src="/images/signup-carousel-img-1.png"
                 alt=""
               />
             </SwiperSlide>
