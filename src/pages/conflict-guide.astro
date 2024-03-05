@@ -639,6 +639,10 @@ const currentPosts = recentPost.slice(0, config.settings.pagination);
 
             localStorage.setItem('guide-page', target);
 
+            $('video').each(function() {
+              this.pause();
+            });
+
             $(this).parents('.form-wrapper').slideUp('300', function() {
               $('html, body').animate({ scrollTop: 0 }, '400');
               $(target).slideDown();
