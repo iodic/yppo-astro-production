@@ -5,6 +5,7 @@ const Video = ({ title, width = 500, height = "auto", src, ...rest }) => {
       width={width}
       height={height}
       controls
+      playsInline
       {...rest}
     >
       <source
