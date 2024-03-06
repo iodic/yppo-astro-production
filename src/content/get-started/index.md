@@ -17,7 +17,7 @@ perfomance:
 our_works:
   - title: Learn with yppo
     image: "/images/get-started/video-poster.jpg"
-    video: "/videos/get-started/people-table.mp4"
+    video: "https://utfs.io/f/cdf96a7c-35e4-4fbe-b888-b704f8adf5de-5um86o.mp4"
     list:
       - Don't know where to start? Consult our Conflict guide
       - Deepen your knowledge in our Wiki
