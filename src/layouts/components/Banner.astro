@@ -1,8 +1,9 @@
 ---
 import { markdownify } from "@/lib/utils/textConverter";
 import { Image } from "astro:assets";
+import Video from "@/layouts/shortcodes/Video.jsx"
 const { banner } = Astro.props;
-const { title, button, image, content } = banner;
+const { title, button, image, content, video } = banner;
 ---
 
 <section class="section banner relative">
@@ -22,13 +23,21 @@ const { title, button, image, content } = banner;
         }
       </div>
       <div class="lg:col-6">
-        <Image
-          class="w-full object-contain"
-          alt="banner"
-          src={image}
-          width={603}
-          height={396}
-        />
+        {
+        video ? (
+          <Video
+            class="w-full object-contain"
+            src={video}
+          />
+        ) : (
+          <Image
+            class="w-full object-contain"
+            alt="banner"
+            src={image}
+            width={603}
+            height={396}
+          />
+        )}
       </div>
     </div>
   </div>
