@@ -18,7 +18,7 @@
 }
 
 .btn-outline-primary {
-  @apply relative rounded-[50px] border-primary bg-white text-center capitalize text-dark hover:bg-white hover:text-white hover:shadow-[0px_5px_30px_rgba(252,167,111,0.5)] hover:before:opacity-100;
+  @apply relative rounded-[50px] border-primary bg-white text-center capitalize text-dark hover:bg-white hover:text-dark hover:shadow-[0px_5px_30px_rgba(252,167,111,0.5)] hover:before:opacity-100;
   &::before {
     @apply absolute bottom-0 left-0 right-0 top-0 -z-[1] rounded-[inherit] bg-gradient-to-tl opacity-0 transition-[inherit] content-[""];
   }
@@ -34,4 +34,20 @@
 
 .btn-sm {
   @apply h-[42px] leading-[24px];
+}
+
+.header-cta {
+  @apply btn btn-sm;
+}
+
+.home .header-cta {
+  @apply btn-outline-primary;
+}
+
+.home .header-sticky .header-cta {
+  @apply btn-primary;
+}
+
+.downstream .header-cta {
+  @apply btn-primary;
 }

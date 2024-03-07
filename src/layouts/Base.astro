@@ -42,7 +42,7 @@ const { title, meta_title, description, image, noindex, canonical } =
 // Prepare body element class to identify pages
 const { pathname } = Astro.url;
 let classslug = pathname.substring(1).replace(/\//g, '-');
-classslug = classslug || 'home';
+classslug = classslug ? `downstream ${classslug}` : 'home';
 ---
 
 <!doctype html>
