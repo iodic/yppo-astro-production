@@ -3,12 +3,13 @@ banner:
   title: "Your Portable Personal Ombuds"
   content: "Helps you resolve conflicts at the workplace with confidence."
   image: /images/hero.png
+  video: "https://utfs.io/f/1409f6f7-0f30-43a8-a7e7-0cedf26d95e7-2pjfat.mp4"
+  videoposter: "/videos/intro-poster.jpg"
   button:
     label: Go to the Conflict Guide
     link: "/conflict-guide"
     enable: true
 
-##key features
 key_features:
   title: "Get Advice and Solutions Anytime"
   description: yppo is your personal guide to navigating the most common issues and concerns people face at work. If you have a boss, a colleague, or an employee, YPPO is always there, so that you can feel better and do better.
@@ -32,7 +33,6 @@ key_features:
       title: Conflict Guide
       content: Ask for help, confidentially.
 
-#service
 service:
   homepage_tab:
     title: Prevent failure from to impacting your reputation
@@ -66,7 +66,6 @@ service:
         link: "#"
         enable: true
 
-#testimonial
 testimonial:
   title: Our satisfied users
   description: Our testimonials serve as powerful endorsements, encapsulating the satisfaction and trust our clients have placed in our services.

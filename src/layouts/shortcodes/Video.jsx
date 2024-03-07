@@ -1,7 +1,7 @@
 const Video = ({ title, width = 500, height = "auto", src, ...rest }) => {
   return (
     <video
-      className="overflow-hidden rounded-md"
+      className="overflow-hidden rounded-md shadow-2xl"
       width={width}
       height={height}
       controls

@@ -3,7 +3,7 @@ import { markdownify } from "@/lib/utils/textConverter";
 import { Image } from "astro:assets";
 import Video from "@/layouts/shortcodes/Video.jsx"
 const { banner } = Astro.props;
-const { title, button, image, content, video } = banner;
+const { title, button, image, content, video, videoposter } = banner;
 ---
 
 <section class="section banner relative">
@@ -28,6 +28,7 @@ const { title, button, image, content, video } = banner;
           <Video
             class="w-full object-contain"
             src={video}
+            poster={videoposter ? videoposter : undefined}
           />
         ) : (
           <Image
