@@ -9,15 +9,24 @@ const HomapageFeature = ({ feature_list }) => {
         return (
           <div
             key={i}
-            className="flex flex-col justify-between rounded-lg bg-white p-5 shadow-lg"
+            className="flex flex-col justify-between"
           >
-            <div>
-              <h3 className="h4 text-xl lg:text-2xl">{item.title}</h3>
-              <p>{item.content}</p>
+            <div className="flip-card">
+              <div className="flip-card-inner">
+                <div className="flip-card-front rounded-lg bg-white p-5 shadow-lg flex flex-col justify-between">
+                  <div>
+                    <h3 className="h4 text-xl lg:text-2xl">{item.title}</h3>
+                    <p>{item.content}</p>
+                  </div>
+                  <span className="icon mt-4">
+                    <FeatherIcon />
+                  </span>
+                </div>
+                <div className="flip-card-back rounded-lg bg-white p-5 shadow-lg flex items-center text-black">
+                  <p>{item.moreinfo}</p>
+                </div>
+              </div>
             </div>
-            <span className="icon mt-4">
-              <FeatherIcon />
-            </span>
           </div>
         );
       })}

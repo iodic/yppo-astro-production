@@ -17,21 +17,27 @@ key_features:
     - icon: "tool"  #icon package react-feather-icon [https://feathericons.com/]
       title: Learn conflict resolving approaches
       content: All situations are unique, we help you find the solution.
+      moreinfo: "This course equips you with tools and strategies to effectively resolve conflicts in various settings. Gain insights and skills to manage conflicts constructively for positive outcomes in personal and professional relationships."
     - icon: "map"  #icon package react-feather-icon [https://feathericons.com/]
       title: Conflict Guide
       content: Ask for help, confidentially.
+      moreinfo: "Our guide offers step-by-step instructions, tips, and expert advice to help you navigate challenging situations with confidence. Access actionable strategies and real-life examples to address conflicts proactively and build stronger relationships."
     - icon: "book"  #icon package react-feather-icon [https://feathericons.com/]
       title: Knowledge base
       content: Deepen your knowledge in our Wiki.
+      moreinfo: "Access a wealth of information and resources on conflict resolution, mediation, communication, and more. Explore articles, case studies, and practical guides to support your learning journey and promote positive change."
     - icon: "user"  #icon package react-feather-icon [https://feathericons.com/]
       title: Mediation
       content: A neutral third-party to facilitate the conversation.
+      moreinfo: "Our comprehensive training program covers conflict assessment, communication techniques, facilitation strategies, and ethical considerations. Learn to guide parties toward mutually beneficial solutions and promote understanding in challenging conflicts."
     - icon: "monitor"  #icon package react-feather-icon [https://feathericons.com/]
       title: Online Courses
       content: Learn more in our e-courses and other resource
+      moreinfo: "Elevate your conflict resolution skills with flexible, self-paced online courses. Whether you're a seasoned mediator or starting your journey, gain essential knowledge and tools to excel in resolving conflicts and building relationships."
     - icon: "map"  #icon package react-feather-icon [https://feathericons.com/]
       title: Conflict Guide
       content: Ask for help, confidentially.
+      moreinfo: "Our concise guide provides essential resources for understanding and managing conflicts effectively. With practical advice and expert insights, navigate challenging situations with clarity and confidence, fostering positive outcomes in various contexts."
 
 service:
   homepage_tab:
