@@ -16,7 +16,7 @@ const { title, button, image, content, video, videoposter } = banner;
 
         {
           button.enable && (
-            <a class="btn btn-primary mt-8" href={button.link}>
+            <a class="btn btn-primary mt-8 mb-8 lg:mb-0" href={button.link}>
               {button.label}
             </a>
           )
@@ -26,8 +26,10 @@ const { title, button, image, content, video, videoposter } = banner;
         {
         video ? (
           <Video
-            class="w-full object-contain"
+            class="w-full object-contain mx-auto max-w-3xl w-[94%]"
             src={video}
+            width="94%"
+            height="auto"
             poster={videoposter ? videoposter : undefined}
           />
         ) : (
