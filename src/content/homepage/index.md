@@ -15,7 +15,7 @@ key_features:
   description: yppo is your personal guide to navigating the most common issues and concerns people face at work. If you have a boss, a colleague, or an employee, YPPO is always there, so that you can feel better and do better.
   feature_list:
     - icon: "tool"  #icon package react-feather-icon [https://feathericons.com/]
-      title: Learn conflict resolving approaches
+      title: Handle conflicts
       content: All situations are unique, we help you find the solution.
       moreinfo: "This course equips you with tools and strategies to effectively resolve conflicts in various settings. Gain insights and skills to manage conflicts constructively for positive outcomes in personal and professional relationships."
     - icon: "map"  #icon package react-feather-icon [https://feathericons.com/]
