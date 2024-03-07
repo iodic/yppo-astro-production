@@ -38,6 +38,11 @@ export interface Props {
 // distructure frontmatters
 const { title, meta_title, description, image, noindex, canonical } =
   Astro.props;
+
+// Prepare body element class to identify pages
+const { pathname } = Astro.url;
+let classslug = pathname.substring(1).replace(/\//g, '-');
+classslug = classslug || 'home';
 ---
 
 <!doctype html>
@@ -171,7 +176,7 @@ const { title, meta_title, description, image, noindex, canonical } =
 
     <script is:inline src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   </head>
-  <body>
+  <body class={classslug}>
     <TwSizeIndicator />
     <Header />
     <main id="main-content">
