@@ -58,16 +58,16 @@ const currentPosts = recentPost.slice(0, config.settings.pagination);
                   id="supervisory"
                   class="top-[3px] relative"
                 />
-                <label class="ml-2 fpo-item" for="supervisory">Supervisory relationship</label>
+                <label class="ml-2 real-deal chapter-choice" data-chapter="form-2-1" for="supervisory">Supervisory relationship</label>
               </div>
               <div class="form-group flex w-full items-baseline rounded">
                 <input
                   type="radio"
                   name="issue-type"
-                  id="resoectful"
+                  id="performance"
                   class="top-[3px] relative"
                 />
-                <label class="ml-2 fpo-item" for="resoectful">Supervisory relationship</label>
+                <label class="ml-2 fpo-item" for="resoectful">Performance evaluation</label>
               </div>
               <div class="form-group flex w-full items-baseline rounded">
                 <input
@@ -76,7 +76,7 @@ const currentPosts = recentPost.slice(0, config.settings.pagination);
                   id="sexual-harassment"
                   class="top-[3px] relative"
                 />
-                <label class="ml-2 real-deal" for="sexual-harassment">Sexual harassment</label>
+                <label class="ml-2 real-deal chapter-choice" data-chapter="form-2" for="sexual-harassment">Sexual harassment</label>
               </div>
               <div class="form-group flex w-full items-baseline rounded">
                 <input
@@ -93,6 +93,7 @@ const currentPosts = recentPost.slice(0, config.settings.pagination);
               </div>
             </div>
 
+            <!-- Sexual harassment -->
             <!-- Step 2 -->
             <div class="form-wrapper hidden form-2 mt-4 clear-both" data-back="form-1" data-forward="form-3">
               <div class="return-to-start"><a href="#" data-jump="form-0" class="jump-back py-1 px-3 transition-all mb-6 bg-sky-100 block">Conflict Guide <img class="float-right w-3 h-3 top-2 relative" src="images/icons/close.svg" alt=""></a></div>
@@ -631,6 +632,484 @@ const currentPosts = recentPost.slice(0, config.settings.pagination);
                 <a class="go go-forward btn btn-primary block float-right w-40" href="#">Finish</a>
               </div>
             </div>
+
+            <!-- Supervisory relationship -->
+            <!-- Step 2 -->
+            <div class="form-wrapper hidden form-2-1 mt-4 clear-both" data-back="form-1" data-forward="form-2-2">
+              <div class="return-to-start"><a href="#" data-jump="form-0" class="jump-back py-1 px-3 transition-all mb-6 bg-sky-100 block">Conflict Guide <img class="float-right w-3 h-3 top-2 relative" src="images/icons/close.svg" alt=""></a></div>
+              <h2 class="mb-8 font-normal"><span class="text-sm uppercase">Introduction to</span>
+                <span class="block">Supervisory relationship</span></h2>
+
+              <p>Your boss can be one of the most impactful aspects of your job. Good bosses can help you feel valued, respected, and motivated to reach your potential. Bad bosses can create stress, fear, and negatively impact your workplace experience in a variety of ways. Your boss has managerial authority over your work expectations as well as the formal evaluation of your performance.</p>
+
+              <ul class="list-disc list-outside pl-6 mb-3">
+                <li>Many people can struggle with their boss in a wide variety of situations.</li>
+                <li>A bad boss can cause deep suffering to those they manage and can have a negative impact on the entire organizational culture and even the bottom line.</li>
+              </ul>
+
+              <p>Data show that a fair number of cases might involve some level of misunderstanding. So you may be unsure about what is going on, what to do at this point, and whether you need someone else, a third party, to help you.</p>
+
+              <ul class="list-disc list-outside pl-6 mb-3">
+                <li>If you think there might be some misunderstanding, or you feel like trying to deal with the situation without third-party help, this section presents scenarios and available options, with pros and cons.</li>
+                <li>If you try one or more options and decide you need third-party help, or you decide you want to go directly to third-party help, this section also presents scenarios and available options, with pros and cons.</li>
+              </ul>
+
+              <p>None of the following scenarios may match exactly your situation. Also, your situation may be unique or unusual. In general, there is no one-size-fits-all solution in human interactions. Still, one or more of these examples might help you decide how best to handle the situation.</p>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next</a>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="form-wrapper hidden form-2-2 mt-4" data-back="form-2-1" data-forward="form-2-3">
+              <div class="return-to-start"><a href="#" data-jump="form-0" class="jump-back py-1 px-3 transition-all mb-6 bg-sky-100 block">Conflict Guide <img class="float-right w-3 h-3 top-2 relative" src="images/icons/close.svg" alt=""></a></div>
+              <h2 class="mb-8 font-normal">How would you describe the issue?</h2>
+              <div class="form-group flex w-full items-baseline rounded">
+                <input
+                  type="radio"
+                  name="issue-type"
+                  id="bully"
+                  class="top-[3px] relative"
+                />
+                <label class="ml-2 real-deal" for="bully">My boss bullies me</label>
+              </div>
+              <div class="form-group flex w-full items-baseline rounded">
+                <input
+                  type="radio"
+                  name="issue-type"
+                  id="micromanaging"
+                  class="top-[3px] relative"
+                />
+                <label class="ml-2 fpo-item" for="micromanaging">They are micromanaging me</label>
+              </div>
+              <div class="form-group flex w-full items-baseline rounded">
+                <input
+                  type="radio"
+                  name="issue-type"
+                  id="no-time"
+                  class="top-[3px] relative"
+                />
+                <label class="ml-2 fpo-item" for="no-time">They don’t make time for me</label>
+              </div>
+              <div class="form-group flex w-full items-baseline rounded">
+                <input
+                  type="radio"
+                  name="issue-type"
+                  id="disfavor"
+                  class="top-[3px] relative"
+                />
+                <label class="ml-2 fpo-item" for="disfavor">They seem to favor a colleague or disfavor me</label>
+              </div>
+              <div class="form-group flex w-full items-baseline rounded">
+                <input
+                  type="radio"
+                  name="issue-type"
+                  id="evaluated"
+                  class="top-[3px] relative"
+                />
+                <label class="ml-2 fpo-item" for="evaluated">They evaluated me unfairly</label>
+              </div>
+              <div class="form-group flex w-full items-baseline rounded">
+                <input
+                  type="radio"
+                  name="issue-type"
+                  id="respect"
+                  class="top-[3px] relative"
+                />
+                <label class="ml-2 fpo-item" for="respect">They don’t treat me with respect</label>
+              </div>
+              <div class="form-group flex w-full items-baseline rounded">
+                <input
+                  type="radio"
+                  name="issue-type"
+                  id="diminishing"
+                  class="top-[3px] relative"
+                />
+                <label class="ml-2 fpo-item" for="diminishing">They use diminishing language when talking to me</label>
+              </div>
+              <div class="form-group flex w-full items-baseline rounded">
+                <input
+                  type="radio"
+                  name="issue-type"
+                  id="diminishing"
+                  class="top-[3px] relative"
+                />
+                <label class="ml-2 fpo-item" for="diminishing">They use diminishing language behind my back</label>
+              </div>
+              <div class="form-group flex w-full items-baseline rounded">
+                <input
+                  type="radio"
+                  name="issue-type"
+                  id="criticize"
+                  class="top-[3px] relative"
+                />
+                <label class="ml-2 fpo-item" for="criticize">They criticize me in public without talking to me first</label>
+              </div>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next</a>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="form-wrapper hidden form-2-3 mt-4" data-back="form-2-2" data-forward="form-2-4">
+              <div class="return-to-start"><a href="#" data-jump="form-0" class="jump-back py-1 px-3 transition-all mb-6 bg-sky-100 block">Conflict Guide <img class="float-right w-3 h-3 top-2 relative" src="images/icons/close.svg" alt=""></a></div>
+              <h2 class="mb-8 font-normal"><span class="text-sm font-normal uppercase">How to deal with</span>
+                <span class="block">My boss bullying me</span></h2>
+
+              <p>Here’s your reading overview:</p>
+
+              <div class="form-group reading-group flex w-full rounded">
+                <span class="top-1 relative w-7 h-7 border-2 border-circle-gray rounded-full text-center bg-white">1</span>
+                <label class="ml-2 grow">Why it is so difficult?
+                  <span class="text-sm block">3 min</span>
+                </label>
+                <span class="font-semibold text-xl">&gt;</span>
+              </div>
+              <div class="form-group reading-group flex w-full rounded">
+                <span class="top-1 relative w-7 h-7 border-2 border-circle-gray rounded-full text-center bg-white">2</span>
+                <label class="ml-2 grow">Before you do anything
+                  <span class="text-sm block">3 min</span>
+                </label>
+                <span class="font-semibold text-xl">&gt;</span>
+              </div>
+              <div class="form-group reading-group flex w-full rounded">
+                <span class="top-1 relative w-7 h-7 border-2 border-circle-gray rounded-full text-center bg-white">3</span>
+                <label class="ml-2 grow">Options to deal effectively with the situation
+                  <span class="text-sm block">5 min</span>
+                </label>
+                <span class="font-semibold text-xl">&gt;</span>
+              </div>
+              <div class="form-group reading-group flex w-full rounded">
+                <span class="top-1 relative w-7 h-7 border-2 border-circle-gray rounded-full text-center bg-white">4</span>
+                <label class="ml-2 grow">Bringing in a third party
+                  <span class="text-sm block">5 min</span>
+                </label>
+                <span class="font-semibold text-xl">&gt;</span>
+              </div>
+              <div class="form-group reading-group flex w-full rounded">
+                <span class="top-1 relative w-7 h-7 border-2 border-circle-gray rounded-full text-center bg-white">5</span>
+                <label class="ml-2 grow">Additional resources
+                  <span class="text-sm block">1 min</span>
+                </label>
+                <span class="font-semibold text-xl">&gt;</span>
+              </div>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next</a>
+              </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="form-wrapper hidden form-2-4 mt-4" data-back="form-2-3" data-forward="form-2-5">
+              <div class="return-to-start"><a href="#" data-jump="form-2-3" class="jump-back py-1 px-3 hover:pl-2 transition-all mb-6 bg-sky-100 block">&larr; Back to Overview</a></div>
+              <p class="text-sm font-normal uppercase"><a href="#"><img class="inline align-bottom mr-1" src="/images/listen.svg" alt="Listen"> Listen</a></p>
+              <h2 class="mb-8 font-normal">Why it is so difficult</h2>
+
+              <p class="text-sm uppercase font-bold">Intro</p>
+              <p>Being bullied in the workplace by your boss can create frustration, uncertainty, damage confidence and trust, and disrupt your preferred working style.</p>
+
+              <p>Research shows that many people experiencing bullying behavior by their boss will do nothing, at least at the beginning.</p>
+
+              <ul class="list-disc list-outside pl-6 mb-3">
+                <li>They may hope the unwanted behavior will just go away.</li>
+                <li>Often, though, doing nothing can make matters worse, and the other person might think the behavior is welcome.</li>
+                <li>Doing nothing is hardly ever a good choice in similar cases.</li>
+              </ul>
+
+              <p>But doing or saying something, such as making a direct accusation, can be tricky, too. Here are some things to keep in mind as you consider the options we will discuss:</p>
+
+              <ul class="list-disc list-outside pl-6 mb-3">
+                <li>People usually do not know everything about the situation.</li>
+                <li>You may be unsure if your perceptions of the situation are accurate.</li>
+                <li>It is important not to let emotions such as frustration or anger, however real they are for you, control any interactions you have.</li>
+                <li>Always consider the value of taking a deep breath and pausing before taking action.</li>
+              </ul>
+
+              <p>What can go wrong if you talk directly to your boss without being prepared? If you have not tested your assumptions, and decide to respond without thoughtful planning, here’s an example of how the start of this conversation might go:</p>
+
+              <video class="mb-6" controls playsinline poster="/videos/conflict-guide/b-1-1.png">
+                <source src="https://utfs.io/f/f6a22c28-6d13-41c0-bb39-297f8463f95f-1u.1-1.mp4" />
+              </video>
+
+              <dl class="transcript">
+                <dt class="btn w-44 text-center rounded-md cursor-pointer hover:bg-slate-700">
+                  <span>Show Transcript</span>
+                  <span class="hidden">Hide Transcript</span>
+                </dt>
+                <dd class="mt-2 hidden">
+                  <p class="mb-6"><span class="badge you">You:</span></p>
+                  <blockqoute>
+                    <p>“Every time I make a comment in team meetings, you find a way to ridicule what I say or minimize my ideas. Or you ignore me altogether. You don’t do this with other people. This has happened several times and it is clear you don’t respect me or my contributions. This is not how we talk about treating one another in this organization. It’s called bullying and I don’t see other managers doing this and I don’t see you doing it to others. This is obviously just about me and I won’t take this anymore.”</p>
+                  </blockqoute>
+                </dd>
+              </dl>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next</a>
+              </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="form-wrapper hidden form-2-5 mt-4" data-back="form-2-4" data-forward="form-2-6">
+              <div class="return-to-start"><a href="#" data-jump="form-2-3" class="jump-back py-1 px-3 hover:pl-2 transition-all mb-6 bg-sky-100 block">&larr; Back to Overview</a></div>
+              <p class="text-sm font-normal uppercase"><a href="#"><img class="inline align-bottom mr-1" src="/images/listen.svg" alt="Listen"> Listen</a></p>
+              <h2 class="mb-8 font-normal">Why it is so difficult</h2>
+
+              <p>How do you think your boss will respond if they did not know how their behavior was coming across? And even if they did, or suspected it, will they just apologize and stop? Well, that is certainly possible.</p>
+
+              <video class="mb-6" controls playsinline poster="/videos/conflict-guide/b-1-2.png">
+                <source src="https://utfs.io/f/d1076f73-0a16-45dd-881b-988ef8ea9e99-1u.1-2.mp4" />
+              </video>
+
+              <dl class="transcript">
+                <dt class="btn w-44 text-center rounded-md cursor-pointer hover:bg-slate-700">
+                  <span>Show Transcript</span>
+                  <span class="hidden">Hide Transcript</span>
+                </dt>
+                <dd class="mt-2 hidden">
+                  <p class="mb-6"><span class="badge them">Them:</span></p>
+                  <blockqoute>
+                    <p>“I have no idea where this is coming from. Be careful throwing around terms like bullying. I am not a bully, and I would respond more positively to your comments if they added value to the conversation. We only meet as a team once a week and I need you to come more prepared or I will let you know. I am known for being direct and honest and that is all I am doing with you.”</p>
+                  </blockqoute>
+                </dd>
+              </dl>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next</a>
+              </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="form-wrapper hidden form-2-6 mt-4" data-back="form-2-5" data-forward="form-2-7">
+              <div class="return-to-start"><a href="#" data-jump="form-2-3" class="jump-back py-1 px-3 hover:pl-2 transition-all mb-6 bg-sky-100 block">&larr; Back to Overview</a></div>
+              <p class="text-sm font-normal uppercase"><a href="#"><img class="inline align-bottom mr-1" src="/images/listen.svg" alt="Listen"> Listen</a></p>
+              <h2 class="mb-8 font-normal">Why it is so difficult</h2>
+
+              <p>What went wrong?</p>
+
+              <ul class="list-disc list-outside pl-6 mb-3">
+                <li>Accusing your boss of bullying you may backfire, even if the accusation is right. Your boss may feel offended and threatened.</li>
+                <li>
+                  Being confrontational right at the start
+                  <ul class="list-circle list-outside pl-6 mb-3">
+                    <li>may close off the chance to find out what is really going on. You may never know for sure, in this case, whether your boss genuinely does not think your comments are applicable or adding value to the conversation or has other reasons to justify their behavior.</li>
+                    <li>may make it difficult to have a productive conversation about different working styles and preferences.</li>
+                    <li>may damage your relationship with your boss and your reputation at work.</li>
+                  </ul>
+                </li>
+                <li>Underestimating how hard it can be to communicate with your boss about their behavior can often make a difficult situation worse.</li>
+              </ul>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next Chapter</a>
+              </div>
+            </div>
+
+            <!-- Step 8 -->
+            <div class="form-wrapper hidden form-2-7 mt-4" data-back="form-2-6" data-forward="form-2-8">
+              <div class="return-to-start"><a href="#" data-jump="form-2-3" class="jump-back py-1 px-3 hover:pl-2 transition-all mb-6 bg-sky-100 block">&larr; Back to Overview</a></div>
+              <p class="text-sm font-normal uppercase"><a href="#"><img class="inline align-bottom mr-1" src="/images/listen.svg" alt="Listen"> Listen</a></p>
+              <h2 class="mb-8 font-normal">Before you do anything else</h2>
+
+              <p>What you think and what you feel are important. And your concerns may be right on target. But you may be assuming or seeing things that are not accurate. Your own life experiences and biases may be influencing your perceptions about what is happening.</p>
+
+              <p>Speaking directly to the person in question is normally a good option.  But before you do, it is always good to test your understanding about what is happening. Here are some things you could do to get more insight:</p>
+
+              <ul class="list-checkmark list-outside mb-3">
+                <li>Ask a trusted colleague what they think about your boss’s behavior.</li>
+                <li>Take time to observe how your boss interacts with other colleagues.</li>
+                <li>Be open to the possibility that your impressions are wrong.</li>
+                <li>Consider that you may need more information to fully understand and address this situation.</li>
+                <li>Attend to your emotions and other impacts that this is having on you.</li>
+              </ul>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next</a>
+              </div>
+            </div>
+
+            <!-- Step 9 -->
+            <div class="form-wrapper hidden form-2-8 mt-4" data-back="form-2-7" data-forward="form-2-9">
+              <div class="return-to-start"><a href="#" data-jump="form-2-3" class="jump-back py-1 px-3 hover:pl-2 transition-all mb-6 bg-sky-100 block">&larr; Back to Overview</a></div>
+              <p class="text-sm font-normal uppercase"><a href="#"><img class="inline align-bottom mr-1" src="/images/listen.svg" alt="Listen"> Listen</a></p>
+              <h2 class="mb-8 font-normal text-balance">Before you do anything else</h2>
+
+              <div class="card-pros rounded-l bg-white mb-6 px-6 pb-6 shadow-lg border-left border-l-4 border-l-[#f3873c]">
+                <p class="pt-4 pl-2 uppercase text-xl font-semibold text-black">Pros</p>
+                <ul class="list-disc list-outside pl-6 mb-3">
+                  <li>Getting someone else’s perspective, if possible, can often help you judge how accurate yours is.</li>
+                  <li>Observing your boss’s interactions with other colleagues can help you see how your boss ordinarily interacts with others in the workplace.</li>
+                  <li>Taking the time to do these things may help you feel more informed about your boss’s behavior.</li>
+                  <li>If you keep your mind open, doing these things may change or inform your perspective.</li>
+                  <li>Taking care of yourself will help you think through and address this in a more appropriate and effective manner.</li>
+                </ul>
+              </div>
+
+              <div class="card-cons rounded-l bg-white mb-6 px-6 pb-6 shadow-lg border-left border-l-4 border-l-[#8ebc0c]">
+                <p class="pt-4 pl-2 uppercase text-xl font-semibold text-black">Cons</p>
+                <ul class="list-disc list-outside pl-6 mb-3">
+                  <li>Comparing how your boss interacts with others to how they interact with you can be difficult.</li>
+                  <li>Despite your best efforts, it may be hard to distance yourself and be objective.</li>
+                </ul>
+              </div>
+
+              <p>Another option is to become better informed about professional recommendations for the situation you are facing. You are not the first to have experienced this sort of behavior, and it has been studied. If you can, before you start a conversation, look at our ever-growing <a href="/courses">library of e-courses</a>.</p>
+
+              <ul class="list-disc list-outside pl-6 mb-3">
+                <li>The course descriptions and preview features can help you find something helpful quickly, so you can feel more confident about what you want to do.</li>
+                <li>You will find analysis and suggestions used by staff and management of prominent international organizations.</li>
+                <li>You will also find a <a href="/courses">selection of short articles</a> relevant to your situation.</li>
+              </ul>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next Chapter</a>
+              </div>
+            </div>
+
+            <!-- Step 10 -->
+            <div class="form-wrapper hidden mt-4 form-2-9" data-back="form-2-8" data-forward="form-2-10">
+              <div class="return-to-start"><a href="#" data-jump="form-4" class="jump-back py-1 px-3 hover:pl-2 transition-all mb-6 bg-sky-100 block">&larr; Back to Overview</a></div>
+              <p class="text-sm font-normal uppercase"><a href="#"><img class="inline align-bottom mr-1" src="/images/listen.svg" alt="Listen"> Listen</a></p>
+              <h2 class="mb-8 font-normal">Options to deal effectively with the situation</h2>
+              <p class="text-sm uppercase font-bold">Intro</p>
+
+              <p>Now that you are better informed, let’s talk about alternatives to letting the behavior go unaddressed or approaching the person with a possibly premature, direct accusation.  Every person and each situation are unique. Still, you might want to consider the following options if you feel prepared enough and want to act promptly.</p>
+              <p><strong>Every person and each situation are unique.</strong></p>
+              <p>Still, you might want to consider the following options if you feel prepared enough and want to act promptly.</p>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next</a>
+              </div>
+            </div>
+
+            <!-- Step 11 -->
+            <div class="form-wrapper hidden mt-4 form-2-10" data-back="form-2-9" data-forward="form-2-11">
+              <div class="return-to-start"><a href="#" data-jump="form-0" class="jump-back py-1 px-3 transition-all mb-6 bg-sky-100 block">Conflict Guide <img class="float-right w-3 h-3 top-2 relative" src="images/icons/close.svg" alt=""></a></div>
+              <p class="text-sm font-normal uppercase"><a href="#"><img class="inline align-bottom mr-1" src="/images/listen.svg" alt="Listen"> Listen</a></p>
+              <h2 class="mb-8 font-normal">Options to deal effectively with the situation</h2>
+
+              <p>Here a few approaches you can use:</p>
+
+              <div class="form-group reading-group flex w-full rounded">
+                <span class="top-1 relative w-7 h-7 border-2 border-circle-gray rounded-full text-center bg-white">1</span>
+                <label class="ml-2 grow">Acknowledge the situation
+                  <span class="text-sm block">Approach #1</span>
+                </label>
+                <span class="font-semibold text-xl">&gt;</span>
+              </div>
+              <div class="form-group reading-group flex w-full rounded">
+                <span class="top-1 relative w-7 h-7 border-2 border-circle-gray rounded-full text-center bg-white">2</span>
+                <label class="ml-2 grow">Make a clear request
+                  <span class="text-sm block">Approach #2</span>
+                </label>
+                <span class="font-semibold text-xl">&gt;</span>
+              </div>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next</a>
+              </div>
+            </div>
+
+            <!-- Step 12 -->
+            <div class="form-wrapper hidden mt-4 form-2-11" data-back="form-2-10" data-forward="form-2-12">
+              <div class="return-to-start"><a href="#" data-jump="form-13" class="jump-back py-1 px-3 hover:pl-2 transition-all mb-6 bg-sky-100 block">&larr; Back to Overview</a></div>
+              <p class="text-sm font-normal uppercase"><a href="#"><img class="inline align-bottom mr-1" src="/images/listen.svg" alt="Listen"> Listen</a></p>
+              <h2 class="mb-8 font-normal">Options to deal effectively with the situation</h2>
+
+              <p><strong>
+                Approach 1:<br>
+                  Acknowledge the situation
+              </strong></p>
+
+              <p>One option is simply letting the other person know how you are feeling in this situation. For example, you could respectfully say something like:</p>
+
+              <video class="mb-6" controls playsinline poster="/videos/conflict-guide/b-1-3.png">
+                <source src="https://utfs.io/f/aa34f158-76b8-4902-93e0-44133b57fcfe-1u.1-3.mp4" />
+              </video>
+
+              <dl class="transcript">
+                <dt class="btn w-44 text-center rounded-md cursor-pointer hover:bg-slate-700">
+                  <span>Show Transcript</span>
+                  <span class="hidden">Hide Transcript</span>
+                </dt>
+                <dd class="mt-2 hidden">
+                  <p class="mb-6"><span class="badge you">You:</span></p>
+                  <blockqoute>
+                    <p>“It is important to me that I feel like a part of the team and can make comments in team meetings that are relevant to our work. But I don’t feel that way every time you minimize, criticize, or ignore my contributions. You don’t seem to do that to others and I’m sure the rest of the team sees this and can’t help but form their own negative opinions about me. I need you to stop this and let me know privately when my comments are genuinely off base. I feel humiliated in front of the team.”</p>
+                  </blockqoute>
+                </dd>
+              </dl>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Next</a>
+              </div>
+            </div>
+
+            <!-- Step 13 -->
+            <div class="form-wrapper hidden mt-4 form-2-12" data-back="form-2-11" data-forward="form-final">
+              <div class="return-to-start"><a href="#" data-jump="form-2-3" class="jump-back py-1 px-3 hover:pl-2 transition-all mb-6 bg-sky-100 block">&larr; Back to Overview</a></div>
+              <p class="text-sm font-normal uppercase"><a href="#"><img class="inline align-bottom mr-1" src="/images/listen.svg" alt="Listen"> Listen</a></p>
+              <h2 class="mb-8 font-normal text-balance">Options to deal effectively with the situation</h2>
+
+              <div class="card-pros rounded-l bg-white mb-6 px-6 pb-6 shadow-lg border-left border-l-4 border-l-[#f3873c]">
+                <p class="pt-4 pl-2 uppercase text-xl font-semibold text-black">Pros</p>
+                <ul class="list-disc list-outside pl-6 mb-3">
+                  <li>A direct and respectful acknowledgement of the situation might be effective and appropriate
+                    <ul class="list-circle list-outside pl-6 mb-3">
+                      <li>when you are not sure about what is going on</li>
+                      <li>if you do not know your boss well</li>
+                      <li>if you still hope that raising the issue in a non-accusatory manner will resolve the problem for you</li>
+                      <li>if your boss is unaware of their behavior.</li>
+                    </ul>
+                  </li>
+                  <li>It creates an opportunity to understand one another better and solve the problem together.</li>
+                </ul>
+              </div>
+
+              <div class="card-cons rounded-l bg-white mb-6 px-6 pb-6 shadow-lg border-left border-l-4 border-l-[#8ebc0c]">
+                <p class="pt-4 pl-2 uppercase text-xl font-semibold text-black">Cons</p>
+                <ul class="list-disc list-outside pl-6 mb-3">
+                  <li>A direct and respectful acknowledgment of the situation might not be effective and appropriate
+                    <ul class="list-circle list-outside pl-6 mb-3">
+                      <li>if the problem and the resulting harm you experience is severe</li>
+                      <li>if you have tried something similar already and it has not worked</li>
+                      <li>if your boss has refused to acknowledge your concerns or appears unwilling or unable to change</li>
+                    </ul>
+                  </li>
+                  <li>This approach may not convey the issue with sufficient urgency to get your boss to act.</li>
+                </ul>
+              </div>
+
+              <p>Another option is to become better informed about professional recommendations for the situation you are facing. You are not the first to have experienced this sort of behavior, and it has been studied. If you can, before you start a conversation, look at our ever-growing <a href="/courses">library of e-courses</a>.</p>
+
+              <ul class="list-disc list-outside pl-6 mb-3">
+                <li>The course descriptions and preview features can help you find something helpful quickly, so you can feel more confident about what you want to do.</li>
+                <li>You will find analysis and suggestions used by staff and management of prominent international organizations.</li>
+                <li>You will also find a <a href="/courses">selection of short articles</a> relevant to your situation.</li>
+              </ul>
+
+              <div class="form-navigation mt-10 mb-10 float-left w-full">
+                <a class="go go-back btn float-left border-0 pl-0 pr-0" href="#">&larr; Back</a>
+                <a class="go go-forward btn btn-primary block float-right w-40" href="#">Skip to End</a>
+              </div>
+            </div>
+
+
+
+
           </div>
         </div>
 
@@ -643,6 +1122,12 @@ const currentPosts = recentPost.slice(0, config.settings.pagination);
           } else {
             $('.form-0').slideDown(300);
           }
+
+          $('.chapter-choice').on('click', function() {
+            target = $(this).data('chapter');
+
+            $(this).parents('.form-wrapper').first().data('forward', target);
+          });
 
           // Move between steps
           $('.go').on('click', function(e) {
