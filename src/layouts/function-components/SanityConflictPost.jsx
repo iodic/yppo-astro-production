@@ -102,7 +102,6 @@ const SanityConflictPost = ({ initialId }) => {
               blocks={sanityPost.content}
               className={`${hiddenContent}`}
             />
-            {console.log(guideEnd)}
             {!guideEnd ? (
               <div className="form-navigation clear-both">
                 <button
