@@ -8,6 +8,8 @@ import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 import config from "./src/config/config.json";
 
+import sanity from "@sanity/astro";
+
 // https://astro.build/config
 export default defineConfig({
   site: config.site.base_url ? config.site.base_url : "http://examplesite.com",
@@ -40,6 +42,7 @@ export default defineConfig({
       ],
     }),
     mdx(),
+    sanity({ projectId: config.sanity.project_id, dataset: config.sanity.dataset, useCdn: false }),
   ],
   markdown: {
     remarkPlugins: [
