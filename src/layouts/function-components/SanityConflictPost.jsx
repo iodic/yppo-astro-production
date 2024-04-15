@@ -3,6 +3,7 @@ import { sanityClient } from "sanity:client";
 import imageUrlBuilder from "@sanity/image-url";
 import BlockContent from "@sanity/block-content-to-react";
 import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
+import TradeOff from "@/layouts/function-components/TradeOff.jsx";
 
 const SanityConflictPost = ({ initialId }) => {
   const [id, setId] = useState(initialId);
@@ -98,7 +99,12 @@ const SanityConflictPost = ({ initialId }) => {
     <div>
       <div className="form-wrapper form-2 mt-4">
         <h2 className="mb-8 font-normal">{sanityPost.title}</h2>
-
+        {sanityPost.prosSection && (
+          <TradeOff content={sanityPost.prosSection} type="PROS" />
+        )}
+        {sanityPost.consSection && (
+          <TradeOff content={sanityPost.consSection} type="CONS" />
+        )}
         {sanityPost.content && (
           <>
             <BlockContent
