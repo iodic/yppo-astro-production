@@ -15,6 +15,8 @@ const SanityConflictPost = ({ initialId }) => {
   const [guideEnd, setGuideEnd] = useState(false);
   const [answer, setAnswer] = useState("");
   const [showBlockContent, setShowBlockContent] = useState(false);
+  const [articleType, setArticleType] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   const builder = imageUrlBuilder(sanityClient);
 
@@ -46,6 +48,12 @@ const SanityConflictPost = ({ initialId }) => {
             setShowBlockContent(false);
           } else {
             setShowBlockContent(true);
+          }
+
+          if (loadedPost.articleType) {
+            setArticleType(true);
+          } else {
+            setArticleType(false);
           }
 
           setLoading(false);
@@ -98,12 +106,28 @@ const SanityConflictPost = ({ initialId }) => {
     }
   };
 
+  function calculateReadTime(content) {
+    let fullText = "";
+    if (content) {
+      content.map((text) => (fullText += text.children[0].text));
+      if (fullText) {
+        const wordsPerMinute = 180;
+        const words = fullText.split(/\s+/).length;
+        const minutes = Math.ceil(words / wordsPerMinute);
+        return minutes + " min";
+      }
+    }
+  }
+
   const hiddenClass = showBlockContent ? "" : "hidden";
   const hiddenContent = showBlockContent ? "hidden" : "";
 
   return (
     <div>
-      <div className="form-wrapper form-2 mt-4">
+      <div
+        className="form-wrapper form-2 mt-4"
+        key={`sanityPost_${sanityPost._id}`}
+      >
         <h2 className="mb-8 font-normal">{sanityPost.title}</h2>
         <div className={`${hiddenContent}`}>
           {sanityPost.prosSection && (
@@ -150,33 +174,65 @@ const SanityConflictPost = ({ initialId }) => {
           </>
         )}
         {showBlockContent &&
-          sanityPostAnswers.map((post) => (
-            <div
-              className="form-group flex w-full items-baseline rounded"
-              key={post._id}
-            >
-              <input
-                type="radio"
-                name="issue-type"
-                id={post._id}
-                className="top-[3px] relative"
-                onChange={() => setAnswer(post._id)}
-              />
-              <label
-                className="ml-2 real-deal chapter-choice"
-                htmlFor={post._id}
-              >
-                {post.title}
-              </label>
+          sanityPostAnswers.map((post, index) => (
+            <div key={`root_${post._id}`}>
+              {articleType ? (
+                <div key={`nest_${post._id}`}>
+                  <div
+                    className={`form-group reading-group flex w-full rounded ${selectedAnswer === post._id ? "card-highlight" : ""}`}
+                    key={`question_${post._id}`}
+                  >
+                    <span className="top-1 relative w-7 h-7 border-2 border-circle-gray rounded-full text-center bg-white">
+                      {index + 1}
+                    </span>
+                    <label className="ml-2 grow" htmlFor={post._id}>
+                      {post.title}
+                      <span className="text-sm block">
+                        {calculateReadTime(post.content)}
+                      </span>
+                    </label>
+                    <input
+                      type="radio"
+                      name="issue-type"
+                      id={post._id}
+                      className="hidden"
+                      onChange={() => {
+                        setAnswer(post._id);
+                        setSelectedAnswer(post._id);
+                      }}
+                    />
+                    <span className="font-semibold text-xl">&gt;</span>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="form-group flex w-full items-baseline rounded"
+                  key={post._id}
+                >
+                  <input
+                    type="radio"
+                    name="issue-type"
+                    id={post._id}
+                    className="top-[3px] relative"
+                    onChange={() => setAnswer(post._id)}
+                  />
+                  <label
+                    className="ml-2 real-deal chapter-choice"
+                    htmlFor={post._id}
+                  >
+                    {post.title}
+                  </label>
+                </div>
+              )}
             </div>
           ))}
       </div>
       <div className="form-navigation clear-both">
         <button
           className={`go go-forward btn btn-primary mt-10 block float-right w-40 ${hiddenClass}`}
-          onClick={() => handleNextButtonClick()}
+          onClick={() => (guideEnd ? reloadPage() : handleNextButtonClick())}
         >
-          Next
+          {guideEnd ? "Finish" : "Next"}
         </button>
       </div>
     </div>
