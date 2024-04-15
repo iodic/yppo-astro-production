@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { sanityClient } from "sanity:client";
-
+import imageUrlBuilder from "@sanity/image-url";
 import BlockContent from "@sanity/block-content-to-react";
+import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
 
 const SanityConflictPost = ({ initialId }) => {
   const [id, setId] = useState(initialId);
@@ -13,6 +14,8 @@ const SanityConflictPost = ({ initialId }) => {
   const [guideEnd, setGuideEnd] = useState(false);
   const [answer, setAnswer] = useState("");
   const [showBlockContent, setShowBlockContent] = useState(false);
+
+  const builder = imageUrlBuilder(sanityClient);
 
   useEffect(() => {
     if (id) {
@@ -102,6 +105,14 @@ const SanityConflictPost = ({ initialId }) => {
               blocks={sanityPost.content}
               className={`${hiddenContent}`}
             />
+            {sanityPost && sanityPost.videoUrl && sanityPost.videoPoster && (
+              <div className={`${hiddenContent}`}>
+                <SanityVideoComponent
+                  videoUrl={sanityPost.videoUrl}
+                  videoPoster={builder.image(sanityPost.videoPoster).url()}
+                />
+              </div>
+            )}
             {!guideEnd ? (
               <div className="form-navigation clear-both">
                 <button
