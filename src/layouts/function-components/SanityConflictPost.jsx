@@ -42,6 +42,12 @@ const SanityConflictPost = ({ initialId }) => {
             setGuideEnd(true);
           }
 
+          if (loadedPost.content) {
+            setShowBlockContent(false);
+          } else {
+            setShowBlockContent(true);
+          }
+
           setLoading(false);
           setShouldRender(true);
         } catch (error) {
