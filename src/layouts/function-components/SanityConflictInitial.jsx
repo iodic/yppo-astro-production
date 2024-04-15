@@ -21,10 +21,16 @@ const SanityConflictInitial = () => {
     };
 
     fetchData();
+
+    const latestStorage = localStorage.getItem("latestConflictType");
+    if (latestStorage) {
+      setSubmitFormAnswer(latestStorage);
+    }
   }, []);
 
   const handleNextButtonClick = () => {
     if (answer) {
+      localStorage.setItem("conflictTypeHistory", JSON.stringify([answer]));
       setSubmitFormAnswer(answer);
       setSanityInitialPosts([]);
     }

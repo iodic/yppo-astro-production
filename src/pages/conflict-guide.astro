@@ -42,6 +42,11 @@ import SanityConflictInitial from "@/layouts/function-components/SanityConflictI
         <script is:inline>
           $(".form-0").slideDown(300);
 
+          const latestStorage = localStorage.getItem('latestConflictType');
+          if (latestStorage) {
+            $(".form-0").hide();
+          }
+
           $(".go").on("click", function (e) {
             target = "." + $(this).parents(".form-wrapper").data("back");
 

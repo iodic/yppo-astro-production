@@ -56,6 +56,8 @@ const SanityConflictPost = ({ initialId }) => {
             setArticleType(false);
           }
 
+          localStorage.setItem("latestConflictType", id);
+
           setLoading(false);
           setShouldRender(true);
         } catch (error) {
@@ -73,6 +75,7 @@ const SanityConflictPost = ({ initialId }) => {
   }, [!loading]);
 
   const reloadPage = () => {
+    localStorage.setItem("latestConflictType", "");
     window.location.reload();
   };
 
@@ -83,13 +86,12 @@ const SanityConflictPost = ({ initialId }) => {
   if (error) {
     return (
       <div className="form-navigation mt-10 mb-10 float-left w-full">
-        <a
-          className="go go-forward btn btn-primary block float-right w-40"
-          href="#"
+        <button
+          className="go go-forward btn btn-primary block float-right w-40 "
           onClick={reloadPage}
         >
           Finish
-        </a>
+        </button>
       </div>
     );
   }
@@ -99,11 +101,38 @@ const SanityConflictPost = ({ initialId }) => {
   }
 
   const handleNextButtonClick = () => {
+    const conflictTypeHistory =
+      JSON.parse(localStorage.getItem("conflictTypeHistory")) || [];
+    conflictTypeHistory.push(id);
+    localStorage.setItem(
+      "conflictTypeHistory",
+      JSON.stringify(conflictTypeHistory),
+    );
     if (answer) {
       setId(answer);
       setShowBlockContent(false);
       setSanityPostAnswers([]);
     }
+  };
+
+  const handleBackAction = () => {
+    const conflictTypeHistory =
+      JSON.parse(localStorage.getItem("conflictTypeHistory")) || [];
+
+    const previousPage = conflictTypeHistory.pop();
+
+    if (0 === conflictTypeHistory.length) {
+      localStorage.setItem("latestConflictType", "");
+      window.location.reload();
+    }
+    localStorage.setItem(
+      "conflictTypeHistory",
+      JSON.stringify(conflictTypeHistory),
+    );
+
+    setId(previousPage);
+    setShowBlockContent(false);
+    setSanityPostAnswers([]);
   };
 
   function calculateReadTime(content) {
@@ -154,21 +183,32 @@ const SanityConflictPost = ({ initialId }) => {
             {!guideEnd ? (
               <div className="form-navigation clear-both">
                 <button
-                  className={`go go-forward btn btn-primary mt-10 block float-right w-40 ${hiddenContent}`}
+                  className={`go go-forward btn btn-primary block float-right w-40 ${hiddenContent}`}
                   onClick={() => setShowBlockContent(true)}
                 >
                   Next
                 </button>
+                <button
+                  className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenContent}`}
+                  onClick={() => handleBackAction()}
+                >
+                  ← Back
+                </button>
               </div>
             ) : (
               <div className="form-navigation mt-10 mb-10 float-left w-full">
-                <a
-                  className="go go-forward btn btn-primary block float-right w-40"
-                  href="#"
+                <button
+                  className="go go-forward btn btn-primary block float-right w-40 "
                   onClick={reloadPage}
                 >
                   Finish
-                </a>
+                </button>
+                <button
+                  className="go go-back btn float-left border-0 pl-0 pr-0"
+                  onClick={() => handleBackAction()}
+                >
+                  ← Back
+                </button>
               </div>
             )}
           </>
@@ -229,10 +269,16 @@ const SanityConflictPost = ({ initialId }) => {
       </div>
       <div className="form-navigation clear-both">
         <button
-          className={`go go-forward btn btn-primary mt-10 block float-right w-40 ${hiddenClass}`}
+          className={`go go-forward btn btn-primary block float-right w-40 ${hiddenClass}`}
           onClick={() => (guideEnd ? reloadPage() : handleNextButtonClick())}
         >
           {guideEnd ? "Finish" : "Next"}
+        </button>
+        <button
+          className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenClass}`}
+          onClick={() => handleBackAction()}
+        >
+          ← Back
         </button>
       </div>
     </div>
