@@ -99,12 +99,14 @@ const SanityConflictPost = ({ initialId }) => {
     <div>
       <div className="form-wrapper form-2 mt-4">
         <h2 className="mb-8 font-normal">{sanityPost.title}</h2>
-        {sanityPost.prosSection && (
-          <TradeOff content={sanityPost.prosSection} type="PROS" />
-        )}
-        {sanityPost.consSection && (
-          <TradeOff content={sanityPost.consSection} type="CONS" />
-        )}
+        <div className={`${hiddenContent}`}>
+          {sanityPost.prosSection && (
+            <TradeOff content={sanityPost.prosSection} type="PROS" />
+          )}
+          {sanityPost.consSection && (
+            <TradeOff content={sanityPost.consSection} type="CONS" />
+          )}
+        </div>
         {sanityPost.content && (
           <>
             <BlockContent
