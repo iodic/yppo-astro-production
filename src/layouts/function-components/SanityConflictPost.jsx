@@ -40,6 +40,7 @@ const SanityConflictPost = ({ initialId }) => {
               fetchedAnswers.push(loadedPost);
             }
             setSanityPostAnswers(fetchedAnswers);
+            setGuideEnd(false);
           } else {
             setGuideEnd(true);
           }
@@ -167,11 +168,8 @@ const SanityConflictPost = ({ initialId }) => {
           )}
         </div>
         {sanityPost.content && (
-          <>
-            <PortableText
-              value={sanityPost.content}
-              className={`${hiddenContent}`}
-            />
+          <div className={`${hiddenContent}`}>
+            <PortableText value={sanityPost.content} />
             {sanityPost && sanityPost.videoUrl && sanityPost.videoPoster && (
               <div className={`${hiddenContent}`}>
                 <SanityVideoComponent
@@ -211,7 +209,7 @@ const SanityConflictPost = ({ initialId }) => {
                 </button>
               </div>
             )}
-          </>
+          </div>
         )}
         {showBlockContent &&
           sanityPostAnswers.map((post, index) => (
