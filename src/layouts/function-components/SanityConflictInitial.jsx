@@ -26,7 +26,7 @@ const SanityConflictInitial = ({ initialPosts }) => {
   return (
     <div>
       {submitFormAnswer ? (
-        <SanityConflictPost initialId={submitFormAnswer} />
+        <SanityConflictPost client:load initialId={submitFormAnswer} />
       ) : (
         sanityInitialPosts.length > 0 && (
           <div className="form-wrapper hidden form-1 mt-4">
