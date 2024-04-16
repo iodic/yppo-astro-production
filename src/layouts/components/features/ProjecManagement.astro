@@ -1,33 +1,26 @@
 ---
-import FeatureTab from "@/layouts/function-components/FeatureTab";
 import Projects from "@/layouts/function-components/Projects";
 import { markdownify } from "@/lib/utils/textConverter";
-import FeatureService from "./FeatureService.astro";
 
-const {
-  features: {
-    project_management: {
-      title,
-      content,
-      management,
-      feature_service,
-      feature_tab,
-    },
-  },
-} = Astro.props;
+const { features } = Astro.props;
 ---
 
 <section class="section features pb-0">
   <div class="container">
     <div class="row">
       <div class="mx-auto text-center lg:col-7">
-        <h2 set:html={markdownify(title)} />
-        <p class="mt-4" set:html={markdownify(content)} />
+        <h2
+          set:html={markdownify(
+            "Get familiar with <br /> the topics in our library"
+          )}
+        />
       </div>
     </div>
-    <div class="p mt-14 rounded-xl bg-white px-6 pb-6 shadow-lg lg:px-12 w-full lg:w-3/5 mx-auto">
+    <div
+      class="p mt-14 rounded-xl bg-white px-6 pb-6 shadow-lg lg:px-12 w-full lg:w-3/5 mx-auto"
+    >
       <div class="row">
-        <Projects client:load projects={management.projects} />
+        <Projects client:load projects={features} />
       </div>
     </div>
   </div>

@@ -1,0 +1,26 @@
+---
+import Base from "@/layouts/Base.astro";
+import WikiSingle from "@/layouts/WikiSingle.astro";
+import { sanityClient } from "sanity:client";
+
+export async function getStaticPaths() {
+  const posts = await sanityClient.fetch(
+    `*[_type == 'conflictType'] | order(_createdAt desc)`
+  );
+
+  const paths = posts.map((post: any) => ({
+    params: {
+      single: post.slug.current,
+    },
+    props: { post },
+  }));
+  return paths;
+}
+
+const { post } = Astro.props;
+const { title, description, image } = post;
+---
+
+<Base title={title} description={description} image={image}>
+  <WikiSingle post={post} />
+</Base>
