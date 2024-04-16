@@ -1,5 +1,5 @@
 import React from "react";
-import BlockContent from "@sanity/block-content-to-react";
+import { PortableText } from '@portabletext/react'
 
 const TradeOff = ({ content, type }) => {
   const consClasses =
@@ -12,7 +12,7 @@ const TradeOff = ({ content, type }) => {
       <p className="pt-4 pl-2 uppercase text-xl font-semibold text-black">
         {type}
       </p>
-      <BlockContent blocks={content} />
+      <PortableText value={content} />
     </div>
   );
 };

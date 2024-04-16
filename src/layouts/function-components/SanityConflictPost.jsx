@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { sanityClient } from "sanity:client";
 import imageUrlBuilder from "@sanity/image-url";
-import BlockContent from "@sanity/block-content-to-react";
+import { PortableText } from "@portabletext/react";
 import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
 import TradeOff from "@/layouts/function-components/TradeOff.jsx";
 
@@ -168,8 +168,8 @@ const SanityConflictPost = ({ initialId }) => {
         </div>
         {sanityPost.content && (
           <>
-            <BlockContent
-              blocks={sanityPost.content}
+            <PortableText
+              value={sanityPost.content}
               className={`${hiddenContent}`}
             />
             {sanityPost && sanityPost.videoUrl && sanityPost.videoPoster && (
