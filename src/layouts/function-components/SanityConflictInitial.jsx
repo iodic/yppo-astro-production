@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { sanityClient } from "sanity:client";
 import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
 
-const SanityConflictInitial = () => {
+const SanityConflictInitial = ({ initialPosts }) => {
   const [answer, setAnswer] = useState("");
   const [submitFormAnswer, setSubmitFormAnswer] = useState("");
   const [sanityInitialPosts, setSanityInitialPosts] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const initialPosts = await sanityClient.fetch(
-          `*[_type == 'conflictType' && initialQuestion == true]`,
-        );
-        setSanityInitialPosts(initialPosts);
-      } catch (error) {
-        setError("Error fetching initial posts");
-      }
-    };
-
-    fetchData();
+    setSanityInitialPosts(initialPosts);
 
     const latestStorage = localStorage.getItem("latestConflictType");
     if (latestStorage) {
@@ -38,7 +25,6 @@ const SanityConflictInitial = () => {
 
   return (
     <div>
-      {error && <div>Error: {error}</div>}
       {submitFormAnswer ? (
         <SanityConflictPost initialId={submitFormAnswer} />
       ) : (
