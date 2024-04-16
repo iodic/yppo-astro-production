@@ -1,18 +1,15 @@
 ---
 import dateFormat from "@/lib/utils/dateFormat";
-import readingTime from "@/lib/utils/readingTime";
+import { calculateReadTime } from "@/helper/helper.ts";
+import imageUrlBuilder from "@sanity/image-url";
+import { PortableText } from "@portabletext/react";
+import { sanityClient } from "sanity:client";
+const builder = imageUrlBuilder(sanityClient);
 
-import { humanize, slugify } from "@/lib/utils/textConverter";
-import {
-  FaRegCalendarAlt,
-  FaRegClock,
-  FaRegFolder,
-  FaRegUserCircle,
-} from "react-icons/fa";
+import { FaRegCalendarAlt, FaRegClock, FaRegFolder } from "react-icons/fa";
 import { Image } from "astro:assets";
 
 const { post } = Astro.props;
-const { Content } = await post.render();
 ---
 
 <section class="section blog-single">
@@ -21,7 +18,7 @@ const { Content } = await post.render();
       <div class="lg:col-10">
         <Image
           class="w-full rounded-xl"
-          src={post.data.image}
+          src={builder.image(post.image).url()}
           alt=""
           width={800}
           height={500}
@@ -29,48 +26,49 @@ const { Content } = await post.render();
       </div>
       <div class="mt-10 max-w-[810px] lg:col-9">
         <h1 class="h2">
-          {post.data.title}
+          {post.title}
         </h1>
         <div class="mb-5 mt-6 flex items-center space-x-2">
           <ul class="mb-4">
             <li class="mr-4 inline-block">
-              <FaRegUserCircle className={"mr-2 -mt-1 inline-block"} />
-              {humanize(post.data.author)}
-            </li>
-
-            <li class="mr-4 inline-block">
               <FaRegCalendarAlt className={"mr-2 -mt-1 inline-block"} />
-              {dateFormat(post.data.date)}
+              {dateFormat(post._createdAt)}
             </li>
             <li class="mr-4 inline-block">
               <FaRegClock className={"mr-2 -mt-1 inline-block"} />
-              {readingTime(post.body)}
+              {calculateReadTime(post.content)}
             </li>
-            <li class="mr-4 inline-block">
-              <FaRegFolder className={"mr-2 -mt-1 inline-block"} />
-              {
-                post.data.categories.map((category: string, index: number) => (
-                  <a
-                    href={`/categories/${slugify(category)}`}
-                    class="hover:text-primary"
-                  >
-                    {humanize(category)}
-                    {index !== post.data.categories.length - 1 && ","}
-                  </a>
-                ))
-              }
-            </li>
+            {
+              post.tags && (
+                <li class="mr-4 inline-block">
+                  <FaRegFolder className={"mr-2 -mt-1 inline-block"} />
+                  {post.tags.map((tag: string, index: number) => (
+                    <>
+                      {tag}
+                      {index !== post.tags.length - 1 && ", "}
+                    </>
+                  ))}
+                </li>
+              )
+            }
           </ul>
         </div>
 
         <div class="content">
-          {post.data.video && (
-            <video class="mb-6" controls playsinline poster={post.data.videoposter}>
-              <source src={post.data.video} />
-            </video>
-            )}
+          {
+            post.videoUrl && (
+              <video
+                class="mb-6"
+                controls
+                playsinline
+                poster={builder.image(post.videoPoster).url()}
+              >
+                <source src={post.videoUrl} />
+              </video>
+            )
+          }
 
-          <Content />
+          {post && post.content && <PortableText value={post.content} />}
         </div>
       </div>
     </div>

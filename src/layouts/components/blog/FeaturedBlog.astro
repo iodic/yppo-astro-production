@@ -2,10 +2,16 @@
 import { Image } from "astro:assets";
 import config from "@/config/config.json";
 import dateFormat from "@/lib/utils/dateFormat";
-import readingTime from "@/lib/utils/readingTime";
-import { humanize, plainify, slugify } from "@/lib/utils/textConverter";
+import { calculateReadTime } from "@/helper/helper.ts";
+import imageUrlBuilder from "@sanity/image-url";
+import { plainify } from "@/lib/utils/textConverter";
+import { toPlainText } from "@portabletext/react";
+
 const { summary_length } = config.settings;
 const { posts } = Astro.props;
+
+import { sanityClient } from "sanity:client";
+const builder = imageUrlBuilder(sanityClient);
 ---
 
 <h2 class="h4 mb-4">Featured Courses</h2>
@@ -18,22 +24,22 @@ const { posts } = Astro.props;
             class="card-img"
             width={235}
             height={304}
-            src={post.data.image}
-            alt={post.data.title}
+            src={builder.image(post.image).url()}
+            alt={post.title}
           />
           <div class="card-content">
             <div class="card-tags space-x-1">
-              {post.data.categories.map((category: any) => (
-                <a class="tag" href={`/categories/${slugify(category)}`}>
-                  {humanize(category)}
-                </a>
-              ))}
+              {post.tags &&
+                post.tags.map((tag: string) => <div class="tag">{tag}</div>)}
             </div>
             <h3 class="h4 card-title">
-              <a href={`/courses/${post.slug}`}>{post.data.title}</a>
+              <a href={`/courses/${post.slug.current}`}>{post.title}</a>
             </h3>
             <p class="mb-4 text-text">
-              {plainify(post.body?.slice(0, Number(summary_length)))}...
+              {post.content &&
+                plainify(
+                  toPlainText(post.content)?.slice(0, Number(summary_length))
+                ) + "..."}
             </p>
             <div class="card-footer mt-6 flex space-x-4">
               <span class="inline-flex items-center text-xs text-[#666]">
@@ -50,7 +56,7 @@ const { posts } = Astro.props;
                     fill="#939393"
                   />
                 </svg>
-                {dateFormat(post.data.date)}
+                {dateFormat(post._createdAt)}
               </span>
               <span class="inline-flex items-center text-xs text-[#666]">
                 <svg
@@ -66,7 +72,7 @@ const { posts } = Astro.props;
                     fill="#939393"
                   />
                 </svg>
-                {readingTime(post.body)}
+                {calculateReadTime(post.content)}
               </span>
             </div>
           </div>

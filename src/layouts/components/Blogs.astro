@@ -2,25 +2,34 @@
 import { Image } from "astro:assets";
 import config from "@/config/config.json";
 import dateFormat from "@/lib/utils/dateFormat";
-import readingTime from "@/lib/utils/readingTime";
-import { humanize, plainify, slugify } from "@/lib/utils/textConverter";
+import { calculateReadTime } from "@/helper/helper.ts";
+import { plainify } from "@/lib/utils/textConverter";
+import imageUrlBuilder from "@sanity/image-url";
+import { toPlainText } from '@portabletext/react'
+
 const { summary_length } = config.settings;
 const { posts } = Astro.props;
 const { embed } = Astro.props;
+
+import { sanityClient } from "sanity:client";
+const builder = imageUrlBuilder(sanityClient);
+
 ---
 
 <div class="row">
   {
     posts.map((item: any) => (
-      <div class={`mb-8 ${embed ? 'col-12' : 'md:col-6 lg:col-4'}`}>
+      <div class={`mb-8 ${embed ? "col-12" : "md:col-6 lg:col-4"}`}>
         <div class="card relative">
-          <Image
-            class="card-img"
-            width={335}
-            height={210}
-            src={item.data.image}
-            alt=""
-          />
+          {item.image &&
+            <Image
+              class="card-img"
+              width={335}
+              height={210}
+              src={builder.image(item.image).url()}
+              alt={item.title}
+            />
+          }
           {embed && (
             <span class="absolute right-7 top-7 bg-white inline-flex items-center text-sm px-4 py-2 rounded text-[#666]">
               <svg
@@ -36,25 +45,25 @@ const { embed } = Astro.props;
                   fill="#939393"
                 />
               </svg>
-              {readingTime(item.body)}
+              {calculateReadTime(item.content)}
             </span>
           )}
           <div class="card-content">
             {!embed && (
               <div class="card-tags space-x-1">
-                {item.data.categories.map((category: any) => (
-                  <a class="tag" href={`/categories/${slugify(category)}`}>
-                    {humanize(category)}
-                  </a>
+                {item.tags && item.tags.map((tag: string) => (
+                  <div class="tag">
+                    {tag}
+                  </div>
                 ))}
               </div>
             )}
             <h3 class="h4 card-title">
-              <a href={`/courses/${item.slug}`}>{item.data.title}</a>
+              <a href={`/courses/${item.slug.current}`}>{item.title}</a>
             </h3>
             {!embed && (
               <p class="mb-4 text-text">
-                {plainify(item.body?.slice(0, Number(summary_length)))}...
+                {item.content && plainify(toPlainText(item.content)?.slice(0, Number(summary_length)))+'...'}
               </p>
             )}
             {!embed && (
@@ -73,7 +82,7 @@ const { embed } = Astro.props;
                       fill="#939393"
                     />
                   </svg>
-                  {dateFormat(item.data.date)}
+                  {dateFormat(item._createdAt)}
                 </span>
                 <span class="inline-flex items-center text-xs text-[#666]">
                   <svg
@@ -89,7 +98,7 @@ const { embed } = Astro.props;
                       fill="#939393"
                     />
                   </svg>
-                  {readingTime(item.body)}
+                  {calculateReadTime(item.content)}
                 </span>
               </div>
             )}
