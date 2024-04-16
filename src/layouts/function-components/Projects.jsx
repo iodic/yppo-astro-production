@@ -1,4 +1,8 @@
 const Projects = ({ projects }) => {
+  if (!Array.isArray(projects)) {
+    return null;
+  }
+
   return (
     <div className="col-12">
       <div className="row">

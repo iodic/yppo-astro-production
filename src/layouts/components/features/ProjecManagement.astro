@@ -20,7 +20,7 @@ const { features } = Astro.props;
       class="p mt-14 rounded-xl bg-white px-6 pb-6 shadow-lg lg:px-12 w-full lg:w-3/5 mx-auto"
     >
       <div class="row">
-        <Projects client:load projects={features} />
+        {features && <Projects client:load projects={features} />}
       </div>
     </div>
   </div>
