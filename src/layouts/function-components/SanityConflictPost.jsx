@@ -4,6 +4,7 @@ import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
 import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
 import TradeOff from "@/layouts/function-components/TradeOff.jsx";
+import portableTextComponents from "../portable-text-components";
 
 const SanityConflictPost = ({ initialId }) => {
   const [id, setId] = useState(initialId);
@@ -169,7 +170,10 @@ const SanityConflictPost = ({ initialId }) => {
         </div>
         {sanityPost.content && (
           <div className={`${hiddenContent}`}>
-            <PortableText value={sanityPost.content} />
+            <PortableText
+              value={sanityPost.content}
+              components={portableTextComponents}
+            />
             {sanityPost && sanityPost.videoUrl && sanityPost.videoPoster && (
               <div className={`${hiddenContent}`}>
                 <SanityVideoComponent
