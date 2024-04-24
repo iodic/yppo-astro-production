@@ -1,4 +1,4 @@
-const Projects = ({ projects }) => {
+const Projects = ({ projects } = {}) => {
   if (!Array.isArray(projects)) {
     return null;
   }
