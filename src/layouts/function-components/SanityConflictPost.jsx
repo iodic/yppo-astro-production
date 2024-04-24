@@ -18,6 +18,7 @@ const SanityConflictPost = ({ initialId }) => {
   const [showBlockContent, setShowBlockContent] = useState(false);
   const [articleType, setArticleType] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [currentRepeaterIndex, setCurrentRepeaterIndex] = useState(0);
 
   const builder = imageUrlBuilder(sanityClient);
 
@@ -41,10 +42,11 @@ const SanityConflictPost = ({ initialId }) => {
               fetchedAnswers.push(loadedPost);
             }
             setSanityPostAnswers(fetchedAnswers);
-            setGuideEnd(false);
-          } else {
-            setGuideEnd(true);
           }
+
+          setGuideEnd(
+            !loadedPost?.answers && !loadedPost?.contentRepeater?.length,
+          );
 
           if (loadedPost.content) {
             setShowBlockContent(false);
@@ -74,7 +76,7 @@ const SanityConflictPost = ({ initialId }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [!loading]);
+  }, [!loading, currentRepeaterIndex]);
 
   const reloadPage = () => {
     localStorage.setItem("latestConflictType", "");
@@ -150,8 +152,23 @@ const SanityConflictPost = ({ initialId }) => {
     }
   }
 
-  const hiddenClass = showBlockContent ? "" : "hidden";
-  const hiddenContent = showBlockContent ? "hidden" : "";
+  const isRepeaterContent = sanityPost.contentRepeater?.length;
+  const hiddenClass = showBlockContent && !isRepeaterContent ? "" : "hidden";
+  const hiddenContent = showBlockContent && !isRepeaterContent ? "hidden" : "";
+  let blocks, videoUrl, videoPoster;
+
+  if (sanityPost) {
+    if (isRepeaterContent) {
+      blocks = sanityPost.contentRepeater[currentRepeaterIndex]?.blocks;
+      videoUrl = sanityPost.contentRepeater[currentRepeaterIndex]?.videoUrl;
+      videoPoster =
+        sanityPost.contentRepeater[currentRepeaterIndex]?.videoPoster;
+    } else {
+      blocks = sanityPost.content;
+      videoUrl = sanityPost.videoUrl;
+      videoPoster = sanityPost.videoPoster;
+    }
+  }
 
   return (
     <div>
@@ -168,36 +185,21 @@ const SanityConflictPost = ({ initialId }) => {
             <TradeOff content={sanityPost.consSection} type="CONS" />
           )}
         </div>
-        {sanityPost.content && (
+        {sanityPost && (
           <div className={`${hiddenContent}`}>
-            <PortableText
-              value={sanityPost.content}
-              components={portableTextComponents}
-            />
-            {sanityPost && sanityPost.videoUrl && sanityPost.videoPoster && (
+            <PortableText value={blocks} components={portableTextComponents} />
+            {videoUrl && videoPoster && (
               <div className={`${hiddenContent}`}>
                 <SanityVideoComponent
-                  videoUrl={sanityPost.videoUrl}
-                  videoPoster={builder.image(sanityPost.videoPoster).url()}
+                  videoUrl={videoUrl}
+                  videoPoster={builder.image(videoPoster).url()}
                 />
               </div>
             )}
-            {!guideEnd ? (
-              <div className="form-navigation clear-both">
-                <button
-                  className={`go go-forward btn btn-primary block float-right w-40 ${hiddenContent}`}
-                  onClick={() => setShowBlockContent(true)}
-                >
-                  Next
-                </button>
-                <button
-                  className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenContent}`}
-                  onClick={() => handleBackAction()}
-                >
-                  ← Back
-                </button>
-              </div>
-            ) : (
+            {guideEnd ||
+            (isRepeaterContent &&
+              currentRepeaterIndex ===
+                sanityPost.contentRepeater.length - 1) ? (
               <div className="form-navigation mt-10 mb-10 float-left w-full">
                 <button
                   className="go go-forward btn btn-primary block float-right w-40 "
@@ -207,7 +209,35 @@ const SanityConflictPost = ({ initialId }) => {
                 </button>
                 <button
                   className="go go-back btn float-left border-0 pl-0 pr-0"
-                  onClick={() => handleBackAction()}
+                  onClick={() =>
+                    isRepeaterContent && currentRepeaterIndex > 0
+                      ? setCurrentRepeaterIndex(currentRepeaterIndex - 1)
+                      : handleBackAction()
+                  }
+                >
+                  ← Back
+                </button>
+              </div>
+            ) : (
+              <div className="form-navigation clear-both">
+                <button
+                  className={`go go-forward btn btn-primary block float-right w-40 ${hiddenContent}`}
+                  onClick={() =>
+                    isRepeaterContent &&
+                    currentRepeaterIndex < sanityPost.contentRepeater.length - 1
+                      ? setCurrentRepeaterIndex(currentRepeaterIndex + 1)
+                      : setShowBlockContent(true)
+                  }
+                >
+                  Next
+                </button>
+                <button
+                  className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenContent}`}
+                  onClick={() =>
+                    isRepeaterContent && currentRepeaterIndex > 0
+                      ? setCurrentRepeaterIndex(currentRepeaterIndex - 1)
+                      : handleBackAction()
+                  }
                 >
                   ← Back
                 </button>
