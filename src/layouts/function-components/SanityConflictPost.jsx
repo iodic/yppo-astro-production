@@ -186,12 +186,8 @@ const SanityConflictPost = ({ initialId }) => {
         {sanityPost && (
           <>
             <div className={`${hiddenContent}`}>
-              {sanityPost.prosSection && (
-                <TradeOff content={sanityPost.prosSection} type="PROS" />
-              )}
-              {sanityPost.consSection && (
-                <TradeOff content={sanityPost.consSection} type="CONS" />
-              )}
+              {prosSection && <TradeOff content={prosSection} type="PROS" />}
+              {consSection && <TradeOff content={consSection} type="CONS" />}
             </div>
             <div className={`${hiddenContent}`}>
               <PortableText
@@ -207,8 +203,8 @@ const SanityConflictPost = ({ initialId }) => {
                 </div>
               )}
               {guideEnd ||
-                (isRepeaterContent &&
-                  currentRepeaterIndex ===
+              (isRepeaterContent &&
+                currentRepeaterIndex ===
                   sanityPost.contentRepeater.length - 1) ? (
                 <div className="form-navigation mt-10 mb-10 float-left w-full">
                   <button
@@ -234,7 +230,7 @@ const SanityConflictPost = ({ initialId }) => {
                     className={`go go-forward btn btn-primary block float-right w-40 ${hiddenContent}`}
                     onClick={() =>
                       isRepeaterContent &&
-                        currentRepeaterIndex <
+                      currentRepeaterIndex <
                         sanityPost.contentRepeater.length - 1
                         ? setCurrentRepeaterIndex(currentRepeaterIndex + 1)
                         : setShowBlockContent(true)
@@ -285,7 +281,9 @@ const SanityConflictPost = ({ initialId }) => {
                         setSelectedAnswer(post._id);
                       }}
                     />
-                    <span className="font-semibold text-xl leading-normal">&gt;</span>
+                    <span className="font-semibold text-xl leading-normal">
+                      &gt;
+                    </span>
                   </div>
                 </div>
               ) : (
