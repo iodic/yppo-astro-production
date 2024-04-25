@@ -155,15 +155,21 @@ const SanityConflictPost = ({ initialId }) => {
   const isRepeaterContent = sanityPost.contentRepeater?.length;
   const hiddenClass = showBlockContent && !isRepeaterContent ? "" : "hidden";
   const hiddenContent = showBlockContent && !isRepeaterContent ? "hidden" : "";
-  let blocks, videoUrl, videoPoster;
+  let prosSection, consSection, blocks, videoUrl, videoPoster;
 
   if (sanityPost) {
     if (isRepeaterContent) {
+      prosSection =
+        sanityPost.contentRepeater[currentRepeaterIndex]?.prosSection;
+      consSection =
+        sanityPost.contentRepeater[currentRepeaterIndex]?.consSection;
       blocks = sanityPost.contentRepeater[currentRepeaterIndex]?.blocks;
       videoUrl = sanityPost.contentRepeater[currentRepeaterIndex]?.videoUrl;
       videoPoster =
         sanityPost.contentRepeater[currentRepeaterIndex]?.videoPoster;
     } else {
+      prosSection = sanityPost.prosSection;
+      consSection = sanityPost.consSection;
       blocks = sanityPost.content;
       videoUrl = sanityPost.videoUrl;
       videoPoster = sanityPost.videoPoster;
@@ -177,73 +183,79 @@ const SanityConflictPost = ({ initialId }) => {
         key={`sanityPost_${sanityPost._id}`}
       >
         <h2 className="mb-8 font-normal">{sanityPost.title}</h2>
-        <div className={`${hiddenContent}`}>
-          {sanityPost.prosSection && (
-            <TradeOff content={sanityPost.prosSection} type="PROS" />
-          )}
-          {sanityPost.consSection && (
-            <TradeOff content={sanityPost.consSection} type="CONS" />
-          )}
-        </div>
         {sanityPost && (
-          <div className={`${hiddenContent}`}>
-            <PortableText value={blocks} components={portableTextComponents} />
-            {videoUrl && videoPoster && (
-              <div className={`${hiddenContent}`}>
-                <SanityVideoComponent
-                  videoUrl={videoUrl}
-                  videoPoster={builder.image(videoPoster).url()}
-                />
-              </div>
-            )}
-            {guideEnd ||
-            (isRepeaterContent &&
-              currentRepeaterIndex ===
-                sanityPost.contentRepeater.length - 1) ? (
-              <div className="form-navigation mt-10 mb-10 float-left w-full">
-                <button
-                  className="go go-forward btn btn-primary block float-right w-40 "
-                  onClick={reloadPage}
-                >
-                  Finish
-                </button>
-                <button
-                  className="go go-back btn float-left border-0 pl-0 pr-0"
-                  onClick={() =>
-                    isRepeaterContent && currentRepeaterIndex > 0
-                      ? setCurrentRepeaterIndex(currentRepeaterIndex - 1)
-                      : handleBackAction()
-                  }
-                >
-                  ← Back
-                </button>
-              </div>
-            ) : (
-              <div className="form-navigation clear-both">
-                <button
-                  className={`go go-forward btn btn-primary block float-right w-40 ${hiddenContent}`}
-                  onClick={() =>
-                    isRepeaterContent &&
-                    currentRepeaterIndex < sanityPost.contentRepeater.length - 1
-                      ? setCurrentRepeaterIndex(currentRepeaterIndex + 1)
-                      : setShowBlockContent(true)
-                  }
-                >
-                  Next
-                </button>
-                <button
-                  className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenContent}`}
-                  onClick={() =>
-                    isRepeaterContent && currentRepeaterIndex > 0
-                      ? setCurrentRepeaterIndex(currentRepeaterIndex - 1)
-                      : handleBackAction()
-                  }
-                >
-                  ← Back
-                </button>
-              </div>
-            )}
-          </div>
+          <>
+            <div className={`${hiddenContent}`}>
+              {sanityPost.prosSection && (
+                <TradeOff content={sanityPost.prosSection} type="PROS" />
+              )}
+              {sanityPost.consSection && (
+                <TradeOff content={sanityPost.consSection} type="CONS" />
+              )}
+            </div>
+            <div className={`${hiddenContent}`}>
+              <PortableText
+                value={blocks}
+                components={portableTextComponents}
+              />
+              {videoUrl && videoPoster && (
+                <div className={`${hiddenContent}`}>
+                  <SanityVideoComponent
+                    videoUrl={videoUrl}
+                    videoPoster={builder.image(videoPoster).url()}
+                  />
+                </div>
+              )}
+              {guideEnd ||
+              (isRepeaterContent &&
+                currentRepeaterIndex ===
+                  sanityPost.contentRepeater.length - 1) ? (
+                <div className="form-navigation mt-10 mb-10 float-left w-full">
+                  <button
+                    className="go go-forward btn btn-primary block float-right w-40 "
+                    onClick={reloadPage}
+                  >
+                    Finish
+                  </button>
+                  <button
+                    className="go go-back btn float-left border-0 pl-0 pr-0"
+                    onClick={() =>
+                      isRepeaterContent && currentRepeaterIndex > 0
+                        ? setCurrentRepeaterIndex(currentRepeaterIndex - 1)
+                        : handleBackAction()
+                    }
+                  >
+                    ← Back
+                  </button>
+                </div>
+              ) : (
+                <div className="form-navigation clear-both">
+                  <button
+                    className={`go go-forward btn btn-primary block float-right w-40 ${hiddenContent}`}
+                    onClick={() =>
+                      isRepeaterContent &&
+                      currentRepeaterIndex <
+                        sanityPost.contentRepeater.length - 1
+                        ? setCurrentRepeaterIndex(currentRepeaterIndex + 1)
+                        : setShowBlockContent(true)
+                    }
+                  >
+                    Next
+                  </button>
+                  <button
+                    className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenContent}`}
+                    onClick={() =>
+                      isRepeaterContent && currentRepeaterIndex > 0
+                        ? setCurrentRepeaterIndex(currentRepeaterIndex - 1)
+                        : handleBackAction()
+                    }
+                  >
+                    ← Back
+                  </button>
+                </div>
+              )}
+            </div>
+          </>
         )}
         {showBlockContent &&
           sanityPostAnswers.map((post, index) => (
