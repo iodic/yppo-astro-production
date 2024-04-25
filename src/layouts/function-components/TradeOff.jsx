@@ -4,9 +4,9 @@ import portableTextComponents from "../portable-text-components";
 
 const TradeOff = ({ content, type }) => {
   const consClasses =
-    "card-cons rounded-l bg-white mb-6 px-6 pb-6 shadow-lg border-left border-l-4 border-l-[#8ebc0c]";
+    "card-cons rounded-l bg-white mb-6 px-6 pb-6 shadow-lg border-left border-l-4 border-l-[#f3873c]";
   const prosClasses =
-    "card-pros rounded-l bg-white mb-6 px-6 pb-6 shadow-lg border-left border-l-4 border-l-[#f3873c]";
+    "card-pros rounded-l bg-white mb-6 px-6 pb-6 shadow-lg border-left border-l-4 border-l-[#8ebc0c]";
 
   return (
     <div className={type === "CONS" ? consClasses : prosClasses}>
