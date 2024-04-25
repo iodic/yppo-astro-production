@@ -1,5 +1,6 @@
 import React from "react";
-import { PortableText } from '@portabletext/react'
+import { PortableText } from "@portabletext/react";
+import portableTextComponents from "../portable-text-components";
 
 const TradeOff = ({ content, type }) => {
   const consClasses =
@@ -12,7 +13,7 @@ const TradeOff = ({ content, type }) => {
       <p className="pt-4 pl-2 uppercase text-xl font-semibold text-black">
         {type}
       </p>
-      <PortableText value={content} />
+      <PortableText value={content} components={portableTextComponents} />
     </div>
   );
 };
