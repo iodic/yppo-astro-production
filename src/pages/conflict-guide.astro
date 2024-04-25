@@ -2,12 +2,6 @@
 import Base from "@/layouts/Base.astro";
 import SigninSlider from "@/layouts/function-components/SigninSlider.jsx";
 import SanityConflictInitial from "@/layouts/function-components/SanityConflictInitial.jsx";
-
-import { sanityClient } from "sanity:client";
-
-const initialPosts = await sanityClient.fetch(
-  `*[_type == 'conflictType' && initialQuestion == true]`
-);
 ---
 
 <Base>
@@ -41,14 +35,14 @@ const initialPosts = await sanityClient.fetch(
               >
             </div>
 
-            <SanityConflictInitial client:load initialPosts={initialPosts} />
+            <SanityConflictInitial client:load />
           </div>
         </div>
 
         <script is:inline>
           $(".form-0").slideDown(300);
 
-          const latestStorage = localStorage.getItem("latestConflictType");
+          const latestStorage = localStorage.getItem('latestConflictType');
           if (latestStorage) {
             $(".form-0").hide();
           }
