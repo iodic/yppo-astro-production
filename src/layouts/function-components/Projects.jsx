@@ -1,7 +1,41 @@
+import { useEffect, useState } from "react";
+import { sanityClient } from "sanity:client";
+
 const Projects = ({ projects } = {}) => {
   if (!Array.isArray(projects)) {
     return null;
   }
+
+  const [selectedConflictType, setSelectedConflictType] = useState();
+  const [conflictChoices, setConflictChoices] = useState([]);
+
+  useEffect(() => {
+    if (selectedConflictType) {
+      const fetchPosts = async () => {
+        const posts = await sanityClient.fetch(
+          `*[_type == 'conflictType' && slug.current == '${selectedConflictType}'] | order(_createdAt desc)[0]`,
+        );
+
+        if (posts?.answers?.length) {
+          const newConflictChoices = [];
+
+          for (let answer of posts.answers) {
+            const loadedAnswer = await sanityClient.fetch(
+              `*[_type == 'conflictType' && _id == '${answer._ref}'][0]`,
+            );
+
+            newConflictChoices.push(loadedAnswer);
+          }
+
+          setConflictChoices(newConflictChoices);
+        }
+      };
+
+      fetchPosts();
+    }
+  }, [selectedConflictType]);
+
+  const handleConflictSelect = () => {};
 
   return (
     <div className="col-12">
@@ -37,13 +71,33 @@ const Projects = ({ projects } = {}) => {
                   <ol className="subitems list-decimal list-outside pl-5 mb-3">
                     {project.conflictType &&
                       project.conflictType.map((conflict) => (
-                        <li className="hover:text-[#f3873c]">
+                        <li>
                           <a
-                            className="toggle"
-                            href={`wiki/${conflict.slug.current}`}
+                            className="toggle cursor-pointer hover:text-[#f3873c]"
+                            onClick={() => {
+                              setConflictChoices([]);
+                              setSelectedConflictType(conflict.slug.current);
+                            }}
                           >
                             {conflict.title}
                           </a>
+                          {Boolean(
+                            conflict.slug.current === selectedConflictType &&
+                              conflictChoices.length,
+                          ) && (
+                            <ol className="subitems list-decimal list-inside">
+                              {conflictChoices.map(({ title, slug }) => (
+                                <li>
+                                  <a
+                                    className="toggle cursor-pointer hover:text-[#f3873c]"
+                                    href={`wiki/${slug.current}`}
+                                  >
+                                    {title}
+                                  </a>
+                                </li>
+                              ))}
+                            </ol>
+                          )}
                         </li>
                       ))}
                   </ol>
