@@ -76,7 +76,11 @@ const Projects = ({ projects } = {}) => {
                             className="toggle cursor-pointer hover:text-[#f3873c]"
                             onClick={() => {
                               setConflictChoices([]);
-                              setSelectedConflictType(conflict.slug.current);
+                              setSelectedConflictType(
+                                selectedConflictType === conflict.slug.current
+                                  ? undefined
+                                  : conflict.slug.current,
+                              );
                             }}
                           >
                             {conflict.title}
