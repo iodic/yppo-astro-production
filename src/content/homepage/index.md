@@ -3,7 +3,7 @@ banner:
   title: "Your Portable Personal Ombuds"
   content: "Helps you resolve conflicts at the workplace with confidence."
   image: /images/hero.png
-  video: "https://utfs.io/f/1409f6f7-0f30-43a8-a7e7-0cedf26d95e7-2pjfat.mp4"
+  video: "https://yppo.fra1.cdn.digitaloceanspaces.com/yppo-intro.mp4"
   videoposter: "/videos/intro-poster.jpg"
   button:
     label: Go to the Conflict Guide
