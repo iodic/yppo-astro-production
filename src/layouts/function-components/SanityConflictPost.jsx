@@ -207,8 +207,8 @@ const SanityConflictPost = ({ initialId }) => {
                 </div>
               )}
               {guideEnd ||
-              (isRepeaterContent &&
-                currentRepeaterIndex ===
+                (isRepeaterContent &&
+                  currentRepeaterIndex ===
                   sanityPost.contentRepeater.length - 1) ? (
                 <div className="form-navigation mt-10 mb-10 float-left w-full">
                   <button
@@ -234,7 +234,7 @@ const SanityConflictPost = ({ initialId }) => {
                     className={`go go-forward btn btn-primary block float-right w-40 ${hiddenContent}`}
                     onClick={() =>
                       isRepeaterContent &&
-                      currentRepeaterIndex <
+                        currentRepeaterIndex <
                         sanityPost.contentRepeater.length - 1
                         ? setCurrentRepeaterIndex(currentRepeaterIndex + 1)
                         : setShowBlockContent(true)
@@ -263,10 +263,10 @@ const SanityConflictPost = ({ initialId }) => {
               {articleType ? (
                 <div key={`nest_${post._id}`}>
                   <div
-                    className={`form-group reading-group flex w-full rounded ${selectedAnswer === post._id ? "card-highlight" : ""}`}
+                    className={`form-group reading-group flex items-start w-full rounded ${selectedAnswer === post._id ? "card-highlight" : ""}`}
                     key={`question_${post._id}`}
                   >
-                    <span className="top-1 relative w-7 h-7 border-2 border-circle-gray rounded-full text-center bg-white">
+                    <span className="lg:top-1 relative w-7 min-w-7 h-7 flex items-center justify-center border-2 border-circle-gray rounded-full text-center bg-white">
                       {index + 1}
                     </span>
                     <label className="ml-2 grow" htmlFor={post._id}>
@@ -285,7 +285,7 @@ const SanityConflictPost = ({ initialId }) => {
                         setSelectedAnswer(post._id);
                       }}
                     />
-                    <span className="font-semibold text-xl">&gt;</span>
+                    <span className="font-semibold text-xl leading-normal">&gt;</span>
                   </div>
                 </div>
               ) : (
