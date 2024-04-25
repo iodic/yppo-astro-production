@@ -1,15 +1,16 @@
 ---
-import { calculateReadTime } from "@/helper/helper.ts";
-import imageUrlBuilder from "@sanity/image-url";
-import { PortableText } from "@portabletext/react";
-import { sanityClient } from "sanity:client";
-import TradeOff from "@/layouts/function-components/TradeOff.jsx";
+import imageUrlBuilder from "@sanity/image-url"
+import { PortableText } from "@portabletext/react"
+import { sanityClient } from "sanity:client"
+import TradeOff from "@/layouts/function-components/TradeOff.jsx"
 
-const builder = imageUrlBuilder(sanityClient);
+const builder = imageUrlBuilder(sanityClient)
 
-import { FaRegClock, FaRegFolder } from "react-icons/fa";
+import { FaRegClock, FaRegFolder } from "react-icons/fa"
+import portableTextComponents from "./portable-text-components"
 
-const { post } = Astro.props;
+const { post } = Astro.props
+const isContentRepeater = post?.contentRepeater?.length
 ---
 
 <section class="section blog-single">
@@ -21,10 +22,6 @@ const { post } = Astro.props;
         </h1>
         <div class="mb-5 mt-6 flex items-center space-x-2">
           <ul class="mb-4">
-            <li class="mr-4 inline-block">
-              <FaRegClock className={"mr-2 -mt-1 inline-block"} />
-              {calculateReadTime(post.content)}
-            </li>
             {
               post.tags && (
                 <li class="mr-4 inline-block">
@@ -43,29 +40,32 @@ const { post } = Astro.props;
 
         <div class="content">
           {
-            post.videoUrl && (
-              <video
-                class="mb-6"
-                controls
-                playsinline
-                poster={builder.image(post.videoPoster).url()}
-              >
-                <source src={post.videoUrl} />
-              </video>
+            isContentRepeater ? (
+              post.contentRepeater.map(({ prosSection, consSection, blocks, videoUrl, videoPoster }: any, index: number) => (
+                <div class={index > 0 ? "mt-8" : ""}>
+                  {prosSection && <TradeOff content={prosSection} type="PROS" />}
+                  {consSection && <TradeOff content={consSection} type="CONS" />}
+                  <PortableText value={blocks} components={portableTextComponents as any} />
+                  {videoUrl && (
+                    <video class="mt-6" controls playsinline poster={builder.image(videoPoster).url()}>
+                      <source src={videoUrl} />
+                    </video>
+                  )}
+                </div>
+              ))
+            ) : (
+              <div>
+                {post.prosSection && <TradeOff content={post.prosSection} type="PROS" />}
+                {post.consSection && <TradeOff content={post.consSection} type="CONS" />}
+                {post && post.content && <PortableText value={post.content} />}
+                {post.videoUrl && (
+                  <video class="mb-6" controls playsinline poster={builder.image(post.videoPoster).url()}>
+                    <source src={post.videoUrl} />
+                  </video>
+                )}
+              </div>
             )
           }
-          {
-            post.prosSection && (
-              <TradeOff content={post.prosSection} type="PROS" />
-            )
-          }
-          {
-            post.consSection && (
-              <TradeOff content={post.consSection} type="CONS" />
-            )
-          }
-
-          {post && post.content && <PortableText value={post.content} />}
         </div>
       </div>
     </div>
