@@ -155,7 +155,12 @@ const SanityConflictPost = ({ initialId }) => {
   const isRepeaterContent = sanityPost.contentRepeater?.length;
   const hiddenClass = showBlockContent && !isRepeaterContent ? "" : "hidden";
   const hiddenContent = showBlockContent && !isRepeaterContent ? "hidden" : "";
-  let prosSection, consSection, blocks, videoUrl, videoPoster;
+  let prosSection,
+    consSection,
+    blocks,
+    videoUrl,
+    videoPoster,
+    videoTranscriptRepeater;
 
   if (sanityPost) {
     if (isRepeaterContent) {
@@ -167,12 +172,16 @@ const SanityConflictPost = ({ initialId }) => {
       videoUrl = sanityPost.contentRepeater[currentRepeaterIndex]?.videoUrl;
       videoPoster =
         sanityPost.contentRepeater[currentRepeaterIndex]?.videoPoster;
+      videoTranscriptRepeater =
+        sanityPost.contentRepeater[currentRepeaterIndex]
+          ?.videoTranscriptRepeater;
     } else {
       prosSection = sanityPost.prosSection;
       consSection = sanityPost.consSection;
       blocks = sanityPost.content;
       videoUrl = sanityPost.videoUrl;
       videoPoster = sanityPost.videoPoster;
+      videoTranscriptRepeater = sanityPost.videoTranscriptRepeater;
     }
   }
 
@@ -199,6 +208,7 @@ const SanityConflictPost = ({ initialId }) => {
                   <SanityVideoComponent
                     videoUrl={videoUrl}
                     videoPoster={builder.image(videoPoster).url()}
+                    videoTranscriptRepeater={videoTranscriptRepeater}
                   />
                 </div>
               )}
