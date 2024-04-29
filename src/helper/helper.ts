@@ -27,11 +27,11 @@ export async function checkStatus(status: string) {
   }
 
   if ('logged' === status) {
-
+    validation = await isLoggedIn();
   }
 
   if ('paid' === status) {
-
+    validation = await isPaid();
   }
 
   return validation;
