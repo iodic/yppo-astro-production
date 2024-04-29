@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { sanityClient } from "sanity:client";
 import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
+import { checkUser } from "@/helper/helper.ts";
 
 const SanityConflictInitial = () => {
   const [answer, setAnswer] = useState("");
@@ -26,6 +27,8 @@ const SanityConflictInitial = () => {
     if (latestStorage) {
       setSubmitFormAnswer(latestStorage);
     }
+
+    checkUser();
   }, []);
 
   const handleNextButtonClick = () => {
