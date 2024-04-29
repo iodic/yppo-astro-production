@@ -7,31 +7,48 @@ const Projects = ({ projects } = {}) => {
   }
 
   const [selectedConflictType, setSelectedConflictType] = useState();
-  const [conflictChoices, setConflictChoices] = useState([]);
+  const [conflictChoices, setConflictChoices] = useState({});
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const posts = await sanityClient.fetch(
+        `*[_type == 'conflictType'] | order(_createdAt desc)`,
+      );
+      const fetchedConflictChoices = {};
+
+      for (let post of posts) {
+        if (post?.answers?.length) {
+          const queries = post.answers.reduce(
+            (prev, curr, index) =>
+              `${prev}${prev.length ? "," : ""} "${index}": *[_type == 'conflictType' && _id == '${curr._ref}'][0]`,
+            "",
+          );
+
+          const loadedAnswers = await sanityClient.fetch(`{ ${queries} }`);
+
+          for (let answer of Object.values(loadedAnswers)) {
+            if (post?.slug?.current) {
+              if (
+                Array.isArray(fetchedConflictChoices[post.slug.current]) &&
+                fetchedConflictChoices[post.slug.current].length
+              ) {
+                fetchedConflictChoices[post.slug.current].push(answer);
+              } else {
+                fetchedConflictChoices[post.slug.current] = [answer];
+              }
+            }
+          }
+        }
+      }
+
+      setConflictChoices(fetchedConflictChoices);
+    };
+
+    fetchPosts();
+  }, []);
 
   useEffect(() => {
     if (selectedConflictType) {
-      const fetchPosts = async () => {
-        const posts = await sanityClient.fetch(
-          `*[_type == 'conflictType' && slug.current == '${selectedConflictType}'] | order(_createdAt desc)[0]`,
-        );
-
-        if (posts?.answers?.length) {
-          const newConflictChoices = [];
-
-          for (let answer of posts.answers) {
-            const loadedAnswer = await sanityClient.fetch(
-              `*[_type == 'conflictType' && _id == '${answer._ref}'][0]`,
-            );
-
-            newConflictChoices.push(loadedAnswer);
-          }
-
-          setConflictChoices(newConflictChoices);
-        }
-      };
-
-      fetchPosts();
     }
   }, [selectedConflictType]);
 
@@ -72,34 +89,49 @@ const Projects = ({ projects } = {}) => {
                     {project.conflictType &&
                       project.conflictType.map((conflict) => (
                         <li>
-                          <a
-                            className="toggle cursor-pointer hover:text-[#f3873c]"
-                            onClick={() => {
-                              setConflictChoices([]);
-                              setSelectedConflictType(
-                                selectedConflictType === conflict.slug.current
-                                  ? undefined
-                                  : conflict.slug.current,
-                              );
-                            }}
-                          >
-                            {conflict.title}
-                          </a>
+                          {Object.keys(conflictChoices).length &&
+                          !conflictChoices[conflict.slug.current]?.length ? (
+                            <a
+                              className="toggle cursor-pointer hover:text-[#f3873c]"
+                              href={`wiki/${conflict.slug.current}`}
+                            >
+                              {conflict.title}
+                            </a>
+                          ) : (
+                            <a
+                              className="toggle cursor-pointer hover:text-[#f3873c]"
+                              onClick={() => {
+                                setSelectedConflictType(
+                                  selectedConflictType === conflict.slug.current
+                                    ? undefined
+                                    : conflict.slug.current,
+                                );
+                              }}
+                            >
+                              {conflict.title}
+                            </a>
+                          )}
+
                           {Boolean(
                             conflict.slug.current === selectedConflictType &&
-                              conflictChoices.length,
+                              Object.keys(conflictChoices).length,
                           ) && (
                             <ol className="subitems list-decimal list-inside">
-                              {conflictChoices.map(({ title, slug }) => (
-                                <li>
-                                  <a
-                                    className="toggle cursor-pointer hover:text-[#f3873c]"
-                                    href={`wiki/${slug.current}`}
-                                  >
-                                    {title}
-                                  </a>
-                                </li>
-                              ))}
+                              {Boolean(
+                                conflictChoices[selectedConflictType]?.length,
+                              ) &&
+                                conflictChoices[selectedConflictType].map(
+                                  ({ title, slug }) => (
+                                    <li>
+                                      <a
+                                        className="toggle cursor-pointer hover:text-[#f3873c]"
+                                        href={`wiki/${slug.current}`}
+                                      >
+                                        {title}
+                                      </a>
+                                    </li>
+                                  ),
+                                )}
                             </ol>
                           )}
                         </li>

@@ -3,6 +3,7 @@ import imageUrlBuilder from "@sanity/image-url"
 import { PortableText } from "@portabletext/react"
 import { sanityClient } from "sanity:client"
 import TradeOff from "@/layouts/function-components/TradeOff.jsx"
+import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx"
 
 const builder = imageUrlBuilder(sanityClient)
 
@@ -41,15 +42,18 @@ const isContentRepeater = post?.contentRepeater?.length
         <div class="content">
           {
             isContentRepeater ? (
-              post.contentRepeater.map(({ prosSection, consSection, blocks, videoUrl, videoPoster }: any, index: number) => (
+              post.contentRepeater.map(({ prosSection, consSection, blocks, videoUrl, videoPoster, videoTranscriptRepeater }: any, index: number) => (
                 <div class={index > 0 ? "mt-8" : ""}>
                   {prosSection && <TradeOff content={prosSection} type="PROS" />}
                   {consSection && <TradeOff content={consSection} type="CONS" />}
                   <PortableText value={blocks} components={portableTextComponents as any} />
-                  {videoUrl && (
-                    <video class="mt-6" controls playsinline poster={builder.image(videoPoster).url()}>
-                      <source src={videoUrl} />
-                    </video>
+                  {videoUrl && videoPoster && (
+                    <SanityVideoComponent
+                      videoUrl={videoUrl}
+                      videoPoster={builder.image(videoPoster).url()}
+                      videoTranscriptRepeater={videoTranscriptRepeater}
+                      client:load
+                    />
                   )}
                 </div>
               ))
@@ -58,10 +62,13 @@ const isContentRepeater = post?.contentRepeater?.length
                 {post.prosSection && <TradeOff content={post.prosSection} type="PROS" />}
                 {post.consSection && <TradeOff content={post.consSection} type="CONS" />}
                 {post && post.content && <PortableText value={post.content} />}
-                {post.videoUrl && (
-                  <video class="mb-6" controls playsinline poster={builder.image(post.videoPoster).url()}>
-                    <source src={post.videoUrl} />
-                  </video>
+                {post.videoUrl && post.videoPoster && (
+                  <SanityVideoComponent
+                    videoUrl={post.videoUrl}
+                    videoPoster={builder.image(post.videoPoster).url()}
+                    videoTranscriptRepeater={post.videoTranscriptRepeater}
+                    client:load
+                  />
                 )}
               </div>
             )

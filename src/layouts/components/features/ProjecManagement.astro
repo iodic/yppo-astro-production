@@ -6,7 +6,45 @@ const { features } = Astro.props;
 ---
 
 <section class="section features pb-0">
-  <div class="container">
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch("https://yppousers.websitetotal.com/auth/logged_in")
+        .then((response) => response.json())
+        .then((data) => {
+          if ("paid" == data.plan) {
+            const hiddenPaywall = document.getElementById("hidden-paywall");
+            if (hiddenPaywall) {
+              hiddenPaywall.classList.remove("hidden");
+            }
+          } else {
+            const hiddenContent = document.getElementById("hidden-content");
+            if (hiddenContent) {
+              hiddenContent.classList.remove("hidden");
+            }
+          }
+        })
+        .catch((error) =>
+          console.error("Error checking login status:", error)
+        );
+    });
+  </script>
+
+  <div class="container hidden lg:gx-5 row items-center" id="hidden-paywall">
+    <div class="lg:col-7 lg:order-1">
+      <div class="relative">
+        <img class="w-full object-contain" alt="service" width="473" height="286" src="/images/mascots/conflict-guide.png" />
+      </div>
+    </div>
+    <div class="mt-6 lg:col-5 lg:mt-0 lg:order-0">
+      <div class="text-container">
+        <h2 id="paywall-info" class="lg:text-4xl mb-4">Looks like your account needs an upgrade</h2>
+          <p class="mb-4">Please access your account to upgrade in order to view our courses.</p>
+          <a class="btn btn-outline-header mt-8" href="https://yppousers.websitetotal.com/users/sign_in" title="Let's go!">Let's go!</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container hidden" id="hidden-content">
     <div class="row">
       <div class="mx-auto text-center lg:col-7">
         <h2
