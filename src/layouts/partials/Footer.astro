@@ -1,10 +1,12 @@
 ---
+import LanguageSwitcher from "@/components/LanguageSwitcher.astro";
 import Logo from "@/components/Logo.astro";
 import Social from "@/components/Social.astro";
 import config from "@/config/config.json";
 import menu from "@/config/menu.json";
 import social from "@/config/social.json";
 import { markdownify } from "@/lib/utils/textConverter";
+
 const { footer } = menu;
 const { copyright, location, email, phone, footer_description } = config.params;
 ---
@@ -17,12 +19,16 @@ const { copyright, location, email, phone, footer_description } = config.params;
         <p class="mt-6">
           {footer_description}
         </p>
+
+        <LanguageSwitcher />
       </div>
+
       <div class="col-12 mt-12 md:col-6 lg:col-3">
         <h6>Socials</h6>
 
         <Social source={social} className="social-icons mt-4 lg:mt-6" />
       </div>
+
       <div class="col-12 mt-12 md:col-6 lg:col-3">
         <h6>Quick Links</h6>
         <ul>

@@ -1,0 +1,23 @@
+---
+import { i18nConfig } from "@/i18n/i18nConfig";
+
+const { localeNames, defaultLocale } = i18nConfig;
+
+const currentLanguage  = Astro.currentLocale;
+const currentPath = Astro.url.pathname;
+let targetPath;
+
+if (currentLanguage !== defaultLocale) {
+  targetPath = currentPath.substring(3);
+} else {
+  targetPath = currentPath;
+}
+---
+
+<ul class="flex space-x-2">
+  {Object.entries(localeNames).map(([lang, label]) => (
+    <li class=`${currentLanguage === lang ? "text-orange-500 pointer-events-none" : ""}`>
+      <a href={`${lang === defaultLocale ? targetPath : `/${lang}${targetPath}` }`}>{label}</a>
+    </li>
+  ))}
+</ul>
