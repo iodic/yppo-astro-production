@@ -28,6 +28,7 @@ if (theme.fonts.font_family.secondary) {
 // types for frontmatters
 export interface Props {
   title?: string;
+  lang?: string;
   meta_title?: string;
   description?: string;
   image?: string;
@@ -36,7 +37,7 @@ export interface Props {
 }
 
 // distructure frontmatters
-const { title, meta_title, description, image, noindex, canonical } =
+const { title, lang, meta_title, description, image, noindex, canonical } =
   Astro.props;
 
 // Prepare body element class to identify pages
@@ -46,7 +47,7 @@ classslug = classslug ? `downstream ${classslug}` : 'home';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <!-- favicon -->
     <link rel="shortcut icon" href={config.site.favicon} />
