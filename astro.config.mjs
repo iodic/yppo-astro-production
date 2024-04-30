@@ -42,7 +42,11 @@ export default defineConfig({
       ],
     }),
     mdx(),
-    sanity({ projectId: config.sanity.project_id, dataset: config.sanity.dataset, useCdn: false }),
+    sanity({
+      projectId: config.sanity.project_id,
+      dataset: config.sanity.dataset,
+      useCdn: false,
+    }),
   ],
   markdown: {
     remarkPlugins: [
@@ -59,5 +63,9 @@ export default defineConfig({
       wrap: true,
     },
     extendDefaultPlugins: true,
+  },
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "es"],
   },
 });
