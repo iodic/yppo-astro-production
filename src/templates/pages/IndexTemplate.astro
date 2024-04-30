@@ -8,8 +8,10 @@ import Cta from "@/layouts/partials/Cta.astro";
 import { getEntryBySlug } from "astro:content";
 import { ViewTransitions } from 'astro:transitions';
 
+const { lang } = Astro.props;
+
 const homepage = await getEntryBySlug("homepage", "index");
-const { banner, key_features, service, testimonial } = homepage.data; // TO DO: Fetch data from Sanity
+const { banner, key_features, service, testimonial } = homepage.data; // TODO: Fetch data from Sanity
 ---
 
 <>
