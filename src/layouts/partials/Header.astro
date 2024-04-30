@@ -1,6 +1,7 @@
 ---
 import Logo from "@/components/Logo.astro";
 import menu from "@/config/menu.json";
+import { i18nConfig } from "@/i18n/i18nConfig";
 
 export interface ChildNavigationLink {
   name: string;
@@ -16,6 +17,10 @@ export interface NavigationLink {
 
 const { main }: { main: NavigationLink[] } = menu;
 const { pathname } = Astro.url;
+
+const currentLanguage  = Astro.currentLocale;
+const { defaultLocale } = i18nConfig;
+const languagePrefix = currentLanguage === defaultLocale ? false : true
 ---
 
 <header class="header">
@@ -23,7 +28,7 @@ const { pathname } = Astro.url;
     <!-- logo -->
     <div class="order-0">
       <div class="order-0">
-        <a href="/" class="navbar-brand block">
+        <a href={languagePrefix ? `/${currentLanguage}` : "/"} class="navbar-brand block">
           <picture class="header-logo">
             <source srcset="/images/logo.svg" media="(min-width: 1024px)">
             <source srcset="/images/logo-small.svg">
@@ -92,7 +97,7 @@ const { pathname } = Astro.url;
                   {menu.children?.map((child) => (
                     <li class="nav-dropdown-item">
                       <a
-                        href={child.url}
+                        href={languagePrefix ? `/${currentLanguage}${child.url}` : child.url}
                         class={`nav-dropdown-link block ${
                           (pathname === `${child.url}/` ||
                             pathname === child.url) &&
@@ -108,7 +113,7 @@ const { pathname } = Astro.url;
             ) : (
               <li class="nav-item">
                 <a
-                  href={menu.url}
+                  href={languagePrefix ? `/${currentLanguage}${menu.url}` : menu.url}
                   class={`nav-link inline-block lg:block ${
                     (pathname === `${menu.url}/` || pathname === menu.url) &&
                     "active"
