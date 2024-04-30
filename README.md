@@ -35,3 +35,10 @@ After finishing all the customization, you can create a production build by runn
 ```
 npm run build
 ```
+
+## 🗒 Notes
+
+1. <strong>Locale Addition</strong></br>
+   Remember to update both astro.config.mjs and /src/i18n/i18nConfig.ts locales
+
+Happy Coding!
