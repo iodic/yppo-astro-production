@@ -9,7 +9,7 @@ export default function handler(req:any, res:any) {
 
   const message = {
     From: "marko@stuntcoders.com",
-    To: "nikola@stuntcoders.com",
+    To: "mr@stuntcoders.com",
     Subject: "New Contact Form Submission",
     TextBody: `
       Name: ${body.name}
