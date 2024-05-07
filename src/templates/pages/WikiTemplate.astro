@@ -2,11 +2,21 @@
 import { sanityClient } from "sanity:client";
 
 import Shape from "@/components/Shape.astro";
-import FeatureBanner from "@/components/features/FeatureBanner.astro";
+import FeatureBannerSanity from "@/components/features/FeatureBannerSanity.astro"
 import ProjecManagement from "@/components/features/ProjecManagement.astro";
 import Cta from "@/layouts/partials/Cta.astro";
 
 const { lang } = Astro.props;
+
+const wikiPageData = await sanityClient.fetch(
+  `*[_type == 'wikiPage' && language == '${lang}'] {
+      title,
+      heroSection,
+      ctaBanner
+  }`
+);
+
+const { title, heroSection, ctaBanner } = wikiPageData[0] || {}
 
 const posts = await sanityClient.fetch(
   `*[_type == 'wiki' && language == '${lang}'] | order(orderRank){
@@ -17,26 +27,11 @@ const posts = await sanityClient.fetch(
       },
   }`
 );
-
-const featureBannerData = {
-  title: "Wiki",
-  banner: {
-    title: "Conflict Wiki",
-    content:
-      "Browse our conflict management library, a comprehensive resource for conflict resolution strategies and techniques.",
-    image: "/images/hero.png",
-    button: {
-      label: "Go to the Conflict Guide",
-      link: "/conflict-guide",
-      enable: false,
-    },
-  },
-};
 ---
 
 <>
   <Shape />
-  <FeatureBanner features={featureBannerData} />
+  <FeatureBannerSanity title={title} heroSection={heroSection}  />
   <ProjecManagement features={posts} />
   <Cta />
 </>
