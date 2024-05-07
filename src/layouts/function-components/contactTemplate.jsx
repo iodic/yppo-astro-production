@@ -30,7 +30,7 @@ const ContactPageComponent = () => {
       },
     );
     const responseData = await response.text();
-    setResponseMessage(responseData.message);
+    setResponseMessage(responseData);
 
     setFormData({
       name: "",
