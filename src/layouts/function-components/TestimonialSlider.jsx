@@ -44,7 +44,8 @@ const TestimonialSlider = ({ list }) => {
             <SwiperSlide key={"feature-" + i}>
               <div className="review">
                 <div className="review-author-avatar">
-                  <img src={image} alt="" />
+                  {/* TODO: Get image from Sanity */}
+                  <img src="../../../public//images/umino.png" alt="" />
                 </div>
                 <h4 className="mb-2">{title}</h4>
                 <p className="mb-4 text-[#666]">{subtitle}</p>
