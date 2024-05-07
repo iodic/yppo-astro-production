@@ -4,7 +4,7 @@ import { sanityClient } from "sanity:client";
 import Shape from "@/components/Shape.astro";
 import FeatureBannerSanity from "@/components/features/FeatureBannerSanity.astro"
 import ProjecManagement from "@/components/features/ProjecManagement.astro";
-import Cta from "@/layouts/partials/Cta.astro";
+import CtaSanity from "@/partials/CtaSanity.astro";
 
 const { lang } = Astro.props;
 
@@ -33,5 +33,5 @@ const posts = await sanityClient.fetch(
   <Shape />
   <FeatureBannerSanity title={title} heroSection={heroSection}  />
   <ProjecManagement features={posts} />
-  <Cta />
+  <CtaSanity ctaBanner={ctaBanner} />
 </>
