@@ -192,6 +192,7 @@ const SanityConflictPost = ({ initialId }) => {
         key={`sanityPost_${sanityPost._id}`}
       >
         <h2 className="mb-8 font-normal">{sanityPost.title}</h2>
+        {sanityPost.status}
         {sanityPost && (
           <>
             <div className={`${hiddenContent}`}>
