@@ -1,6 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
-import ContactTemplate from "@/templates/pages/ContactTemplate.astro";
+import ContactPage from "@/templates/pages/ContactTemplate.astro";
 
 import { getEntryBySlug } from "astro:content";
 
@@ -17,5 +17,5 @@ const currentLanguage  = Astro.currentLocale;
   image={contact.image}
   lang={currentLanguage}
 >
- <ContactTemplate lang={currentLanguage} />
+ <ContactPage lang={currentLanguage} />
 </Base>

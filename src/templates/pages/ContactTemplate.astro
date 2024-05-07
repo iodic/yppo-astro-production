@@ -1,6 +1,7 @@
 ---
 import PageHeader from "@/components/PageHeader.astro";
 import config from "@/config/config.json";
+import ContactPageComponent from "@/layouts/function-components/contactTemplate";
 
 import { getEntryBySlug } from "astro:content";
 
@@ -24,65 +25,5 @@ const { lang } = Astro.props;
       <PageHeader page_data={page_data} />
     </div>
   </section>
-
-  <section class="section pt-0">
-    <div class="container">
-      <div class="row">
-        <div class="md:col-6 mx-auto">
-          <form
-            action={contact_form_action}
-            method="POST"
-          >
-            <div class="form-group mb-5">
-              <label class="form-label" for="name">Full Name</label>
-              <input
-                class="form-control"
-                type="text"
-                id="name"
-                placeholder="Your Full Name"
-                required
-              />
-            </div>
-
-            <div class="form-group mb-5">
-              <label class="form-label" for="eamil">Email Address</label>
-              <input
-                class="form-control"
-                type="text"
-                id="email"
-                placeholder="Your  Email Address"
-                required
-              />
-            </div>
-
-            <div class="form-group mb-5">
-              <label class="form-label" for="reason">Type of inquiry</label>
-              <select name="reason" id="reason" class="form-select" required>
-                <option value="">Please select</option>
-                <option value="cr">Conflict resolution</option>
-                <option value="m">Mediation</option>
-                <option value="gi">General inquiry</option>
-              </select>
-            </div>
-
-            <div class="form-group mb-5">
-              <label class="form-label" for="message">Message</label>
-              <textarea
-                class="form-control h-[150px]"
-                id="message"
-                cols="30"
-                rows="10"
-                required></textarea>
-            </div>
-
-            <input
-              class="btn btn-primary block w-full"
-              type="submit"
-              value="Send Message"
-            />
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
+  <ContactPageComponent client:load />
 </>
