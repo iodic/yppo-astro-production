@@ -59,7 +59,7 @@ const Projects = ({ projects } = {}) => {
       <div className="row">
         {projects &&
           projects.map((project, index) => (
-            <div className="col-12">
+            <div className="col-12" key={index}>
               <div className="flex items-center space-x-6 rounded-lg bg-[#fafafa] px-6 py-8 mt-6">
                 <div className="relative inline-flex h-24 w-24 items-center justify-center p-3">
                   <span className="project-icon text-2xl font-semibold text-[#FA7398]">
@@ -85,10 +85,10 @@ const Projects = ({ projects } = {}) => {
                 <div>
                   <h3 className="h5 font-primary">{project.title}</h3>
                   <p className="mt-4">{project.description}</p>
-                  <ol className="subitems list-decimal list-outside pl-5 mb-3">
+                  <ol className="subitems list-decimal list-outside pl-5 mb-3" key={`${index}_${project._id}`}>
                     {project.conflictType &&
                       project.conflictType.map((conflict) => (
-                        <li>
+                        <li key={conflict.slug.current}>
                           {Object.keys(conflictChoices).length &&
                           !conflictChoices[conflict.slug.current]?.length ? (
                             <a
@@ -122,7 +122,7 @@ const Projects = ({ projects } = {}) => {
                               ) &&
                                 conflictChoices[selectedConflictType].map(
                                   ({ title, slug }) => (
-                                    <li>
+                                    <li key={slug.current}>
                                       <a
                                         className="toggle cursor-pointer hover:text-[#f3873c]"
                                         href={`wiki/${slug.current}`}
