@@ -1,9 +1,9 @@
 ---
-import { markdownify } from "@/lib/utils/textConverter";
 import { Image } from "astro:assets";
+
 import HomapageFeature from "@/layouts/function-components/HomapageFeature";
-const { key_features } = Astro.props;
-const { title, description, feature_list } = key_features;
+
+const { cardsData: { textCard: { title, description }, cards } } = Astro.props;
 ---
 
 <section class="section key-feature relative">
@@ -14,15 +14,17 @@ const { title, description, feature_list } = key_features;
     width={63}
     alt=""
   />
+
   <div class="container">
     <div class="row justify-between text-center lg:text-start">
       <div class="lg:col-5">
-        <h2 set:html={markdownify(title)} />
+        <h2>{title}</h2>
       </div>
       <div class="mt-6 lg:col-5 lg:mt-0">
-        <p set:html={markdownify(description)} />
+        <p>{description}</p>
       </div>
     </div>
-    <HomapageFeature feature_list={feature_list} client:load />
+
+    <HomapageFeature cards={cards} client:load />
   </div>
 </section>
