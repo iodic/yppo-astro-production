@@ -8,7 +8,7 @@ import Banner from "@/layouts/components/Banner.astro";
 import KeyFeatures from "@/layouts/components/KeyFeatures.astro";
 import Testimonial from "@/layouts/components/Testimonial.astro";
 import Service from "@/layouts/components/Service.astro";
-import Cta from "@/layouts/partials/Cta.astro";
+import CtaSanity from "@/partials/CtaSanity.astro";
 
 const { lang } = Astro.props;
 
@@ -41,5 +41,5 @@ const homepage = await getEntryBySlug("homepage", "index");
   <!-- testimonial -->
   <Testimonial testimonialsData={reviewsSection} />
   <!-- call to action -->
-  <Cta />
+  <CtaSanity ctaBanner={ctaBanner} />
 </>
