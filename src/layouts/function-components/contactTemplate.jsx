@@ -29,7 +29,7 @@ const ContactPageComponent = () => {
         body: JSON.stringify(formData),
       },
     );
-    const responseData = await response.json();
+    const responseData = await response.text();
     setResponseMessage(responseData.message);
 
     setFormData({
