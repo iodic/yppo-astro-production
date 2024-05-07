@@ -1,42 +1,41 @@
 ---
-import { markdownify } from "@/lib/utils/textConverter";
 import { Image } from "astro:assets";
 import Video from "@/layouts/shortcodes/Video.jsx"
-const { banner } = Astro.props;
-const { title, button, image, content, video, videoposter } = banner;
+
+const { banner: { textCard: { title, description }, videoCard: { videoUrl, videoPoster } } } = Astro.props;
 ---
 
 <section class="section banner relative">
   <div class="container">
     <div class="row items-center">
       <div class="lg:col-6">
-        <h1 class="banner-title" set:html={markdownify(title)} />
+        <h1 class="banner-title">{title}</h1>
 
-        <p class="mt-6" set:html={markdownify(content)} />
+        <p class="mt-6">{description}</p>
 
-        {
+        <!-- {
           button.enable && (
             <a class="btn btn-primary mt-8 mb-8 lg:mb-0" href={button.link}>
               {button.label}
             </a>
           )
-        }
+        } -->
       </div>
       <div class="lg:col-6">
         {
-        video ? (
+        videoUrl ? (
           <Video
             class="w-full object-contain mx-auto max-w-3xl w-[94%]"
-            src={video}
+            src={videoUrl}
             width="94%"
             height="auto"
-            poster={videoposter ? videoposter : undefined}
+            poster={videoPoster ? videoPoster : undefined}
           />
         ) : (
           <Image
             class="w-full object-contain"
             alt="banner"
-            src={image}
+            src={videoPoster}
             width={603}
             height={396}
           />
