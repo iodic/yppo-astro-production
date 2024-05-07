@@ -1,26 +1,45 @@
 ---
+import { sanityClient } from "sanity:client";
+
+import { getEntryBySlug } from "astro:content";
+import { ViewTransitions } from 'astro:transitions';
+
 import Banner from "@/layouts/components/Banner.astro";
 import KeyFeatures from "@/layouts/components/KeyFeatures.astro";
 import Testimonial from "@/layouts/components/Testimonial.astro";
 import Service from "@/layouts/components/Service.astro";
 import Cta from "@/layouts/partials/Cta.astro";
 
-import { getEntryBySlug } from "astro:content";
-import { ViewTransitions } from 'astro:transitions';
-
 const { lang } = Astro.props;
 
+const homepageData = await sanityClient.fetch(
+  `*[_type == 'homepage' && language == '${lang}'] {
+      title,
+      heroSection {
+        ...,
+        videoCard {
+          ...,
+          "videoPoster": videoPoster.asset->url
+        }
+      },
+      cardsSection,
+      reviewsSection,
+      ctaBanner
+  }`
+);
+
+const { title, heroSection, cardsSection, reviewsSection, ctaBanner } = homepageData[0] || {}
+
 const homepage = await getEntryBySlug("homepage", "index");
-const { banner, key_features, service, testimonial } = homepage.data; // TODO: Fetch data from Sanity
 ---
 
 <>
   <!-- banner -->
-  <Banner banner={banner} />
+  <Banner banner={heroSection} />
   <!-- key features -->
-  <KeyFeatures key_features={key_features} />
+  <KeyFeatures cardsData={cardsSection} />
   <!-- testimonial -->
-  <Testimonial testimonial={testimonial} />
+  <Testimonial testimonialsData={reviewsSection} />
   <!-- call to action -->
   <Cta />
 </>
