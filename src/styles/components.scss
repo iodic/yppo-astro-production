@@ -352,13 +352,13 @@ select:invalid {
   }
 }
 .review-rating {
-  &.five {
+  &.stars-5 {
     svg {
       @apply fill-secondary text-secondary;
     }
   }
 
-  &.four {
+  &.stars-4 {
     svg {
       &:not(:last-child) {
         @apply fill-secondary text-secondary;
@@ -369,7 +369,7 @@ select:invalid {
     }
   }
 
-  &.three {
+  &.stars-3 {
     svg {
       @apply fill-secondary text-secondary;
 
@@ -383,7 +383,7 @@ select:invalid {
     }
   }
 
-  &.two {
+  &.stars-2 {
     svg {
       &:first-child {
         @apply fill-secondary text-secondary;
@@ -395,7 +395,7 @@ select:invalid {
     }
   }
 
-  &.one {
+  &.stars-1 {
     svg {
       &:first-child {
         @apply fill-secondary text-secondary;
@@ -731,7 +731,6 @@ select:invalid {
 
 // Header logo
 .header-logo {
-
   &,
   img {
     width: 231px;
@@ -766,7 +765,7 @@ select:invalid {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: all 1.0s;
+  transition: all 1s;
   transform-style: preserve-3d;
 }
 
@@ -779,7 +778,7 @@ select:invalid {
   position: absolute;
   width: 100%;
   height: 100%;
-  transition: all 1.0s;
+  transition: all 1s;
   backface-visibility: hidden;
 }
 
