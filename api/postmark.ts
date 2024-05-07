@@ -1,8 +1,8 @@
 import * as postmark from "postmark";
 
-export async function POST(request: Request) {
+export default async function handler(req:any, res:any) {
   try {
-    const requestBody = await request.json();
+    const { body } = req;
 
     const client = new postmark.ServerClient(
       "20117eea-da45-43d0-a313-b55475dee001",
@@ -13,10 +13,10 @@ export async function POST(request: Request) {
       To: "nikola@stuntcoders.com",
       Subject: "New Contact Form Submission",
       TextBody: `
-        Name: ${requestBody.name}
-        Email: ${requestBody.email}
-        Reason: ${requestBody.reason}
-        Message: ${requestBody.message}
+        Name: ${body.name}
+        Email: ${body.email}
+        Reason: ${body.reason}
+        Message: ${body.message}
       `,
     };
 
