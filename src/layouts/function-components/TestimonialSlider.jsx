@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
-import { Star } from "react-feather";
+
 import SwiperCore from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+
+import { Star } from "react-feather";
 
 const TestimonialSlider = ({ list }) => {
   SwiperCore.use([Pagination]);
@@ -35,28 +37,33 @@ const TestimonialSlider = ({ list }) => {
           },
         }}
       >
-        {list.map((item, i) => (
-          <SwiperSlide key={"feature-" + i}>
-            <div className="review">
-              <div className="review-author-avatar">
-                <img src={item.avatar} alt="" />
+        {list.map((item, i) => {
+          const { title, subtitle, description, image, rating } = item;
+
+          return (
+            <SwiperSlide key={"feature-" + i}>
+              <div className="review">
+                <div className="review-author-avatar">
+                  <img src={image} alt="" />
+                </div>
+                <h4 className="mb-2">{title}</h4>
+                <p className="mb-4 text-[#666]">{subtitle}</p>
+                <p>{description}</p>
+                <div
+                  className={`review-rating mt-6 flex items-center justify-center space-x-2.5 stars-${rating}`}
+                >
+                  <Star />
+                  <Star />
+                  <Star />
+                  <Star />
+                  <Star />
+                </div>
               </div>
-              <h4 className="mb-2">{item.author}</h4>
-              <p className="mb-4 text-[#666]">{item.organization}</p>
-              <p>{item.content}</p>
-              <div
-                className={`review-rating mt-6 flex items-center justify-center space-x-2.5 ${item.rating}  `}
-              >
-                <Star />
-                <Star />
-                <Star />
-                <Star />
-                <Star />
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
+
       <div className="relative flex justify-center">
         <div
           width="100%"
