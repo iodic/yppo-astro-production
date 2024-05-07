@@ -7,6 +7,7 @@ const ContactPageComponent = () => {
     reason: "",
     message: "",
   });
+  const [responseMessage, setResponseMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,7 +20,7 @@ const ContactPageComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      "https://personal-ombudsman.vercel.app/api/postmark",
+      "/api/postmark",
       {
         method: "POST",
         headers: {
@@ -28,6 +29,8 @@ const ContactPageComponent = () => {
         body: JSON.stringify(formData),
       },
     );
+    const responseData = await response.json();
+    setResponseMessage(responseData.message);
 
     setFormData({
       name: "",
@@ -114,6 +117,9 @@ const ContactPageComponent = () => {
                 Send Message
               </button>
             </form>
+            {responseMessage && (
+              <div className="mt-4 text-green-600">{responseMessage}</div>
+            )}
           </div>
         </div>
       </div>
