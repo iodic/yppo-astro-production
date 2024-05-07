@@ -1,4 +1,4 @@
-import postmark from "postmark";
+import * as postmark from "postmark";
 
 export default function handler(req:any, res:any) {
   const { body } = req;
