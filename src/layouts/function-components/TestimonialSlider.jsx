@@ -43,22 +43,27 @@ const TestimonialSlider = ({ list }) => {
           return (
             <SwiperSlide key={"feature-" + i}>
               <div className="review">
-                <div className="review-author-avatar">
-                  {/* TODO: Get image from Sanity */}
-                  <img src="../../../public//images/umino.png" alt="" />
-                </div>
-                <h4 className="mb-2">{title}</h4>
-                <p className="mb-4 text-[#666]">{subtitle}</p>
-                <p>{description}</p>
-                <div
-                  className={`review-rating mt-6 flex items-center justify-center space-x-2.5 stars-${rating}`}
-                >
-                  <Star />
-                  <Star />
-                  <Star />
-                  <Star />
-                  <Star />
-                </div>
+                {image && (
+                  <div className="review-author-avatar">
+                    <img src={image} alt="" />
+                  </div>
+                )}
+
+                {title && <h4 className="mb-2">{title}</h4>}
+                {subtitle && <p className="mb-4 text-[#666]">{subtitle}</p>}
+                {description && <p>{description}</p>}
+
+                {rating && (
+                  <div
+                    className={`review-rating mt-6 flex items-center justify-center space-x-2.5 stars-${rating}`}
+                  >
+                    <Star />
+                    <Star />
+                    <Star />
+                    <Star />
+                    <Star />
+                  </div>
+                )}
               </div>
             </SwiperSlide>
           );
