@@ -47,6 +47,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/marked": "^5.0.2",
     "@types/react": "^18.2.77",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.34",
     "prettier": "^3.2.5",

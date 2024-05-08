@@ -7,6 +7,7 @@ import { defineConfig, squooshImageService } from "astro/config";
 import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 import config from "./src/config/config.json";
+import basicSsl from '@vitejs/plugin-basic-ssl'
 
 import sanity from "@sanity/astro";
 
@@ -17,6 +18,21 @@ export default defineConfig({
   trailingSlash: config.site.trailing_slash ? "always" : "never",
   image: {
     service: squooshImageService(),
+  },
+  vite: {
+    plugins: [
+      basicSsl({
+        /** name of certification */
+        name: 'yppo',
+        /** custom trust domains */
+        domains: ['localhost'],
+        /** custom certification directory */
+        certDir: './'
+      })
+    ],
+    server: {
+      https: true,
+    },
   },
   integrations: [
     react(),

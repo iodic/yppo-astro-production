@@ -24,3 +24,6 @@ package-lock.json
 
 # ignore .astro directory
 .astro
+
+# Local SSL certificate
+_cert.pem
