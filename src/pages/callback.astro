@@ -21,10 +21,33 @@
       const code = getQueryParam("code");
 
       if (code) {
-        setCookie("authorization_code", code, 30);
-      }
+        const postData = {
+          code: code,
+          client_id: "A0USaYg7dVEdtVPztz5TBThpbOwk9xCqXKx2p9g0zwo",
+          client_secret: "B05vhMaEQvDLaS01NySCvjVzhZU5PlgwYhraiIP1lgw",
+          grant_type: "authorization_code",
+          redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
+        };
 
-      window.location.href = "/";
+        fetch("https://yppousers.websitetotal.com/oauth/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const responseDataString = JSON.stringify(data);
+            setCookie("authorization_token", responseDataString, 30);
+            window.location.href = "/";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      } else {
+        console.error("No code found in URL query parameters");
+      }
     </script>
   </body>
 </html>
