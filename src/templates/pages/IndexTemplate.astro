@@ -1,13 +1,9 @@
 ---
 import { sanityClient } from "sanity:client";
 
-import { getEntryBySlug } from "astro:content";
-import { ViewTransitions } from 'astro:transitions';
-
 import Banner from "@/layouts/components/Banner.astro";
 import KeyFeatures from "@/layouts/components/KeyFeatures.astro";
 import Testimonial from "@/layouts/components/Testimonial.astro";
-import Service from "@/layouts/components/Service.astro";
 import CtaSanity from "@/partials/CtaSanity.astro";
 
 const { lang } = Astro.props;
@@ -29,8 +25,6 @@ const homepageData = await sanityClient.fetch(
 );
 
 const { title, heroSection, cardsSection, reviewsSection, ctaBanner } = homepageData[0] || {}
-
-const homepage = await getEntryBySlug("homepage", "index");
 ---
 
 <>
