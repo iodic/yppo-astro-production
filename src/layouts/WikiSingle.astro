@@ -1,81 +1,110 @@
 ---
-import imageUrlBuilder from "@sanity/image-url"
-import { PortableText } from "@portabletext/react"
-import { sanityClient } from "sanity:client"
-import TradeOff from "@/layouts/function-components/TradeOff.jsx"
-import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx"
+import imageUrlBuilder from "@sanity/image-url";
+import { PortableText } from "@portabletext/react";
+import { sanityClient } from "sanity:client";
+import TradeOff from "@/layouts/function-components/TradeOff.jsx";
+import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
+import LockedContent from "@/layouts/function-components/LockedContent.jsx";
 
-const builder = imageUrlBuilder(sanityClient)
+import { checkStatus } from "src/helper/helper.ts";
 
-import { FaRegClock, FaRegFolder } from "react-icons/fa"
-import portableTextComponents from "./portable-text-components"
+const builder = imageUrlBuilder(sanityClient);
 
-const { post } = Astro.props
-const isContentRepeater = post?.contentRepeater?.length
+import { FaRegClock, FaRegFolder } from "react-icons/fa";
+import portableTextComponents from "./portable-text-components";
+
+const { post } = Astro.props;
+const isContentRepeater = post?.contentRepeater?.length;
+const postStatus = await checkStatus(post?.status);
 ---
 
-<section class="section blog-single">
-  <div class="container">
-    <div class="row justify-center">
-      <div class="mt-10 max-w-[810px] lg:col-9">
-        <h1 class="h2">
-          {post.title}
-        </h1>
-        {post.status}
-        <div class="mb-5 mt-6 flex items-center space-x-2">
-          <ul class="mb-4">
-            {
-              post.tags && (
-                <li class="mr-4 inline-block">
-                  <FaRegFolder className={"mr-2 -mt-1 inline-block"} />
-                  {post.tags.map((tag: string, index: number) => (
-                    <>
-                      {tag}
-                      {index !== post.tags.length - 1 && ", "}
-                    </>
-                  ))}
-                </li>
-              )
-            }
-          </ul>
-        </div>
+{
+  postStatus ? (
+    <section class="section blog-single">
+      <div class="container">
+        <div class="row justify-center">
+          <div class="mt-10 max-w-[810px] lg:col-9">
+            <h1 class="h2">{post.title}</h1>
+            {post.status}
+            <div class="mb-5 mt-6 flex items-center space-x-2">
+              <ul class="mb-4">
+                {post.tags && (
+                  <li class="mr-4 inline-block">
+                    <FaRegFolder className={"mr-2 -mt-1 inline-block"} />
+                    {post.tags.map((tag: string, index: number) => (
+                      <>
+                        {tag}
+                        {index !== post.tags.length - 1 && ", "}
+                      </>
+                    ))}
+                  </li>
+                )}
+              </ul>
+            </div>
 
-        <div class="content">
-          {
-            isContentRepeater ? (
-              post.contentRepeater.map(({ prosSection, consSection, blocks, videoUrl, videoPoster, videoTranscriptRepeater }: any, index: number) => (
-                <div class={index > 0 ? "mt-8" : ""}>
-                  {prosSection && <TradeOff content={prosSection} type="PROS" />}
-                  {consSection && <TradeOff content={consSection} type="CONS" />}
-                  <PortableText value={blocks} components={portableTextComponents as any} />
-                  {videoUrl && videoPoster && (
+            <div class="content">
+              {isContentRepeater ? (
+                post.contentRepeater.map(
+                  (
+                    {
+                      prosSection,
+                      consSection,
+                      blocks,
+                      videoUrl,
+                      videoPoster,
+                      videoTranscriptRepeater,
+                    }: any,
+                    index: number
+                  ) => (
+                    <div class={index > 0 ? "mt-8" : ""}>
+                      {prosSection && (
+                        <TradeOff content={prosSection} type="PROS" />
+                      )}
+                      {consSection && (
+                        <TradeOff content={consSection} type="CONS" />
+                      )}
+                      <PortableText
+                        value={blocks}
+                        components={portableTextComponents as any}
+                      />
+                      {videoUrl && videoPoster && (
+                        <SanityVideoComponent
+                          videoUrl={videoUrl}
+                          videoPoster={builder.image(videoPoster).url()}
+                          videoTranscriptRepeater={videoTranscriptRepeater}
+                          client:load
+                        />
+                      )}
+                    </div>
+                  )
+                )
+              ) : (
+                <div>
+                  {post.prosSection && (
+                    <TradeOff content={post.prosSection} type="PROS" />
+                  )}
+                  {post.consSection && (
+                    <TradeOff content={post.consSection} type="CONS" />
+                  )}
+                  {post && post.content && (
+                    <PortableText value={post.content} />
+                  )}
+                  {post.videoUrl && post.videoPoster && (
                     <SanityVideoComponent
-                      videoUrl={videoUrl}
-                      videoPoster={builder.image(videoPoster).url()}
-                      videoTranscriptRepeater={videoTranscriptRepeater}
+                      videoUrl={post.videoUrl}
+                      videoPoster={builder.image(post.videoPoster).url()}
+                      videoTranscriptRepeater={post.videoTranscriptRepeater}
                       client:load
                     />
                   )}
                 </div>
-              ))
-            ) : (
-              <div>
-                {post.prosSection && <TradeOff content={post.prosSection} type="PROS" />}
-                {post.consSection && <TradeOff content={post.consSection} type="CONS" />}
-                {post && post.content && <PortableText value={post.content} />}
-                {post.videoUrl && post.videoPoster && (
-                  <SanityVideoComponent
-                    videoUrl={post.videoUrl}
-                    videoPoster={builder.image(post.videoPoster).url()}
-                    videoTranscriptRepeater={post.videoTranscriptRepeater}
-                    client:load
-                  />
-                )}
-              </div>
-            )
-          }
+              )}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
+  ) : (
+    <LockedContent client:load />
+  )
+}
