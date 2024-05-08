@@ -18,21 +18,11 @@ const wikiPageData = await sanityClient.fetch(
 );
 
 const { title, heroSection, ctaBanner, postsTitle } = wikiPageData[0] || {}
-
-const posts = await sanityClient.fetch(
-  `*[_type == 'wiki' && language == '${lang}'] | order(orderRank){
-      ...,
-      'conflictType': conflictType[]->{
-        slug,
-        title
-      },
-  }`
-);
 ---
 
 <>
   <Shape />
   <FeatureBannerSanity title={title} heroSection={heroSection}  />
-  <ProjecManagement features={posts} postsTitle={postsTitle} lang={lang} />
+  <ProjecManagement postsTitle={postsTitle} lang={lang} />
   <CtaSanity ctaBanner={ctaBanner} />
 </>
