@@ -41,6 +41,7 @@
             const responseDataString = JSON.stringify(data);
             console.log(data);
             setCookie("authorization_token", responseDataString, 30);
+            // window.location.href = "/";
           })
           .catch((error) => {
             console.error("Error:", error);
