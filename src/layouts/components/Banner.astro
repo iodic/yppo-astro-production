@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image } from "astro:assets"
 
 import Video from "@/layouts/shortcodes/Video.jsx"
 
@@ -20,41 +20,26 @@ const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
         <h1 class="banner-title">{title}</h1>
         <p class="mt-6">{description}</p>
 
-       {enableHeroButton &&
-          <a class="btn btn-primary mt-8 mb-8 lg:mb-0" href={heroButtonUrl}>
-            {heroButtonTitle}
-          </a>
+        {
+          enableHeroButton && (
+            <a class="btn btn-primary mt-8 mb-8 lg:mb-0" href={heroButtonUrl}>
+              {heroButtonTitle}
+            </a>
+          )
         }
       </div>
 
       <div class="lg:col-6">
         {
-        videoUrl ? (
-          <Video
-            class="w-full object-contain mx-auto max-w-3xl w-[94%]"
-            src={videoUrl}
-            width="94%"
-            height="auto"
-            poster={videoPoster ? videoPoster : undefined}
-          />
-        ) : (
-          <Image
-            class="w-full object-contain"
-            alt="banner"
-            src={videoPoster}
-            width={603}
-            height={396}
-          />
-        )}
+          videoUrl ? (
+            <Video class="object-contain mx-auto max-w-3xl w-[94%]" src={videoUrl} width="94%" height="auto" poster={videoPoster ? videoPoster : undefined} />
+          ) : (
+            <Image class="w-full object-contain" alt="banner" src={videoPoster} width={603} height={396} />
+          )
+        }
       </div>
     </div>
   </div>
 
-  <Image
-    class="banner-shape absolute -top-28 right-0 -z-[1] w-full max-w-[30%]"
-    alt="banner"
-    src="/images/banner-shape.png"
-    width={496}
-    height={466}
-  />
+  <Image class="banner-shape absolute -top-28 right-0 -z-[1] w-full max-w-[30%]" alt="banner" src="/images/banner-shape.png" width={496} height={466} />
 </section>
