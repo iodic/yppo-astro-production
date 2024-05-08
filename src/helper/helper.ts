@@ -18,3 +18,21 @@ export function calculateReadTime(content: any) {
     return "1 min";
   }
 }
+
+export async function checkStatus(status: string) {
+  let validation: boolean = false;
+
+  if ("free" === status) {
+    validation = true;
+  }
+
+  if ("logged" === status) {
+    validation = false;
+  }
+
+  if ("paid" === status) {
+    validation = false;
+  }
+
+  return validation;
+}
