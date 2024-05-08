@@ -12,11 +12,12 @@ const wikiPageData = await sanityClient.fetch(
   `*[_type == 'wikiPage' && language == '${lang}'] {
       title,
       heroSection,
+      postsTitle,
       ctaBanner
   }`
 );
 
-const { title, heroSection, ctaBanner } = wikiPageData[0] || {}
+const { title, heroSection, ctaBanner, postsTitle } = wikiPageData[0] || {}
 
 const posts = await sanityClient.fetch(
   `*[_type == 'wiki' && language == '${lang}'] | order(orderRank){
@@ -32,6 +33,6 @@ const posts = await sanityClient.fetch(
 <>
   <Shape />
   <FeatureBannerSanity title={title} heroSection={heroSection}  />
-  <ProjecManagement features={posts} />
+  <ProjecManagement features={posts} postsTitle={postsTitle} />
   <CtaSanity ctaBanner={ctaBanner} />
 </>

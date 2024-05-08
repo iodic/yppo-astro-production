@@ -1,8 +1,7 @@
 ---
 import Projects from "@/layouts/function-components/Projects";
-import { markdownify } from "@/lib/utils/textConverter";
 
-const { features } = Astro.props;
+const { features, postsTitle } = Astro.props;
 ---
 
 <section class="section features pb-0">
@@ -47,11 +46,7 @@ const { features } = Astro.props;
   <div class="container hidden" id="hidden-content">
     <div class="row">
       <div class="mx-auto text-center lg:col-7">
-        <h2
-          set:html={markdownify(
-            "Get familiar with <br /> the topics in our library"
-          )}
-        />
+        <h2>{postsTitle}</h2>
       </div>
     </div>
     <div
