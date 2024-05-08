@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
 import { sanityClient } from "sanity:client";
 
-const Projects = ({ projects } = {}) => {
-  if (!Array.isArray(projects)) {
-    return null;
-  }
-
+const Projects = ({ lang } = {}) => {
   const [selectedConflictType, setSelectedConflictType] = useState();
+  const [projects, setProjects] = useState([]);
   const [conflictChoices, setConflictChoices] = useState({});
 
   useEffect(() => {
     const fetchPosts = async () => {
+      const projectsData = await sanityClient.fetch(
+        `*[_type == 'wiki' && language == '${lang}'] | order(orderRank){
+            ...,
+            'conflictType': conflictType[]->{
+              slug,
+              title
+            },
+        }`,
+      );
+
+      setProjects(projectsData);
+
       const posts = await sanityClient.fetch(
         `*[_type == 'conflictType'] | order(_createdAt desc)`,
       );
@@ -85,7 +94,10 @@ const Projects = ({ projects } = {}) => {
                 <div>
                   <h3 className="h5 font-primary">{project.title}</h3>
                   <p className="mt-4">{project.description}</p>
-                  <ol className="subitems list-decimal list-outside pl-5 mb-3" key={`${index}_${project._id}`}>
+                  <ol
+                    className="subitems list-decimal list-outside pl-5 mb-3"
+                    key={`${index}_${project._id}`}
+                  >
                     {project.conflictType &&
                       project.conflictType.map((conflict) => (
                         <li key={conflict.slug.current}>
