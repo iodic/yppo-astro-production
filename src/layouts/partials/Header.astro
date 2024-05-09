@@ -1,7 +1,7 @@
 ---
-import Logo from "@/components/Logo.astro";
 import menu from "@/config/menu.json";
 import { i18nConfig } from "@/i18n/i18nConfig";
+import { getClientId, getRedirectUri, getBaseUri } from "@/helper/auth";
 
 export interface ChildNavigationLink {
   name: string;
@@ -18,21 +18,40 @@ export interface NavigationLink {
 const { main }: { main: NavigationLink[] } = menu;
 const { pathname } = Astro.url;
 
-const currentLanguage  = Astro.currentLocale;
+const currentLanguage = Astro.currentLocale;
 const { defaultLocale } = i18nConfig;
-const languagePrefix = currentLanguage === defaultLocale ? false : true
+const languagePrefix = currentLanguage === defaultLocale ? false : true;
+
+const clientId = getClientId();
+const redirectUri = getRedirectUri();
+const baseUri = getBaseUri();
 ---
+
+<input type="hidden" id="clientId" value={clientId} />
+<input type="hidden" id="redirectUri" value={redirectUri} />
+<input type="hidden" id="baseUri" value={baseUri} />
 
 <header class="header">
   <nav class="navbar container">
     <!-- logo -->
     <div class="order-0">
       <div class="order-0">
-        <a href={languagePrefix ? `/${currentLanguage}` : "/"} class="navbar-brand block">
+        <a
+          href={languagePrefix ? `/${currentLanguage}` : "/"}
+          class="navbar-brand block"
+        >
           <picture class="header-logo">
-            <source srcset="/images/logo.svg" media="(min-width: 1024px)">
-            <source srcset="/images/logo-small.svg">
-            <img src="/images/logo.svg" data-image-component="true" alt="yppo" width="462" height="148" loading="eager" decoding="async">
+            <source srcset="/images/logo.svg" media="(min-width: 1024px)" />
+            <source srcset="/images/logo-small.svg" />
+            <img
+              src="/images/logo.svg"
+              data-image-component="true"
+              alt="yppo"
+              width="462"
+              height="148"
+              loading="eager"
+              decoding="async"
+            />
           </picture>
         </a>
       </div>
@@ -97,7 +116,11 @@ const languagePrefix = currentLanguage === defaultLocale ? false : true
                   {menu.children?.map((child) => (
                     <li class="nav-dropdown-item">
                       <a
-                        href={languagePrefix ? `/${currentLanguage}${child.url}` : child.url}
+                        href={
+                          languagePrefix
+                            ? `/${currentLanguage}${child.url}`
+                            : child.url
+                        }
                         class={`nav-dropdown-link block ${
                           (pathname === `${child.url}/` ||
                             pathname === child.url) &&
@@ -113,7 +136,9 @@ const languagePrefix = currentLanguage === defaultLocale ? false : true
             ) : (
               <li class="nav-item">
                 <a
-                  href={languagePrefix ? `/${currentLanguage}${menu.url}` : menu.url}
+                  href={
+                    languagePrefix ? `/${currentLanguage}${menu.url}` : menu.url
+                  }
                   class={`nav-link inline-block lg:block ${
                     (pathname === `${menu.url}/` || pathname === menu.url) &&
                     "active"
@@ -127,24 +152,24 @@ const languagePrefix = currentLanguage === defaultLocale ? false : true
         ))
       }
       <li class="nav-item mt-2 lg:hidden">
-        <a class="btn btn-primary btn-sm border-border" href="/get-started">Get Started</a
+        <a class="btn btn-primary btn-sm border-border" href="/get-started"
+          >Get Started</a
+        >
+      </li>
+      <li class="nav-item mt-2 lg:hidden">
+        <a class="btn btn-primary btn-sm border-border" href="#" id="authLink"
+          >Login</a
         >
       </li>
     </ul>
     <div class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
       <a class="header-cta" href="/get-started">Get Started</a>
+      <a class="ml-5 header-cta" href="#" id="authLink">Login</a>
     </div>
   </nav>
 </header>
 
 <script is:inline>
-  // const button = document.getElementById("dropdown-button");
-  // button.addEventListener("click", () => {
-  //   const dropdown = document.getElementById("dropdown");
-  //   dropdown.classList.toggle(dropdown.style === "hidden" ? "block" : "hidden");
-  // });
-
-  //sticky header
   document.addEventListener("astro:page-load", () => {
     const header = document.querySelector(".header");
     window.addEventListener("scroll", () => {
@@ -155,4 +180,15 @@ const languagePrefix = currentLanguage === defaultLocale ? false : true
       }
     });
   });
+
+  const clientId = document.getElementById("clientId").value;
+  const redirectUri = document.getElementById("redirectUri").value;
+  const baseUri = document.getElementById("baseUri").value;
+
+  document
+    .getElementById("authLink")
+    .addEventListener("click", function (event) {
+      const authorizationUri = `${baseUri}/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=public`;
+      window.location.href = authorizationUri;
+    });
 </script>
