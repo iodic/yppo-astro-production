@@ -1,8 +1,8 @@
 ---
-import SigninSlider from "@/layouts/function-components/SigninSlider.jsx";
-import SanityConflictInitial from "@/layouts/function-components/SanityConflictInitial.jsx";
+import SigninSlider from "@/layouts/function-components/SigninSlider.jsx"
+import SanityConflictInitial from "@/layouts/function-components/SanityConflictInitial.jsx"
 
-const { lang } = Astro.props;
+const { lang } = Astro.props
 
 // TODO: Fetch data from Sanity
 ---
@@ -14,27 +14,17 @@ const { lang } = Astro.props;
         <div class="mx-auto w-full max-w-[480px]">
           <!-- Intro -->
           <div class="form-wrapper hidden form-0" data-forward="form-1">
-            <img
-              class="mb-8 w-20 block lg:hidden"
-              src="/images/umino.png"
-              alt=""
-            />
+            <img class="mb-8 w-20 block lg:hidden" src="/images/umino.png" alt="" />
             <h1 class="mb-4 font-normal">
               Welcome to the
               <span class="font-bold">Conflict Guide</span>
             </h1>
 
             <p>
-              Just answer a couple of questions and we'll point you towards
-              the info we believe will help you address your issue in the most
-              professional way.
+              Just answer a couple of questions and we'll point you towards the info we believe will help you address your issue in the most professional way.
             </p>
 
-            <a
-              class="go go-forward btn btn-primary mt-10 block w-full start-form"
-              data-target="form-1"
-              href="#">Answer questions</a
-            >
+            <a class="go go-forward btn btn-primary mt-10 block w-full start-form" data-target="form-1" href="#">Answer questions</a>
           </div>
 
           <SanityConflictInitial client:load />
@@ -42,39 +32,36 @@ const { lang } = Astro.props;
       </div>
 
       <script is:inline>
-        $(".form-0").slideDown(300);
+        $(".form-0").slideDown(300)
 
-        const latestStorage = localStorage.getItem('latestConflictType');
+        const latestStorage = localStorage.getItem("latestConflictType")
         if (latestStorage) {
-          $(".form-0").hide();
+          $(".form-0").hide()
         }
 
         $(".go").on("click", function (e) {
-          target = "." + $(this).parents(".form-wrapper").data("back");
+          target = "." + $(this).parents(".form-wrapper").data("back")
 
           if ($(this).hasClass("go-forward")) {
-            target = "." + $(this).parents(".form-wrapper").data("forward");
+            target = "." + $(this).parents(".form-wrapper").data("forward")
           }
 
           $("video").each(function () {
-            this.pause();
-          });
+            this.pause()
+          })
 
           $(this)
             .parents(".form-wrapper")
             .slideUp("300", function () {
-              $("html, body").animate({ scrollTop: 0 }, "400");
-              $(target).slideDown();
-            });
+              $("html, body").animate({ scrollTop: 0 }, "400")
+              $(target).slideDown()
+            })
 
-          e.preventDefault();
-        });
+          e.preventDefault()
+        })
       </script>
 
-      <SigninSlider
-        client:load
-        title="Answer a few questions and<br>we'll point you in the right direction."
-      />
+      <SigninSlider client:load title="Answer a few questions and<br>we'll point you in the right direction." />
     </div>
   </div>
 </section>
