@@ -1,6 +1,5 @@
 ---
 import {
-  handleAuthCallback,
   getClientId,
   getClientSecret,
   getRedirectUri,
@@ -30,6 +29,65 @@ const tokenUri = getTokenUri();
       const clientSecret = document.getElementById("clientSecret").value;
       const redirectUri = document.getElementById("redirectUri").value;
       const tokenUri = document.getElementById("tokenUri").value;
+
+      function handleAuthCallback(
+        clientId,
+        clientSecret,
+        redirectUri,
+        tokenUri
+      ) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const code = urlParams.get("code");
+
+        if (code) {
+          exchangeCodeForToken(
+            code,
+            clientId,
+            clientSecret,
+            redirectUri,
+            tokenUri
+          );
+        } else {
+          console.error("Error: Authorization code not received.");
+        }
+      }
+
+      function exchangeCodeForToken(
+        code,
+        clientId,
+        clientSecret,
+        redirectUri,
+        tokenUri
+      ) {
+        const encodedRedirectUri = encodeURIComponent(redirectUri);
+        const body = `grant_type=authorization_code&code=${code}&redirect_uri=${encodedRedirectUri}&client_id=${clientId}&client_secret=${clientSecret}`;
+
+        fetch(tokenUri, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: body,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Token received:", data);
+            saveResponseInCookie(data);
+          })
+          .catch((error) => {
+            console.error("Error exchanging token:", error);
+          });
+      }
+
+      function saveResponseInCookie(response) {
+        const currentDate = new Date();
+        const expirationDate = new Date(
+          currentDate.getTime() + 30 * 24 * 60 * 60 * 1000
+        );
+        const expires = expirationDate.toUTCString();
+        document.cookie = `yppoJWT=${JSON.stringify(response)}; expires=${expires}; path=/`;
+      }
 
       if (window.location.search.includes("code=")) {
         handleAuthCallback(clientId, clientSecret, redirectUri, tokenUri);
