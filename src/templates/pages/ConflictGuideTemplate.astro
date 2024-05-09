@@ -1,10 +1,22 @@
 ---
+import { sanityClient } from "sanity:client"
+import { PortableText } from "@portabletext/react"
+import portableTextComponents from "@/layouts/portable-text-components"
+
 import SigninSlider from "@/layouts/function-components/SigninSlider.jsx"
 import SanityConflictInitial from "@/layouts/function-components/SanityConflictInitial.jsx"
 
 const { lang } = Astro.props
 
-// TODO: Fetch data from Sanity
+const conflictGuidePageData = await sanityClient.fetch(
+  `*[_type == 'conflictGuidePage' && language == '${lang}'] {
+      title,
+      introSection
+  }`
+)
+
+const { title, introSection } = conflictGuidePageData[0] || {}
+const { introTitle, introDescription, introButtonText } = introSection || {}
 ---
 
 <section>
@@ -15,16 +27,17 @@ const { lang } = Astro.props
           <!-- Intro -->
           <div class="form-wrapper hidden form-0" data-forward="form-1">
             <img class="mb-8 w-20 block lg:hidden" src="/images/umino.png" alt="" />
-            <h1 class="mb-4 font-normal">
-              Welcome to the
-              <span class="font-bold">Conflict Guide</span>
-            </h1>
 
-            <p>
-              Just answer a couple of questions and we'll point you towards the info we believe will help you address your issue in the most professional way.
-            </p>
+            {introTitle && <PortableText value={introTitle} components={portableTextComponents as any} />}
+            {introDescription && <PortableText value={introDescription} components={portableTextComponents as any} />}
 
-            <a class="go go-forward btn btn-primary mt-10 block w-full start-form" data-target="form-1" href="#">Answer questions</a>
+            {
+              introButtonText && (
+                <a class="go go-forward btn btn-primary mt-10 block w-full start-form" data-target="form-1" href="#">
+                  Answer questions
+                </a>
+              )
+            }
           </div>
 
           <SanityConflictInitial client:load />
