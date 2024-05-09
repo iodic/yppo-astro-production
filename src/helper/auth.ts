@@ -19,11 +19,11 @@ export function parseJwt(token: string) {
 }
 
 export function getClientId(): string {
-  return "A0USaYg7dVEdtVPztz5TBThpbOwk9xCqXKx2p9g0zwo";
+  return "Jtx8pKWLU54C7IMfz8xmAxt7tG4Ourj0jHM5KIDUrXg";
 }
 
 export function getClientSecret(): string {
-  return "B05vhMaEQvDLaS01NySCvjVzhZU5PlgwYhraiIP1lgw";
+  return "Q4A525OFRsYM4ryOapQ-Oth65139lcshVg-q0vBRSWw";
 }
 
 export function getRedirectUri(): string {
