@@ -11,12 +11,15 @@ const { lang } = Astro.props
 const conflictGuidePageData = await sanityClient.fetch(
   `*[_type == 'conflictGuidePage' && language == '${lang}'] {
       title,
-      introSection
+      introSection {
+        ...,
+        "introMobileImage": introMobileImage.asset->url,
+      }
   }`
 )
 
 const { title, introSection } = conflictGuidePageData[0] || {}
-const { introTitle, introDescription, introButtonText } = introSection || {}
+const { introTitle, introDescription, introButtonText, introMobileImage } = introSection || {}
 ---
 
 <section>
@@ -26,7 +29,7 @@ const { introTitle, introDescription, introButtonText } = introSection || {}
         <div class="mx-auto w-full max-w-[480px]">
           <!-- Intro -->
           <div class="form-wrapper hidden form-0" data-forward="form-1">
-            <img class="mb-8 w-20 block lg:hidden" src="/images/umino.png" alt="" />
+            {introMobileImage && <img class="mb-8 w-20 block lg:hidden" src={introMobileImage} alt="" />}
 
             {introTitle && <PortableText value={introTitle} components={portableTextComponents as any} />}
             {introDescription && <PortableText value={introDescription} components={portableTextComponents as any} />}
@@ -34,7 +37,7 @@ const { introTitle, introDescription, introButtonText } = introSection || {}
             {
               introButtonText && (
                 <a class="go go-forward btn btn-primary mt-10 block w-full start-form" data-target="form-1" href="#">
-                  Answer questions
+                  {introButtonText}
                 </a>
               )
             }
