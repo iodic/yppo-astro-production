@@ -1,29 +1,32 @@
 ---
-import PageHeader from "@/components/PageHeader.astro";
-import config from "@/config/config.json";
-import ContactPageComponent from "@/layouts/function-components/contactTemplate";
+import { sanityClient } from "sanity:client"
 
-import { getEntryBySlug } from "astro:content";
+import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
+import ContactPageComponent from "@/layouts/function-components/contactTemplate"
 
-const entry = await getEntryBySlug("contact", "index");
+const { lang } = Astro.props
 
-const { contact_form_action } = config.params;
-const contact = entry.data;
-const page_data = {
-  ...contact,
-  content: contact.body,
-};
+const contactPageData = await sanityClient.fetch(
+  `*[_type == 'contactPage' && language == '${lang}'] {
+      title,
+      heroSection,
+      nameObject,
+      emailObject,
+      inquiryObject,
+      inquiryOptions,
+      messageObject
+  }`
+)
 
-const { lang } = Astro.props;
-
-// TODO: Fetch data from Sanity
+const { title, heroSection, nameObject, emailObject, inquiryObject, inquiryOptions, messageObject } = contactPageData[0] || {}
 ---
 
 <>
   <section class="page-hero pb-6 pt-16">
     <div class="container">
-      <PageHeader page_data={page_data} />
+      <PageHeaderSanity pageData={{ title, heroSection }} />
     </div>
   </section>
-  <ContactPageComponent client:load />
+
+  <ContactPageComponent fieldData={{ nameObject, emailObject, inquiryObject, inquiryOptions, messageObject }} client:load />
 </>
