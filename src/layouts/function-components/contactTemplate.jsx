@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 
-const ContactPageComponent = () => {
+const ContactPageComponent = ({ fieldData }) => {
+  const {
+    nameObject,
+    emailObject,
+    inquiryObject,
+    inquiryOptions,
+    messageObject,
+  } = fieldData;
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,16 +27,13 @@ const ContactPageComponent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(
-      "/api/postmark",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+    const response = await fetch("/api/postmark", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify(formData),
+    });
     const responseData = await response.text();
     setResponseMessage(responseData);
 
@@ -48,14 +53,16 @@ const ContactPageComponent = () => {
             <form method="POST" onSubmit={handleSubmit}>
               <div className="form-group mb-5">
                 <label className="form-label" htmlFor="name">
-                  Full Name
+                  {nameObject?.fieldName ? nameObject.fieldName : ""}
                 </label>
                 <input
                   className="form-control"
                   type="text"
                   id="name"
                   name="name"
-                  placeholder="Your Full Name"
+                  placeholder={
+                    nameObject?.placeholder ? nameObject.placeholder : ""
+                  }
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -64,14 +71,16 @@ const ContactPageComponent = () => {
 
               <div className="form-group mb-5">
                 <label className="form-label" htmlFor="email">
-                  Email Address
+                  {emailObject?.fieldName ? emailObject.fieldName : ""}
                 </label>
                 <input
                   className="form-control"
                   type="text"
                   id="email"
                   name="email"
-                  placeholder="Your Email Address"
+                  placeholder={
+                    emailObject?.placeholder ? emailObject.placeholder : ""
+                  }
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -80,7 +89,7 @@ const ContactPageComponent = () => {
 
               <div className="form-group mb-5">
                 <label className="form-label" htmlFor="reason">
-                  Type of inquiry
+                  {inquiryObject?.fieldName ? inquiryObject.fieldName : ""}
                 </label>
                 <select
                   name="reason"
@@ -90,16 +99,15 @@ const ContactPageComponent = () => {
                   onChange={handleChange}
                   required
                 >
-                  <option value="">Please select</option>
-                  <option value="cr">Conflict resolution</option>
-                  <option value="m">Mediation</option>
-                  <option value="gi">General inquiry</option>
+                  {inquiryOptions?.map((option) => {
+                    return <option value={option}>{option}</option>;
+                  })}
                 </select>
               </div>
 
               <div className="form-group mb-5">
                 <label className="form-label" htmlFor="message">
-                  Message
+                  {messageObject?.fieldName ? messageObject.fieldName : ""}
                 </label>
                 <textarea
                   className="form-control h-[150px]"
@@ -109,6 +117,9 @@ const ContactPageComponent = () => {
                   rows="10"
                   value={formData.message}
                   onChange={handleChange}
+                  placeholder={
+                    messageObject?.placeholder ? messageObject.placeholder : ""
+                  }
                   required
                 ></textarea>
               </div>
@@ -117,6 +128,7 @@ const ContactPageComponent = () => {
                 Send Message
               </button>
             </form>
+
             {responseMessage && (
               <div className="mt-4 text-green-600">{responseMessage}</div>
             )}
