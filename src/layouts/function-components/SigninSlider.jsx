@@ -1,15 +1,16 @@
-import { marked } from "marked";
 import React, { useRef, useState } from "react";
+
 import SwiperCore from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const SigninSlider = ({ title }) => {
   SwiperCore.use([Pagination]);
   const [swiper, setSwiper] = useState(null);
   const paginationRef = useRef(null);
+
   return (
     <div className="auth-banner bg-gradient hidden flex-col items-center justify-center py-16 lg:col-6 lg:block">
       <img
@@ -18,10 +19,10 @@ const SigninSlider = ({ title }) => {
         alt=""
       />
       <div className="w-full text-center">
-        <h2
-          className="h3 text-white"
-          dangerouslySetInnerHTML={{ __html: marked.parse(title) }}
-        />
+        {title && (
+          <h2 className="h3 text-white max-w-[80%] mx-auto">{title}</h2>
+        )}
+
         <div className="auth-banner-carousel">
           <Swiper
             pagination={{

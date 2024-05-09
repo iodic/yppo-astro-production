@@ -14,11 +14,12 @@ const conflictGuidePageData = await sanityClient.fetch(
       introSection {
         ...,
         "introMobileImage": introMobileImage.asset->url,
-      }
+      },
+      signInSliderContent
   }`
 )
 
-const { title, introSection } = conflictGuidePageData[0] || {}
+const { title, introSection, signInSliderContent } = conflictGuidePageData[0] || {}
 const { introTitle, introDescription, introButtonText, introMobileImage } = introSection || {}
 ---
 
@@ -77,7 +78,7 @@ const { introTitle, introDescription, introButtonText, introMobileImage } = intr
         })
       </script>
 
-      <SigninSlider client:load title="Answer a few questions and<br>we'll point you in the right direction." />
+      <SigninSlider title={signInSliderContent?.title} client:load />
     </div>
   </div>
 </section>
