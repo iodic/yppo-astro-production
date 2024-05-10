@@ -1,0 +1,137 @@
+---
+const { socialsType, url } = Astro.props
+
+import {
+  IoGlobeOutline,
+  IoLogoFacebook,
+  IoLogoInstagram,
+  IoLogoLinkedin,
+  IoLogoPinterest,
+  IoLogoReddit,
+  IoLogoSkype,
+  IoLogoSnapchat,
+  IoLogoTiktok,
+  IoLogoTwitter,
+  IoLogoVimeo,
+  IoLogoWhatsapp,
+  IoLogoYoutube
+} from "react-icons/io5"
+---
+
+{
+  socialsType == "facebook" && (
+    <li class="inline-block">
+      <a aria-label="facebook" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoFacebook />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "twitter" && (
+    <li class="inline-block">
+      <a aria-label="twitter" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoTwitter />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "instagram" && (
+    <li class="inline-block">
+      <a aria-label="instagram" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoInstagram />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "youtube" && (
+    <li class="inline-block">
+      <a aria-label="youtube" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoYoutube />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "linkedin" && (
+    <li class="inline-block">
+      <a aria-label="linkedin" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoLinkedin />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "pinterest" && (
+    <li class="inline-block">
+      <a aria-label="pinterest" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoPinterest />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "reddit" && (
+    <li class="inline-block">
+      <a aria-label="reddit" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoReddit />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "whatsapp" && (
+    <li class="inline-block">
+      <a aria-label="whatsapp" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoWhatsapp />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "snapchat" && (
+    <li class="inline-block">
+      <a aria-label="snapchat" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoSnapchat />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "vimeo" && (
+    <li class="inline-block">
+      <a aria-label="vimeo" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoVimeo />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "tiktok" && (
+    <li class="inline-block">
+      <a aria-label="tiktok" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoTiktok />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "skype" && (
+    <li class="inline-block">
+      <a aria-label="skype" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoLogoSkype />
+      </a>
+    </li>
+  )
+}
+{
+  socialsType == "website" && (
+    <li class="inline-block">
+      <a aria-label="website" href={url} target="_blank" rel="noopener noreferrer nofollow">
+        <IoGlobeOutline />
+      </a>
+    </li>
+  )
+}
