@@ -37,8 +37,10 @@ export interface Props {
 }
 
 // distructure frontmatters
-const { title, lang, meta_title, description, image, noindex, canonical } =
+const { title, meta_title, description, image, noindex, canonical } =
   Astro.props;
+
+const lang  = Astro.currentLocale;
 
 // Prepare body element class to identify pages
 const { pathname } = Astro.url;
@@ -183,6 +185,6 @@ classslug = classslug ? `downstream ${classslug}` : 'home';
     <main id="main-content">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
   </body>
 </html>
