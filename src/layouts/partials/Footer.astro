@@ -2,10 +2,6 @@
 import { Image } from "astro:assets"
 import { sanityClient } from "sanity:client"
 
-import config from "@/config/config.json"
-import menu from "@/config/menu.json"
-import { markdownify } from "@/lib/utils/textConverter"
-
 import SocialItem from "@/components/SocialItem.astro"
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro"
 
@@ -16,19 +12,24 @@ const footerData = await sanityClient.fetch(
       "logoSrc": logo.asset->url,
       description,
       enableLanguageSwitcher,
-      socials
+      socials,
+      linksObject,
+      contactObject,
+      enableCopyright
   }`
 )
 
-const { logoSrc, description, enableLanguageSwitcher, socials } = footerData[0] || {}
+const { logoSrc, description, enableLanguageSwitcher, socials, linksObject, contactObject, enableCopyright } = footerData[0] || {}
 
 interface SocialItem {
   socialsType: string
   url: string
 }
 
-const { footer } = menu
-const { copyright, location, email, phone } = config.params
+interface LinkItem {
+  urlTitle: string
+  url: string
+}
 ---
 
 <footer class="footer bg-[#F1F1F1]">
@@ -58,39 +59,71 @@ const { copyright, location, email, phone } = config.params
         )
       }
 
-      <div class="col-12 mt-12 md:col-6 lg:col-3">
-        <h6>Quick Links</h6>
-        <ul>
-          {
-            footer.map((item, i) => (
-              <li class={footer.length - 1 === i ? "mb-0" : "mb-4"}>
-                <a class="hover:text-primary hover:underline " href={item.url}>
-                  {item.name}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-      <div class="col-12 mt-12 md:col-6 lg:col-3">
-        <h6>Contact</h6>
-        <ul>
-          <li class="mb-2">
-            <a class="mb-2 hover:text-primary" href={`mailto:${email}`}>{email}</a>
-          </li>
-          <li>
-            <a class="hover:text-primary hover:underline" href={`tel:${phone}`}>{phone}</a>
-          </li>
-          <li>
-            <a href="/contact" class="btn btn-white mt-4">Contact</a>
-          </li>
-        </ul>
-      </div>
+      {
+        linksObject && (
+          <div class="col-12 mt-12 md:col-6 lg:col-3">
+            {linksObject?.title && <h6>{linksObject?.title}</h6>}
+
+            {linksObject?.urlsRepeater && (
+              <ul>
+                {linksObject?.urlsRepeater?.map(({ urlTitle, url }: LinkItem, index: number) => {
+                  return (
+                    <li class={linksObject?.urlsRepeater?.length - 1 === index ? "mb-0" : "mb-4"}>
+                      <a class="hover:text-primary hover:underline " href={url}>
+                        {urlTitle}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
+          </div>
+        )
+      }
+
+      {
+        contactObject && (
+          <div class="col-12 mt-12 md:col-6 lg:col-3">
+            {contactObject?.title && <h6>{contactObject?.title}</h6>}
+
+            <ul>
+              {contactObject?.email && (
+                <li class="mb-2">
+                  <a class="mb-2 hover:text-primary" href={`mailto:${contactObject?.email}`}>
+                    {contactObject?.email}
+                  </a>
+                </li>
+              )}
+
+              {contactObject?.phone && (
+                <li>
+                  <a class="hover:text-primary hover:underline" href={`tel:${contactObject?.phone}`}>
+                    {contactObject?.phone}
+                  </a>
+                </li>
+              )}
+
+              {contactObject?.enableContactButton && (
+                <li>
+                  <a href="/contact" class="btn btn-white mt-4">
+                    {contactObject?.title && contactObject?.title}
+                  </a>
+                </li>
+              )}
+            </ul>
+          </div>
+        )
+      }
     </div>
   </div>
-  <div class="container max-w-[1440px]">
-    <div class="footer-copyright mx-auto border-t border-border pb-10 pt-7 text-center">
-      <p class="content text-text" set:html={markdownify(copyright)} />
-    </div>
-  </div>
+
+  {
+    enableCopyright && (
+      <div class="container max-w-[1440px]">
+        <div class="footer-copyright mx-auto border-t border-border pb-10 pt-7 text-center">
+          <p class="content text-text">Copyright © {new Date().getFullYear()}</p>
+        </div>
+      </div>
+    )
+  }
 </footer>
