@@ -18,11 +18,12 @@ const baseUri = getBaseUri()
 const headerData = await sanityClient.fetch(
   `*[_type == 'header' && language == '${lang}'] {
       "logoSrc": logo.asset->url,
+      "mobileLogoSrc": mobileLogo.asset->url,
       mainMenuObject,
   }`
 )
 
-const { logoSrc, mainMenuObject } = headerData[0] || {}
+const { logoSrc, mobileLogoSrc, mainMenuObject } = headerData[0] || {}
 
 interface MenuObject {
   urlTitle: string
@@ -45,11 +46,16 @@ interface MenuItem {
     <div class="order-0">
       <div class="order-0">
         <a href={languagePrefix ? `/${currentLanguage}` : "/"} class="navbar-brand block">
-          <picture class="header-logo">
-            <source srcset="/images/logo.svg" media="(min-width: 1024px)" />
-            <source srcset="/images/logo-small.svg" />
-            <img src="/images/logo.svg" data-image-component="true" alt="yppo" width="462" height="148" loading="eager" decoding="async" />
-          </picture>
+          {
+            (logoSrc || mobileLogoSrc) && (
+              <picture class="header-logo">
+                {logoSrc && <source srcset={logoSrc} media="(min-width: 1024px)" />}
+                {mobileLogoSrc && <source srcset={mobileLogoSrc} />}
+
+                <img src={logoSrc ? logoSrc : mobileLogoSrc} data-image-component="true" alt="yppo" width="462" height="148" loading="eager" decoding="async" />
+              </picture>
+            )
+          }
         </a>
       </div>
     </div>
