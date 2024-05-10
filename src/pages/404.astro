@@ -1,30 +1,46 @@
 ---
-import Base from "@/layouts/Base.astro";
-import { markdownify } from "@/lib/utils/textConverter";
-import { Image } from "astro:assets";
-import { getEntryBySlug } from "astro:content";
-import config from "@/config/config.json";
+import { Image } from "astro:assets"
+import { sanityClient } from "sanity:client"
 
-const { logo } = config.site;
-const entry = await getEntryBySlug("pages", "404");
-const { Content } = await entry.render();
+import Base from "@/layouts/Base.astro"
+
+const lang = Astro.currentLocale
+
+const notFoundPageData = await sanityClient.fetch(
+  `*[_type == 'notFoundPage' && language == '${lang}'] {
+      title,
+      pageData {
+        mainTitle,
+        subtitle,
+        "image": image.asset->url,
+        buttonObject
+      }
+  }`
+)
+
+const { title, pageData } = notFoundPageData[0] || {}
+const { mainTitle, subtitle, image, buttonObject } = pageData || {}
+const { enableLink, linkObject } = buttonObject || {}
 ---
 
-<Base title={entry.data.title}>
+<Base title={title && title}>
   <section class="section">
     <div class="container">
-      <div class="flex h-[40vh] items-center justify-center">
+      <div class="flex flex-col h-[40vh] items-center justify-center">
         <div class="text-center">
-          <Image
-            src="/images/404.png"
-            class="mb-4 inline"
-            alt="logo"
-            width={300}
-            height={200}
-          />
-          <h1 class="mb-4" set:html={markdownify(entry.data.title)} />
-          <Content />
+          {image && <Image src={image} class="mb-4 inline" alt="logo" width={300} height={200} />}
+
+          {mainTitle && <h1 class="mb-4">{mainTitle}</h1>}
+          {subtitle && <h2>{subtitle}</h2>}
         </div>
+
+        {
+          enableLink && linkObject && (
+            <a class="mt-4 btn btn-primary" href={linkObject?.url ? linkObject?.url : "/"}>
+              {linkObject?.urlTitle && linkObject?.urlTitle}
+            </a>
+          )
+        }
       </div>
     </div>
   </section>
