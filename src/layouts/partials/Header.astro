@@ -1,7 +1,19 @@
 ---
+import { sanityClient } from "sanity:client"
 import menu from "@/config/menu.json";
 import { i18nConfig } from "@/i18n/i18nConfig";
 import { getClientId, getRedirectUri, getBaseUri } from "@/helper/auth";
+
+const { lang } = Astro.props
+
+const headerData = await sanityClient.fetch(
+  `*[_type == 'header' && language == '${lang}'] {
+      "logoSrc": logo.asset->url,
+      mainMenuObject,
+  }`
+)
+
+const { logoSrc, mainMenuObject } = headerData[0] || {}
 
 export interface ChildNavigationLink {
   name: string;
@@ -82,86 +94,86 @@ const baseUri = getBaseUri();
     </label>
     <!-- /navbar toggler -->
 
-    <ul
-      id="nav-menu"
-      class="navbar-nav order-3 hidden w-full lg:order-1 lg:flex lg:w-auto lg:space-x-2"
-    >
-      {
-        main.map((menu) => (
-          <>
-            {menu.hasChildren ? (
-              <li
-                class="nav-item nav-dropdown group relative cursor-pointer "
-                id="dropdown-button"
-              >
-                <span
-                  class={`nav-link inline-flex items-center ${
-                    menu.children?.map(({ url }) => url).includes(pathname) ||
-                    menu.children
-                      ?.map(({ url }) => `${url}/`)
-                      .includes(pathname)
-                      ? "active"
-                      : ""
-                  }`}
+    {mainMenuObject?.menuRepeater &&
+      <ul
+        id="nav-menu"
+        class="navbar-nav order-3 hidden w-full lg:order-1 lg:flex lg:w-auto lg:space-x-2"
+      >
+        {
+          mainMenuObject?.menuRepeater.map(({pageUrl, menuItemChildren}) => (
+            <>
+              {menuItemChildren ? (
+                <li
+                  class="nav-item nav-dropdown group relative cursor-pointer "
+                  id="dropdown-button"
                 >
-                  {menu.name}
-                  <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
-                </span>
-                <ul
-                  id="dropdown"
-                  class="nav-dropdown-list mx-auto hidden duration-300 lg:invisible lg:absolute lg:block lg:h-auto lg:w-[13.5rem] lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100"
-                >
-                  {menu.children?.map((child) => (
-                    <li class="nav-dropdown-item">
-                      <a
-                        href={
-                          languagePrefix
-                            ? `/${currentLanguage}${child.url}`
-                            : child.url
-                        }
-                        class={`nav-dropdown-link block ${
-                          (pathname === `${child.url}/` ||
-                            pathname === child.url) &&
-                          "text-primary"
-                        }`}
-                      >
-                        {child.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ) : (
-              <li class="nav-item">
-                <a
-                  href={
-                    languagePrefix ? `/${currentLanguage}${menu.url}` : menu.url
-                  }
-                  class={`nav-link inline-block lg:block ${
-                    (pathname === `${menu.url}/` || pathname === menu.url) &&
-                    "active"
-                  }`}
-                >
-                  {menu.name}
-                </a>
-              </li>
-            )}
-          </>
-        ))
-      }
-      <li class="nav-item mt-2 lg:hidden">
-        <a class="btn btn-primary btn-sm border-border" href="/get-started"
-          >Get Started</a
-        >
-      </li>
-      <li class="nav-item mt-2 lg:hidden">
-        <button class="btn btn-primary btn-sm border-border" id="authLink"
-          >Login</button
-        >
-      </li>
-    </ul>
+                  <span
+                    class={`nav-link inline-flex items-center ${
+                      menuItemChildren?.map(({ url: childUrl }) => childUrl).includes(pathname)
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    {pageUrl?.urlTitle}
+                    <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </span>
+                  <ul
+                    id="dropdown"
+                    class="nav-dropdown-list mx-auto hidden duration-300 lg:invisible lg:absolute lg:block lg:h-auto lg:w-[13.5rem] lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100"
+                  >
+                    {menuItemChildren?.map(({ urlTitle: childUrlTitle, url: childUrl }) => (
+                      <li class="nav-dropdown-item">
+                        <a
+                          href={
+                            languagePrefix
+                              ? `/${currentLanguage}${childUrl}`
+                              : childUrl
+                          }
+                          class={`nav-dropdown-link block ${
+                            (pathname === `${childUrl}/` ||
+                              pathname === childUrl) &&
+                            "text-primary"
+                          }`}
+                        >
+                          {childUrlTitle}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ) : (
+                <li class="nav-item">
+                  <a
+                    href={
+                      languagePrefix ? `/${currentLanguage}${pageUrl?.url}` : pageUrl?.url
+                    }
+                    class={`nav-link inline-block lg:block ${
+                      (pathname === `${pageUrl?.url}/` || pathname === pageUrl?.url) &&
+                      "active"
+                    }`}
+                  >
+                    {pageUrl?.urlTitle}
+                  </a>
+                </li>
+              )}
+            </>
+          ))
+        }
+        <li class="nav-item mt-2 lg:hidden">
+          <a class="btn btn-primary btn-sm border-border" href="/get-started"
+            >Get Started</a
+          >
+        </li>
+        <li class="nav-item mt-2 lg:hidden">
+          <button class="btn btn-primary btn-sm border-border" id="authLink"
+            >Login</button
+          >
+        </li>
+      </ul>
+    }
+
     <div class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
       <a class="header-cta" href="/get-started">Get Started</a>
       <button class="ml-5 header-cta" id="authLink">Login</button>

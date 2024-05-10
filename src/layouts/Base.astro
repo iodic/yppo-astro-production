@@ -181,7 +181,7 @@ classslug = classslug ? `downstream ${classslug}` : 'home';
   </head>
   <body class={classslug}>
     <TwSizeIndicator />
-    <Header />
+    <Header lang={lang} />
     <main id="main-content">
       <slot />
     </main>
