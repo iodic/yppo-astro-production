@@ -11,6 +11,8 @@ const currentLanguage = Astro.currentLocale
 const { defaultLocale } = i18nConfig
 const languagePrefix = currentLanguage === defaultLocale ? false : true
 
+import localizeURL from "@/lib/utils/localizeURL"
+
 const clientId = getClientId()
 const redirectUri = getRedirectUri()
 const baseUri = getBaseUri()
@@ -98,8 +100,7 @@ interface MenuItem {
                   >
                     {menuItemChildren?.map(({ urlTitle: childUrlTitle, url: childUrl }: any) => (
                       <li class="nav-dropdown-item">
-                        <a
-                          href={languagePrefix ? `/${currentLanguage}${childUrl}` : childUrl}
+                        <a href={localizeURL(`${pageUrl?.url}`, `${currentLanguage}`)}
                           class={`nav-dropdown-link block ${(pathname === `${childUrl}/` || pathname === childUrl) && "text-primary"}`}
                         >
                           {childUrlTitle}
@@ -111,7 +112,7 @@ interface MenuItem {
               ) : (
                 <li class="nav-item">
                   <a
-                    href={languagePrefix ? `/${currentLanguage}${pageUrl?.url}` : pageUrl?.url}
+                    href={localizeURL(`${pageUrl?.url}`, `${currentLanguage}`)}
                     class={`nav-link inline-block lg:block ${(pathname === `${pageUrl?.url}/` || pathname === pageUrl?.url) && "active"}`}
                   >
                     {pageUrl?.urlTitle}
