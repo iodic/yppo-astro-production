@@ -14,11 +14,12 @@ const contactPageData = await sanityClient.fetch(
       emailObject,
       inquiryObject,
       inquiryOptions,
-      messageObject
+      messageObject,
+      buttonString
   }`
 )
 
-const { title, heroSection, nameObject, emailObject, inquiryObject, inquiryOptions, messageObject } = contactPageData[0] || {}
+const { title, heroSection, nameObject, emailObject, inquiryObject, inquiryOptions, messageObject, buttonString } = contactPageData[0] || {}
 ---
 
 <>
@@ -28,5 +29,5 @@ const { title, heroSection, nameObject, emailObject, inquiryObject, inquiryOptio
     </div>
   </section>
 
-  <ContactPageComponent fieldData={{ nameObject, emailObject, inquiryObject, inquiryOptions, messageObject }} client:load />
+  <ContactPageComponent fieldData={{ nameObject, emailObject, inquiryObject, inquiryOptions, messageObject, buttonString }} client:load />
 </>
