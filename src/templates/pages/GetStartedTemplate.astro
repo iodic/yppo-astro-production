@@ -4,7 +4,7 @@ import { Image } from "astro:assets"
 
 import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
 import Shape from "@/components/Shape.astro"
-import Cta from "@/layouts/partials/Cta.astro"
+import CtaSanity from "@/partials/CtaSanity.astro"
 
 const { lang } = Astro.props
 
@@ -33,11 +33,12 @@ const getStartedPageData = await sanityFetch(
           buttonObject,
           "cardImage": image.asset->url
         }
-      }
+      },
+      ctaBanner
   }`
 )
 
-const { title, heroSection, videoSection, cardsSection } = getStartedPageData[0] || {}
+const { title, heroSection, videoSection, cardsSection, ctaBanner } = getStartedPageData[0] || {}
 const { performanceCards } = heroSection || {}
 const { videoCard, listSectionTitle, list } = videoSection || {}
 const { cards } = cardsSection || {}
@@ -168,5 +169,5 @@ const { cards } = cardsSection || {}
     </div>
   </section>
 
-  <Cta />
+  <CtaSanity ctaBanner={ctaBanner} />
 </>
