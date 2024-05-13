@@ -1,11 +1,10 @@
 ---
-import { i18nConfig } from "@/i18n/i18nConfig";
+import localizeURL from "@/lib/utils/localizeURL"
 
 const {
   ctaBanner: {title, bannerUrl: {url, urlTitle}}
 } = Astro.props;
 
-const { defaultLocale } = i18nConfig;
 const currentLanguage  = Astro.currentLocale;
 ---
 
@@ -19,8 +18,8 @@ const currentLanguage  = Astro.currentLocale;
           <div class="lg:col-9">
             <h2 class="h1 text-white">{title}</h2>
             <a
-              class="btn btn-white mt-8"
-              href={`${currentLanguage == defaultLocale ? '' : `/${currentLanguage}`}${url}`}
+              class="btn btn-white mt-8 112"
+              href={localizeURL(url, `${currentLanguage}`)}
               >
               {urlTitle}
             </a>
