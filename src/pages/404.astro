@@ -1,8 +1,10 @@
 ---
 import { Image } from "astro:assets"
 import { sanityClient } from "sanity:client"
+import localizeURL from "@/lib/utils/localizeURL"
 
 import Base from "@/layouts/Base.astro"
+const currentLanguage  = Astro.currentLocale;
 
 const lang = Astro.currentLocale
 
@@ -23,7 +25,7 @@ const { mainTitle, subtitle, image, buttonObject } = pageData || {}
 const { enableLink, linkObject } = buttonObject || {}
 ---
 
-<Base title={title && title}>
+<Base title={title && title} lang={currentLanguage}>
   <section class="section">
     <div class="container">
       <div class="flex flex-col h-[40vh] items-center justify-center">
@@ -36,7 +38,7 @@ const { enableLink, linkObject } = buttonObject || {}
 
         {
           enableLink && linkObject && (
-            <a class="mt-4 btn btn-primary" href={linkObject?.url ? linkObject?.url : "/"}>
+            <a class="mt-4 btn btn-primary" href={localizeURL(linkObject?.url, `${currentLanguage}`)}>
               {linkObject?.urlTitle && linkObject?.urlTitle}
             </a>
           )
