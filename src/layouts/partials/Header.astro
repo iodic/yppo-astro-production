@@ -1,5 +1,5 @@
 ---
-import { sanityFetch } from "@/utils/sanityFetch"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import { i18nConfig } from "@/i18n/i18nConfig"
 import { getClientId, getRedirectUri, getBaseUri } from "@/helper/auth"
@@ -19,7 +19,6 @@ const baseUri = getBaseUri()
 const headerData = await sanityFetch(
   "header",
   lang,
-  "en",
   `{
       "logoSrc": logo.asset->url,
       "mobileLogoSrc": mobileLogo.asset->url,
@@ -102,7 +101,8 @@ interface MenuItem {
                   >
                     {menuItemChildren?.map(({ urlTitle: childUrlTitle, url: childUrl }: any) => (
                       <li class="nav-dropdown-item">
-                        <a href={localizeURL(`${pageUrl?.url}`, `${currentLanguage}`)}
+                        <a
+                          href={localizeURL(`${pageUrl?.url}`, `${currentLanguage}`)}
                           class={`nav-dropdown-link block ${(pathname === `${childUrl}/` || pathname === childUrl) && "text-primary"}`}
                         >
                           {childUrlTitle}

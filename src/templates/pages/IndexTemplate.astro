@@ -1,5 +1,5 @@
 ---
-import { sanityFetch } from "@/utils/sanityFetch"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import Banner from "@/layouts/components/Banner.astro"
 import KeyFeatures from "@/layouts/components/KeyFeatures.astro"
@@ -11,7 +11,6 @@ const { lang } = Astro.props
 const homepageData = await sanityFetch(
   "homepage",
   lang,
-  "en",
   `{
       title,
       heroSection {

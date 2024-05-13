@@ -1,5 +1,5 @@
 ---
-import { sanityFetch } from "@/utils/sanityFetch"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import Shape from "@/components/Shape.astro"
 import FeatureBannerSanity from "@/components/features/FeatureBannerSanity.astro"
@@ -11,7 +11,6 @@ const { lang } = Astro.props
 const wikiPageData = await sanityFetch(
   "wikiPage",
   lang,
-  "en",
   `{
       title,
       heroSection,

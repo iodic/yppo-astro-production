@@ -1,5 +1,5 @@
 ---
-import { sanityFetch } from "@/utils/sanityFetch"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 import { PortableText } from "@portabletext/react"
 import portableTextComponents from "@/layouts/portable-text-components"
 
@@ -11,7 +11,6 @@ const { lang } = Astro.props
 const conflictGuidePageData = await sanityFetch(
   "conflictGuidePage",
   lang,
-  "en",
   `{
       title,
       introSection {

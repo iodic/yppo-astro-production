@@ -1,18 +1,17 @@
 ---
 import { Image } from "astro:assets"
-import { sanityFetch } from "@/utils/sanityFetch"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import SocialItem from "@/components/SocialItem.astro"
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro"
 import localizeURL from "@/lib/utils/localizeURL"
 
 const { lang } = Astro.props
-const currentLanguage  = Astro.currentLocale;
+const currentLanguage = Astro.currentLocale
 
 const footerData = await sanityFetch(
   "footer",
   lang,
-  "en",
   `{
       "logoSrc": logo.asset->url,
       description,
@@ -110,7 +109,7 @@ interface LinkItem {
 
               {contactObject?.enableContactButton && (
                 <li>
-                  <a href={localizeURL('/contact', `${currentLanguage}`)} class="btn btn-white mt-4">
+                  <a href={localizeURL("/contact", `${currentLanguage}`)} class="btn btn-white mt-4">
                     {contactObject?.title && contactObject?.title}
                   </a>
                 </li>

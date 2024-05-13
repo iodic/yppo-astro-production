@@ -1,5 +1,5 @@
 ---
-import { sanityFetch } from "@/utils/sanityFetch"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
 import ContactPageComponent from "@/layouts/function-components/contactTemplate"
@@ -9,7 +9,6 @@ const { lang } = Astro.props
 const contactPageData = await sanityFetch(
   "contactPage",
   lang,
-  "en",
   `{
       title,
       heroSection,
