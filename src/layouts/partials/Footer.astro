@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets"
-import { sanityClient } from "sanity:client"
+import { sanityFetch } from "@/utils/sanityFetch"
 
 import SocialItem from "@/components/SocialItem.astro"
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro"
@@ -9,8 +9,11 @@ import localizeURL from "@/lib/utils/localizeURL"
 const { lang } = Astro.props
 const currentLanguage  = Astro.currentLocale;
 
-const footerData = await sanityClient.fetch(
-  `*[_type == 'footer' && language == '${lang}'] {
+const footerData = await sanityFetch(
+  "footer",
+  lang,
+  "en",
+  `{
       "logoSrc": logo.asset->url,
       description,
       enableLanguageSwitcher,

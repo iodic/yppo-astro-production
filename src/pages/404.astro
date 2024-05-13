@@ -1,15 +1,18 @@
 ---
 import { Image } from "astro:assets"
-import { sanityClient } from "sanity:client"
+import { sanityFetch } from "@/utils/sanityFetch"
 import localizeURL from "@/lib/utils/localizeURL"
 
 import Base from "@/layouts/Base.astro"
-const currentLanguage  = Astro.currentLocale;
+const currentLanguage = Astro.currentLocale
 
 const lang = Astro.currentLocale
 
-const notFoundPageData = await sanityClient.fetch(
-  `*[_type == 'notFoundPage' && language == '${lang}'] {
+const notFoundPageData = await sanityFetch(
+  "notFoundPage",
+  lang,
+  "en",
+  `{
       title,
       pageData {
         mainTitle,

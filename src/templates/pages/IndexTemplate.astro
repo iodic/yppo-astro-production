@@ -1,5 +1,5 @@
 ---
-import { sanityClient } from "sanity:client"
+import { sanityFetch } from "@/utils/sanityFetch"
 
 import Banner from "@/layouts/components/Banner.astro"
 import KeyFeatures from "@/layouts/components/KeyFeatures.astro"
@@ -8,8 +8,11 @@ import CtaSanity from "@/partials/CtaSanity.astro"
 
 const { lang } = Astro.props
 
-const homepageData = await sanityClient.fetch(
-  `*[_type == 'homepage' && language == '${lang}'] {
+const homepageData = await sanityFetch(
+  "homepage",
+  lang,
+  "en",
+  `{
       title,
       heroSection {
         ...,

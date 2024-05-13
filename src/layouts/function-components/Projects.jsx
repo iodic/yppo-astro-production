@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { sanityClient } from "sanity:client";
+import { sanityFetch } from "@/utils/sanityFetch";
 
 const Projects = ({ lang } = {}) => {
   const [selectedConflictType, setSelectedConflictType] = useState();
@@ -8,8 +9,11 @@ const Projects = ({ lang } = {}) => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const projectsData = await sanityClient.fetch(
-        `*[_type == 'wiki' && language == '${lang}'] | order(orderRank){
+      const projectsData = await sanityFetch(
+        "wiki",
+        lang,
+        "en",
+        `| order(orderRank){
             ...,
             'conflictType': conflictType[]->{
               slug,

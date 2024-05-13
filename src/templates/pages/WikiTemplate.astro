@@ -1,28 +1,31 @@
 ---
-import { sanityClient } from "sanity:client";
+import { sanityFetch } from "@/utils/sanityFetch"
 
-import Shape from "@/components/Shape.astro";
+import Shape from "@/components/Shape.astro"
 import FeatureBannerSanity from "@/components/features/FeatureBannerSanity.astro"
-import ProjecManagement from "@/components/features/ProjecManagement.astro";
-import CtaSanity from "@/partials/CtaSanity.astro";
+import ProjecManagement from "@/components/features/ProjecManagement.astro"
+import CtaSanity from "@/partials/CtaSanity.astro"
 
-const { lang } = Astro.props;
+const { lang } = Astro.props
 
-const wikiPageData = await sanityClient.fetch(
-  `*[_type == 'wikiPage' && language == '${lang}'] {
+const wikiPageData = await sanityFetch(
+  "wikiPage",
+  lang,
+  "en",
+  `{
       title,
       heroSection,
       postsTitle,
       ctaBanner
   }`
-);
+)
 
 const { title, heroSection, ctaBanner, postsTitle } = wikiPageData[0] || {}
 ---
 
 <>
   <Shape />
-  <FeatureBannerSanity title={title} heroSection={heroSection}  />
+  <FeatureBannerSanity title={title} heroSection={heroSection} />
   <ProjecManagement postsTitle={postsTitle} lang={lang} />
   <CtaSanity ctaBanner={ctaBanner} />
 </>

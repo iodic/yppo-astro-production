@@ -1,5 +1,5 @@
 ---
-import { sanityClient } from "sanity:client"
+import { sanityFetch } from "@/utils/sanityFetch"
 
 import { i18nConfig } from "@/i18n/i18nConfig"
 import { getClientId, getRedirectUri, getBaseUri } from "@/helper/auth"
@@ -16,8 +16,11 @@ const clientId = getClientId()
 const redirectUri = getRedirectUri()
 const baseUri = getBaseUri()
 
-const headerData = await sanityClient.fetch(
-  `*[_type == 'header' && language == '${lang}'] {
+const headerData = await sanityFetch(
+  "header",
+  lang,
+  "en",
+  `{
       "logoSrc": logo.asset->url,
       "mobileLogoSrc": mobileLogo.asset->url,
       mainMenuObject,

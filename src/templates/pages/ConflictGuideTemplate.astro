@@ -1,5 +1,5 @@
 ---
-import { sanityClient } from "sanity:client"
+import { sanityFetch } from "@/utils/sanityFetch"
 import { PortableText } from "@portabletext/react"
 import portableTextComponents from "@/layouts/portable-text-components"
 
@@ -8,8 +8,11 @@ import SanityConflictInitial from "@/layouts/function-components/SanityConflictI
 
 const { lang } = Astro.props
 
-const conflictGuidePageData = await sanityClient.fetch(
-  `*[_type == 'conflictGuidePage' && language == '${lang}'] {
+const conflictGuidePageData = await sanityFetch(
+  "conflictGuidePage",
+  lang,
+  "en",
+  `{
       title,
       introSection {
         ...,
