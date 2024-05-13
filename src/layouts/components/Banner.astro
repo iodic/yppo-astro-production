@@ -2,7 +2,9 @@
 import { Image } from "astro:assets"
 
 import Video from "@/layouts/shortcodes/Video.jsx"
+import languageChecker from "@/lib/utils/localizeURL"
 
+const currentLanguage  = Astro.currentLocale;
 const {
   banner: { textCard, videoCard, buttonObject }
 } = Astro.props
@@ -22,7 +24,7 @@ const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
 
         {
           enableHeroButton && (
-            <a class="btn btn-primary mt-8 mb-8 lg:mb-0" href={heroButtonUrl}>
+            <a class="btn btn-primary mt-8 mb-8 lg:mb-0" href={languageChecker(heroButtonUrl, `${currentLanguage}`)}>
               {heroButtonTitle}
             </a>
           )
