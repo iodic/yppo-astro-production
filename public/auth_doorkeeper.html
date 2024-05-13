@@ -15,7 +15,7 @@
             const redirectUri = encodeURIComponent('https://yppo.websitetotal.com/auth_doorkeeper.html');
             const responseType = 'code';
             const scope = encodeURIComponent('public');
-            const authorizationUri = `http://localhost:3000/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+            const authorizationUri = `https://yppousers.websitetotal.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
 
             window.location.href = authorizationUri;
         }
