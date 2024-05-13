@@ -4,8 +4,10 @@ import { sanityClient } from "sanity:client"
 
 import SocialItem from "@/components/SocialItem.astro"
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro"
+import localizeURL from "@/lib/utils/localizeURL"
 
 const { lang } = Astro.props
+const currentLanguage  = Astro.currentLocale;
 
 const footerData = await sanityClient.fetch(
   `*[_type == 'footer' && language == '${lang}'] {
@@ -69,7 +71,7 @@ interface LinkItem {
                 {linksObject?.urlsRepeater?.map(({ urlTitle, url }: LinkItem, index: number) => {
                   return (
                     <li class={linksObject?.urlsRepeater?.length - 1 === index ? "mb-0" : "mb-4"}>
-                      <a class="hover:text-primary hover:underline " href={url}>
+                      <a class="hover:text-primary hover:underline " href={localizeURL(url, `${currentLanguage}`)}>
                         {urlTitle}
                       </a>
                     </li>
@@ -105,7 +107,7 @@ interface LinkItem {
 
               {contactObject?.enableContactButton && (
                 <li>
-                  <a href="/contact" class="btn btn-white mt-4">
+                  <a href={localizeURL('/contact', `${currentLanguage}`)} class="btn btn-white mt-4">
                     {contactObject?.title && contactObject?.title}
                   </a>
                 </li>
