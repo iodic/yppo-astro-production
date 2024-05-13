@@ -1,5 +1,8 @@
 ---
 import config from "@/config/config.json";
+import localizeURL from "@/lib/utils/localizeURL"
+
+const currentLanguage = Astro.currentLocale
 
 const {
   call_to_action: {
@@ -19,7 +22,7 @@ const {
         <div class="row">
           <div class="lg:col-9">
             <h2 class="h1 text-white">{title}</h2>
-            <a class="btn btn-white mt-8" href={link}>{label}</a>
+            <a class="btn btn-white mt-8" href={localizeURL(link, `${currentLanguage}`)}>{label}</a>
           </div>
           <div class="mt-8 lg:col-3 lg:mt-0">
             <p class="text-white"></p>
