@@ -1,7 +1,25 @@
 ---
-import SigninSlider from "@/layouts/function-components/SigninSlider.jsx"
+import { sanityFetch } from "@/utils/sanityFetch"
 
+import SigninSlider from "@/layouts/function-components/SigninSlider.jsx"
 const { lang } = Astro.props
+
+const signInPageData = await sanityFetch(
+  "signInPage",
+  lang,
+  "en",
+  `{
+    title,
+    description,
+    emailObject,
+    passwordObject,
+    buttonString,
+    signInSliderContent,
+    cantLoginText,
+    signupText
+  }`
+)
+const { title, description, emailObject,passwordObject, buttonString, signInSliderContent, cantLoginText, signupText } = signInPageData[0] || {}
 ---
 
 <section>
@@ -10,8 +28,8 @@ const { lang } = Astro.props
       <div class="min-h-[980px] bg-white py-10 lg:col-6 lg:py-[114px]">
         <div class="mx-auto w-full max-w-[480px]">
           <img class="mb-8 w-20" src="/images/umino.png" alt="" />
-          <h1 class="mb-4">Sing In</h1>
-          <p>Donec sollicitudin molestie malesda sollitudin</p>
+          <h1 class="mb-4">{title}</h1>
+          <p>{description}</p>
           <div class="signin-options mt-10">
             <a class="btn btn-outline-white block w-full text-dark" href="#">Sign In With Google</a>
           </div>
@@ -23,22 +41,22 @@ const { lang } = Astro.props
 
           <form action="#">
             <div class="form-group">
-              <label for="email" class="form-label">Email Address</label>
-              <input type="email" id="email" class="form-control" placeholder="Your Email Address" />
+              <label for="email" class="form-label">{emailObject?.fieldName}</label>
+              <input type="email" id="email" class="form-control" placeholder={emailObject?.placeholder} />
             </div>
             <div class="form-group mt-4">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" id="password" class="form-control" placeholder="Your Password" />
+              <label for="password" class="form-label">{passwordObject?.fieldName}</label>
+              <input type="password" id="password" class="form-control" placeholder={passwordObject?.placeholder} />
             </div>
-            <input class="btn btn-primary mt-10 block w-full" type="submit" value="Sign In" />
+            <input class="btn btn-primary mt-10 block w-full" type="submit" value={buttonString} />
             <p class="mt-6 text-center">
-              Can't <a class="text-dark">log in</a>?
-              <a class="text-dark" href="/signup">Sign up</a> for create account
+              {cantLoginText} <a href="/login" class="text-dark">log in</a>
+              <a class="text-dark" href="/signup">Sign up</a> {signupText}
             </p>
           </form>
         </div>
       </div>
-      <SigninSlider client:load title="Turn your All ideas into your reality" />
+      <SigninSlider client:load title={signInSliderContent?.title} />
     </div>
   </div>
 </section>
