@@ -1,0 +1,97 @@
+<!-- Example HTML page to handle the callback -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OAuth Callback Handler</title>
+</head>
+<body>
+    <center>
+        <a href="javascript:redirectToAuthorization();">AUTH</a>
+        <div id="userInfo" style="margin-top: 20px;"></div>
+    </center>
+    <script>
+        function redirectToAuthorization() {
+            const clientId = 'ux7e5sTs3O8yvriP5tQ-4Al78SXso5L-tVLVYSQagk8';
+            const redirectUri = encodeURIComponent('https://yppo.websitetotal.com/auth_doorkeeper.html');
+            const responseType = 'code';
+            const scope = encodeURIComponent('public');
+            const authorizationUri = `http://localhost:3000/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+
+            window.location.href = authorizationUri;
+        }
+
+        function handleAuthCallback() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const code = urlParams.get('code');
+
+            if (code) {
+                exchangeCodeForToken(code);
+            } else {
+                console.error("Error: Authorization code not received.");
+            }
+        }
+
+        function exchangeCodeForToken(code) {
+            const clientId = 'ux7e5sTs3O8yvriP5tQ-4Al78SXso5L-tVLVYSQagk8';
+            // Note: Ideally, move clientSecret to your server to keep it secure
+            const clientSecret = 'F8w1trkaih9NMdSmIbXWi3m0OS257gQ2TKB7sRUwH8Q'; 
+            const redirectUri = encodeURIComponent('https://yppo.websitetotal.com/auth_doorkeeper.html');
+            const tokenUri = 'https://yppousers.websitetotal.com/oauth/token';
+
+            const body = `grant_type=authorization_code&code=${code}&redirect_uri=${redirectUri}&client_id=${clientId}&client_secret=${clientSecret}`;
+
+            fetch(tokenUri, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: body
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Token received:', data);
+                const userInfo = parseJwt(data.access_token);
+                displayUserInfo(userInfo);
+                // Handle token usage here (e.g., storing in sessionStorage, redirecting, etc.)
+            })
+            .catch(error => {
+                console.error('Error exchanging token:', error);
+            });
+        }
+
+        // Check if the page URL contains the 'code' parameter before running handleAuthCallback
+        if (window.location.search.includes('code=')) {
+            handleAuthCallback();
+        }
+
+
+        function parseJwt(token) {
+            try {
+                // Split the JWT into its three parts: Header, Payload, and Signature
+                const base64Url = token.split('.')[1]; // Get the payload part
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error('Error decoding JWT:', e);
+                return null;
+            }
+        }
+
+        function displayUserInfo(userInfo) {
+            if (userInfo && userInfo.user) {
+                const infoDiv = document.getElementById('userInfo');
+                infoDiv.innerHTML = `<strong>User Information:</strong><br>
+                                     Language: ${userInfo.user.language || 'N/A'}<br>
+                                     Domain: ${userInfo.user.domain}<br>
+                                     Plan: ${userInfo.user.plan}<br>
+                                     Kind: ${userInfo.user.kind}`;
+            }
+        }
+    </script>
+</body>
+</html>
