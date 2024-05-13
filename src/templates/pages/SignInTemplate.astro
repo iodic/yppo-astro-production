@@ -1,5 +1,5 @@
 ---
-import { sanityFetch } from "@/utils/sanityFetch"
+import { sanityFetch } from "@/lib/utils/sanityFetch";
 
 import SigninSlider from "@/layouts/function-components/SigninSlider.jsx"
 const { lang } = Astro.props
@@ -7,7 +7,6 @@ const { lang } = Astro.props
 const signInPageData = await sanityFetch(
   "signInPage",
   lang,
-  "en",
   `{
     title,
     description,
@@ -50,7 +49,7 @@ const { title, description, emailObject,passwordObject, buttonString, signInSlid
             </div>
             <input class="btn btn-primary mt-10 block w-full" type="submit" value={buttonString} />
             <p class="mt-6 text-center">
-              {cantLoginText} <a href="/login" class="text-dark">log in</a>
+              {cantLoginText} <a href="/login" class="text-dark">log in</a>?
               <a class="text-dark" href="/signup">Sign up</a> {signupText}
             </p>
           </form>
