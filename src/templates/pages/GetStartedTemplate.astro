@@ -1,5 +1,5 @@
 ---
-import { sanityClient } from "sanity:client"
+import { sanityFetch } from "@/utils/sanityFetch"
 import { Image } from "astro:assets"
 
 import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
@@ -8,9 +8,12 @@ import Cta from "@/layouts/partials/Cta.astro"
 
 const { lang } = Astro.props
 
-const getStartedPageData = await sanityClient.fetch(
-  `*[_type == 'getStartedPage' && language == '${lang}'] {
-      title,
+const getStartedPageData = await sanityFetch(
+  "getStartedPage",
+  lang,
+  "en",
+  `{
+    title,
       heroSection {
         ...,
         performanceCards[] {
