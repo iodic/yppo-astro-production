@@ -1,17 +1,12 @@
 ---
 import { sanityClient } from "sanity:client"
-import { getEntryBySlug } from "astro:content";
-import { Image } from "astro:assets";
+import { Image } from "astro:assets"
 
-import PageHeaderSanity from "@/components/PageHeaderSanity.astro";
-import Shape from "@/components/Shape.astro";
-import Cta from "@/layouts/partials/Cta.astro";
+import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
+import Shape from "@/components/Shape.astro"
+import Cta from "@/layouts/partials/Cta.astro"
 
-import { markdownify } from "@/lib/utils/textConverter";
-const get_started = await getEntryBySlug("get-started", "index");
-const { perfomance, our_works } = get_started.data;
-
-const { lang } = Astro.props;
+const { lang } = Astro.props
 
 const getStartedPageData = await sanityClient.fetch(
   `*[_type == 'getStartedPage' && language == '${lang}'] {
@@ -24,11 +19,25 @@ const getStartedPageData = await sanityClient.fetch(
           "performanceCardImage": image.asset->url,
         }
       },
+      videoSection {
+        ...,
+          "videoPoster": videoPoster.asset->url
+      },
+      cardsSection {
+        ...,
+        cards[] {
+          textCard,
+          buttonObject,
+          "cardImage": image.asset->url
+        }
+      }
   }`
 )
 
-const { title, heroSection } = getStartedPageData[0] || {}
+const { title, heroSection, videoSection, cardsSection } = getStartedPageData[0] || {}
 const { performanceCards } = heroSection || {}
+const { videoCard, listSectionTitle, list } = videoSection || {}
+const { cards } = cardsSection || {}
 ---
 
 <>
@@ -37,84 +46,121 @@ const { performanceCards } = heroSection || {}
   <section class="page-hero pb-14 pt-16">
     <div class="container">
       {
-        heroSection &&
+        heroSection && (
           <div class="page-hero-content mx-auto max-w-[883px] text-center">
             <PageHeaderSanity pageData={{ title, heroSection }} />
           </div>
+        )
       }
 
       {
-        performanceCards &&
+        performanceCards && (
           <div class="row mt-14">
-            {
-              performanceCards.map((performanceCard: any, i: number) => {
-                const {title, description, performanceCardImage} = performanceCard
+            {performanceCards.map((performanceCard: any, i: number) => {
+              const { title, description, performanceCardImage } = performanceCard
 
-                return(
-                  <div class="mt-10 text-center sm:col-6 md:col-4 md:mb-0">
-                    {
-                      performanceCardImage &&
-                      <div class={`relative mx-auto mb-8 flex h-[184px] w-[184px] items-center justify-center rounded-xl bg-white p-4 shadow-lg ${ perfomance.length - 1 !==i ? "after:absolute after:-right-4 after:-z-[1] after:hidden after:w-full after:translate-x-full after:border-b-2 after:border-dashed after:border-primary/50 after:content-[''] md:after:block" : undefined }`}>
-                        <Image height={122} width={144} src={performanceCardImage} alt="" />
-                      </div>
-                    }
+              return (
+                <div class="mt-10 text-center sm:col-6 md:col-4 md:mb-0">
+                  {performanceCardImage && (
+                    <div
+                      class={`relative mx-auto mb-8 flex h-[184px] w-[184px] items-center justify-center rounded-xl bg-white p-4 shadow-lg ${performanceCards.length - 1 !== i ? "after:absolute after:-right-4 after:-z-[1] after:hidden after:w-full after:translate-x-full after:border-b-2 after:border-dashed after:border-primary/50 after:content-[''] md:after:block" : undefined}`}
+                    >
+                      <Image height={122} width={144} src={performanceCardImage} alt="" />
+                    </div>
+                  )}
 
-                    {title && <h2 class="h5">{title}</h2>}
-                    {description && <p class="mt-4">{description}</p>}
-                  </div>
-                )
-              })
-            }
+                  {title && <h2 class="h5">{title}</h2>}
+                  {description && <p class="mt-4">{description}</p>}
+                </div>
+              )
+            })}
           </div>
+        )
       }
     </div>
   </section>
 
   <section>
     <div class="container">
-      {
-      our_works.map((item: any, index: number) => (
       <div class="lg:gx-5 row mt-16 items-center first:mt-12">
-        <div class={`lg:col-7 ${ index % 2===0 ? "lg:order-1" : "lg:order-0" }`}>
+        <div class={`lg:col-7 lg:order-1`}>
           <div class="relative">
             {
-            item.video ? (
-            <video class="w-full object-contain" playsinline autoplay loop>
-              <source src={item.video} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            ) : (
-            <Image class="w-full object-contain" alt="service" width={473} height={286} src={item.image} />
-            )
-            }
-          </div>
-        </div>
-        <div class={`mt-6 lg:col-5 lg:mt-0 ${ index % 2===0 ? "lg:order-0" : "lg:order-1" }`}>
-          <div class="text-container">
-            <h2 id={item.heading_id} class="lg:text-4xl mb-4">{item.title}</h2>
-            {
-              item.intro ? (
-                <p class="mb-4">{item.intro}</p>
-                <a class="btn btn-outline-header mt-8" href={item.button} title="Let's go!">Let's go!</a>
+              videoCard?.videoUrl ? (
+                <video class="w-full object-contain" playsinline autoplay loop>
+                  <source src={videoCard?.videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               ) : (
-                <ul class="mt-6 text-dark lg:-ml-4">
-                  {item.list.map((list: any) => (
-                  <li class="mb-6 w-full flex items-center leading-normal rounded px-4">
-                    <svg class="mr-3 w-6 h-6 flex-shrink-0" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 3C9.72 3 3 9.72 3 18C3 26.28 9.72 33 18 33C26.28 33 33 26.28 33 18C33 9.72 26.28 3 18 3ZM18 30C11.37 30 6 24.63 6 18C6 11.37 11.37 6 18 6C24.63 6 30 11.37 30 18C30 24.63 24.63 30 18 30Z" fill="#009EDB" />
-                      <path d="M5 18C5 25.1825 10.8175 31 18 31C25.1825 31 31 25.1825 31 18C31 10.8175 25.1825 5 18 5C10.8175 5 5 10.8175 5 18Z" fill="#009EDB" />
-                      <path d="M15 22.17L10.83 18L9.40997 19.41L15 25L27 13L25.59 11.59L15 22.17Z" fill="white" />
-                    </svg>
-                    <span set:html={markdownify(list)} />
-                  </li>
-                  ))}
-                </ul>
+                videoCard?.videoPoster && <Image class="w-full object-contain" alt="service" width={473} height={286} src={videoCard?.videoPoster} />
               )
             }
           </div>
         </div>
+
+        <div class={`mt-6 lg:col-5 lg:mt-0 lg:order-0`}>
+          <div class="text-container">
+            {listSectionTitle && <h2 class="lg:text-4xl mb-4">{listSectionTitle}</h2>}
+
+            <ul class="mt-6 text-dark lg:-ml-4">
+              {
+                list?.map((list: any) => (
+                  <li class="mb-6 w-full flex items-center leading-normal rounded px-4">
+                    <svg class="mr-3 w-6 h-6 flex-shrink-0" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M18 3C9.72 3 3 9.72 3 18C3 26.28 9.72 33 18 33C26.28 33 33 26.28 33 18C33 9.72 26.28 3 18 3ZM18 30C11.37 30 6 24.63 6 18C6 11.37 11.37 6 18 6C24.63 6 30 11.37 30 18C30 24.63 24.63 30 18 30Z"
+                        fill="#009EDB"
+                      />
+                      <path
+                        d="M5 18C5 25.1825 10.8175 31 18 31C25.1825 31 31 25.1825 31 18C31 10.8175 25.1825 5 18 5C10.8175 5 5 10.8175 5 18Z"
+                        fill="#009EDB"
+                      />
+                      <path d="M15 22.17L10.83 18L9.40997 19.41L15 25L27 13L25.59 11.59L15 22.17Z" fill="white" />
+                    </svg>
+
+                    {list?.listItemText && <span>{list?.listItemText}</span>}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
       </div>
-      ))
+
+      {
+        cards &&
+          cards.map((card: any, index: number) => {
+            const { cardImage, textCard, buttonObject } = card || {}
+
+            return (
+              <div class="lg:gx-5 row mt-16 items-center first:mt-12">
+                <div class={`lg:col-7 ${index % 2 === 0 ? "lg:order-1" : "lg:order-0"}`}>
+                  {cardImage && (
+                    <div class="relative">
+                      <Image class="w-full object-contain" alt="service" width={473} height={286} src={cardImage} />
+                    </div>
+                  )}
+                </div>
+
+                <div class={`mt-6 lg:col-5 lg:mt-0 ${index % 2 === 0 ? "lg:order-0" : "lg:order-1"}`}>
+                  <div class="text-container">
+                    {textCard?.title && <h2 class="lg:text-4xl mb-4">{textCard?.title}</h2>}
+                    {textCard?.description && <p class="mb-4">{textCard?.description}</p>}
+
+                    {buttonObject?.enableLink && buttonObject?.linkObject?.url && (
+                      <a
+                        class="btn btn-outline-header mt-8"
+                        href={buttonObject?.linkObject?.url}
+                        title={buttonObject?.linkObject?.urlTitle && buttonObject?.linkObject?.urlTitle}
+                      >
+                        {buttonObject?.linkObject?.urlTitle && buttonObject?.linkObject?.urlTitle}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )
+          })
       }
     </div>
   </section>
