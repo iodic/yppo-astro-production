@@ -1,29 +1,34 @@
 ---
 import { sanityClient } from "sanity:client"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import Shape from "@/components/Shape.astro"
-import PageHeader from "@/components/PageHeader.astro"
+import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
 import Blogs from "@/components/Blogs.astro"
 import FeaturedBlog from "@/components/blog/FeaturedBlog.astro"
 import Pagination from "@/layouts/components/Pagination.astro"
-import Cta from "@/layouts/partials/Cta.astro"
+import CtaSanity from "@/partials/CtaSanity.astro"
 
 const { lang } = Astro.props
 
-const featuredPost = await sanityClient.fetch(`*[_type == 'course' && featured == true && language == '${lang}']`)
+const coursesPageData = await sanityFetch(
+  "coursesPage",
+  lang,
+  `{
+      title,
+      heroSection,
+      generalText,
+      ctaBanner
+  }`
+)
 
+const { title, heroSection, generalText, ctaBanner } = coursesPageData[0] || {}
+
+const featuredPost = await sanityClient.fetch(`*[_type == 'course' && featured == true && language == '${lang}']`)
 const recentPost = await sanityClient.fetch(`*[_type == 'course' && featured != false && language == '${lang}'] | order(_createdAt desc)`)
 
 const totalPages = Math.ceil(recentPost.length / 6)
 const currentPosts = recentPost.slice(0, 6)
-
-const blogIndex = {
-  collection: "courses",
-  data: {
-    title: "Courses",
-    page_title: "Deepen your conflict management skills with our curated e-courses."
-  }
-}
 ---
 
 <>
@@ -31,7 +36,7 @@ const blogIndex = {
 
   <section class="page-hero pt-16">
     <div class="container">
-      <PageHeader page_data={blogIndex.data} />
+      <PageHeaderSanity pageData={{ title, heroSection }} />
     </div>
   </section>
 
@@ -74,11 +79,13 @@ const blogIndex = {
 
     <div class="container hidden" id="hidden-content">
       <FeaturedBlog posts={featuredPost} />
-      <h2 class="h4 mb-4">Recent Posts</h2>
+
+      {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
       <Blogs posts={currentPosts} />
+
       <Pagination section={"courses"} currentPage={1} totalPages={totalPages} />
     </div>
   </section>
 
-  <Cta />
+  <CtaSanity ctaBanner={ctaBanner} />
 </>
