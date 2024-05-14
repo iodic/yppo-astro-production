@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets"
+
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 
 import SigninSlider from "@/layouts/function-components/SigninSlider.jsx"
@@ -8,6 +10,7 @@ const signInPageData = await sanityFetch(
   "signInPage",
   lang,
   `{
+    "signInImage": signInImage.asset->url,
     title,
     description,
     googleSignInText,
@@ -20,7 +23,7 @@ const signInPageData = await sanityFetch(
     signupText
   }`
 )
-const { title, description, googleSignInText, emailSignInText, emailObject,passwordObject, buttonString, signInSliderContent, cantLoginText, signupText } = signInPageData[0] || {}
+const { signInImage, title, description, googleSignInText, emailSignInText, emailObject,passwordObject, buttonString, signInSliderContent, cantLoginText, signupText } = signInPageData[0] || {}
 ---
 
 <section>
@@ -28,17 +31,17 @@ const { title, description, googleSignInText, emailSignInText, emailObject,passw
     <div class="row">
       <div class="min-h-[980px] bg-white py-10 lg:col-6 lg:py-[114px]">
         <div class="mx-auto w-full max-w-[480px]">
-          <img class="mb-8 w-20" src="/images/umino.png" alt="" />
-          <h1 class="mb-4">{title}</h1>
-          <p>{description}</p>
-          <div class="signin-options mt-10">
+          {signInImage && (<img class="mb-8 w-20" alt="service" src={signInImage} />)}
+          {title && <h1 class="mb-4">{title}</h1>}
+          {description && <p> {description}</p>}
+          {googleSignInText &&  <div class="signin-options mt-10">
             <a class="btn btn-outline-white block w-full text-dark" href="#">{googleSignInText}</a>
-          </div>
-          <div
+          </div>}
+         {emailSignInText && <div
             class="relative my-8 text-center after:absolute after:left-0 after:top-1/2 after:z-[0] after:w-full after:border-b after:border-border after:content-['']"
           >
             <span class="relative z-[1] inline-block bg-white px-2">{emailSignInText}</span>
-          </div>
+          </div>}
 
           <form action="#">
             <div class="form-group">
