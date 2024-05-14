@@ -1,0 +1,38 @@
+---
+import { sanityClient } from "sanity:client"
+
+import CoursesSlugTemplate from "@/templates/pages/CoursesSlugTemplate.astro"
+import config from "@/config/config.json"
+import Base from "@/layouts/Base.astro"
+
+import { i18nConfig } from "@/i18n/i18nConfig"
+
+export async function getStaticPaths() {
+  const { defaultLocale, locales } = i18nConfig
+  const posts = await sanityClient.fetch(`*[_type == 'course' && featured != false && language != '${defaultLocale}'] | order(_createdAt desc)`)
+
+  const totalPages = Math.ceil(posts.length / config.settings.pagination)
+  const paths: any = []
+
+  locales.map((currentLocale: string) => {
+    if (currentLocale !== defaultLocale) {
+      for (let i = 1; i < totalPages; i++) {
+        paths.push({
+          params: {
+            lang: currentLocale,
+            slug: (i + 1).toString()
+          }
+        })
+      }
+    }
+  })
+
+  return paths
+}
+
+const { slug, lang } = Astro.params
+---
+
+<Base title="Courses">
+  <CoursesSlugTemplate slug={slug} lang={lang} />
+</Base>
