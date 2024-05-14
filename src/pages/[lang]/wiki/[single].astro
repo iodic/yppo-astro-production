@@ -16,13 +16,15 @@ export async function getStaticPaths() {
     if (currentLocale !== defaultLocale) {
       posts
         .filter((post: any) => post?.slug?.current)
-        .map((post: any) => ({
-          params: {
-            lang: currentLocale,
-            single: post.slug.current
-          },
-          props: { post }
-        }))
+        .map((post: any) =>
+          paths.push({
+            params: {
+              lang: currentLocale,
+              single: post.slug.current
+            },
+            props: { post }
+          })
+        )
     }
   })
 
