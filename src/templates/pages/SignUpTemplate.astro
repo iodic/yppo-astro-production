@@ -19,10 +19,11 @@ const signUpPageData = await sanityFetch(
     buttonString,
     signInSliderContent,
     cantLoginText,
-    signupText
+    signupText,
+    "signUpImage": signUpImage.asset->url,
   }`
 )
-const { title, description, googleSignUpText, emailSignUpText, nameObject, emailObject,passwordObject, buttonString, signInSliderContent } = signUpPageData[0] || {}
+const { signUpImage, title, description, googleSignUpText, emailSignUpText, nameObject, emailObject,passwordObject, buttonString, signInSliderContent } = signUpPageData[0] || {}
 ---
 
 <section>
@@ -30,7 +31,7 @@ const { title, description, googleSignUpText, emailSignUpText, nameObject, email
     <div class="row">
       <div class="min-h-[980px] bg-white py-10 lg:col-6 lg:py-[114px]">
         <div class="mx-auto w-full max-w-[480px]">
-          <img class="mb-8" src="/images/umino.png" alt="" />
+         {signUpImage && <img class="mb-8" src={signUpImage} alt="Sign Up Image" />}
           <h1 class="mb-4">{title}</h1>
           <p>{description}</p>
           <div class="signin-options mt-10">
