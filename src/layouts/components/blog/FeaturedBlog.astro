@@ -4,18 +4,20 @@ import { Image } from "astro:assets"
 import imageUrlBuilder from "@sanity/image-url"
 
 import config from "@/config/config.json"
+import localizeURL from "@/lib/utils/localizeURL"
 import dateFormat from "@/lib/utils/dateFormat"
 import { plainify } from "@/lib/utils/textConverter"
 import { calculateReadTime } from "@/helper/helper.ts"
 import { toPlainText } from "@portabletext/react"
 
 const { summary_length } = config.settings
-const { posts } = Astro.props
+const { title, posts, lang } = Astro.props
 
 const builder = imageUrlBuilder(sanityClient)
 ---
 
-<h2 class="h4 mb-4">Featured Courses</h2>
+{title && <h2 class="h4 mb-4">{title}</h2>}
+
 <div class="featured-posts row">
   {
     posts.map((post: any) => (
@@ -24,10 +26,13 @@ const builder = imageUrlBuilder(sanityClient)
           <Image class="card-img" width={235} height={304} src={builder.image(post.image).url()} alt={post.title} />
           <div class="card-content">
             <div class="card-tags space-x-1">{post.tags && post.tags.map((tag: string) => <div class="tag">{tag}</div>)}</div>
+
             <h3 class="h4 card-title">
-              <a href={`/courses/${post.slug.current}`}>{post.title}</a>
+              <a href={localizeURL(`/courses/${post.slug.current}`, `${lang}`)}>{post.title}</a>
             </h3>
+
             <p class="mb-4 text-text">{post.content && plainify(toPlainText(post.content)?.slice(0, Number(summary_length))) + "..."}</p>
+
             <div class="card-footer mt-6 flex space-x-4">
               <span class="inline-flex items-center text-xs text-[#666]">
                 <svg class="mr-1.5" width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,6 +43,7 @@ const builder = imageUrlBuilder(sanityClient)
                 </svg>
                 {dateFormat(post._createdAt)}
               </span>
+
               <span class="inline-flex items-center text-xs text-[#666]">
                 <svg class="mr-1.5" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path

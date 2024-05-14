@@ -78,7 +78,7 @@ const currentPosts = recentPost.slice(0, 6)
     </div>
 
     <div class="container hidden" id="hidden-content">
-      <FeaturedBlog posts={featuredPost} />
+      <FeaturedBlog posts={featuredPost} title={generalText?.recentPosts} lang={lang} />
 
       {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
       <Blogs posts={currentPosts} />
