@@ -1,0 +1,43 @@
+---
+import Base from "@/layouts/Base.astro"
+import BlogSingle from "@/layouts/BlogSingle.astro"
+import { sanityClient } from "sanity:client"
+
+import { i18nConfig } from "@/i18n/i18nConfig"
+
+export async function getStaticPaths() {
+  const paths: any = []
+  const posts = await sanityClient.fetch(`*[_type == 'course' && featured != false] | order(_createdAt desc)`)
+  const { defaultLocale, locales } = i18nConfig
+
+  posts.map((post: any) => ({
+    params: {
+      single: post.slug.current
+    },
+    props: { post }
+  }))
+
+  locales.map((currentLocale: string) => {
+    if (currentLocale !== defaultLocale) {
+      posts.map((post: any) =>
+        paths.push({
+          params: {
+            lang: currentLocale,
+            single: post.slug.current
+          },
+          props: { post }
+        })
+      )
+    }
+  })
+
+  return paths
+}
+
+const { post } = Astro.props
+const { title, description, image } = post
+---
+
+<Base title={title} description={description} image={image}>
+  <BlogSingle post={post} />
+</Base>
