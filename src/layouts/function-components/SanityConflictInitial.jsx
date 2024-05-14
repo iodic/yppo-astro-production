@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { sanityClient } from "sanity:client";
 import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
+import { sanityFetch } from "@/lib/utils/sanityFetch";
 
 const SanityConflictInitial = () => {
   const [answer, setAnswer] = useState("");
@@ -11,9 +12,11 @@ const SanityConflictInitial = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const initialPosts = await sanityClient.fetch(
-          `*[_type == 'conflictType' && initialQuestion == true]`,
-        );
+        const initialPosts = await sanityFetch({
+          type: "conflictType",
+          query: "initialQuestion == true",
+        });
+
         setSanityInitialPosts(initialPosts);
       } catch (error) {
         setError("Error fetching initial posts");
