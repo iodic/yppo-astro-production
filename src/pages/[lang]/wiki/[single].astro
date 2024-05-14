@@ -1,0 +1,38 @@
+---
+import { sanityClient } from "sanity:client"
+
+import Base from "@/layouts/Base.astro"
+import WikiSingle from "@/layouts/WikiSingle.astro"
+
+import { i18nConfig } from "@/i18n/i18nConfig"
+
+export async function getStaticPaths() {
+  const paths: any = []
+  const { defaultLocale, locales } = i18nConfig
+
+  const posts = await sanityClient.fetch(`*[_type == 'conflictType' && language != '${defaultLocale}'] | order(_createdAt desc)`)
+
+  locales.map((currentLocale: string) => {
+    if (currentLocale !== defaultLocale) {
+      posts
+        .filter((post: any) => post?.slug?.current)
+        .map((post: any) => ({
+          params: {
+            lang: currentLocale,
+            single: post.slug.current
+          },
+          props: { post }
+        }))
+    }
+  })
+
+  return paths
+}
+
+const { post } = Astro.props
+const { title, description, image } = post
+---
+
+<Base title={title} description={description} image={image}>
+  <WikiSingle post={post} />
+</Base>
