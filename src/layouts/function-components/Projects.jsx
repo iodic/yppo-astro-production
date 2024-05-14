@@ -9,17 +9,18 @@ const Projects = ({ lang } = {}) => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const projectsData = await sanityFetch(
-        "wiki",
+      const projectsData = await sanityFetch({
+        type: "wiki",
         lang,
-        `| order(orderRank){
+        pipe: `order(orderRank)`,
+        object: `{
             ...,
             'conflictType': conflictType[]->{
               slug,
               title
             },
         }`,
-      );
+      });
 
       setProjects(projectsData);
 

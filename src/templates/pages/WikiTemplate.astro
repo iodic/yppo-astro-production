@@ -8,16 +8,16 @@ import CtaSanity from "@/partials/CtaSanity.astro"
 
 const { lang } = Astro.props
 
-const wikiPageData = await sanityFetch(
-  "wikiPage",
+const wikiPageData = await sanityFetch({
+  type: "wikiPage",
   lang,
-  `{
+  object: `{
       title,
       heroSection,
       postsTitle,
       ctaBanner
   }`
-)
+})
 
 const { title, heroSection, ctaBanner, postsTitle } = wikiPageData[0] || {}
 ---

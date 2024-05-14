@@ -8,10 +8,10 @@ import SanityConflictInitial from "@/layouts/function-components/SanityConflictI
 
 const { lang } = Astro.props
 
-const conflictGuidePageData = await sanityFetch(
-  "conflictGuidePage",
+const conflictGuidePageData = await sanityFetch({
+  type: "conflictGuidePage",
   lang,
-  `{
+  object: `{
       title,
       introSection {
         ...,
@@ -19,7 +19,7 @@ const conflictGuidePageData = await sanityFetch(
       },
       signInSliderContent
   }`
-)
+})
 
 const { title, introSection, signInSliderContent } = conflictGuidePageData[0] || {}
 const { introTitle, introDescription, introButtonText, introMobileImage } = introSection || {}

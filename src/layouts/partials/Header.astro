@@ -16,16 +16,16 @@ const clientId = getClientId()
 const redirectUri = getRedirectUri()
 const baseUri = getBaseUri()
 
-const headerData = await sanityFetch(
-  "header",
+const headerData = await sanityFetch({
+  type: "header",
   lang,
-  `{
+  object: `{
       "logoSrc": logo.asset->url,
       "mobileLogoSrc": mobileLogo.asset->url,
       mainMenuObject,
       headerButtonsText
   }`
-)
+})
 
 const { logoSrc, mobileLogoSrc, mainMenuObject, headerButtonsText } = headerData[0] || {}
 

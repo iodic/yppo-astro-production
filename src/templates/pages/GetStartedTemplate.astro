@@ -8,10 +8,10 @@ import CtaSanity from "@/partials/CtaSanity.astro"
 
 const { lang } = Astro.props
 
-const getStartedPageData = await sanityFetch(
-  "getStartedPage",
+const getStartedPageData = await sanityFetch({
+  type: "getStartedPage",
   lang,
-  `{
+  object: `{
     title,
       heroSection {
         ...,
@@ -35,7 +35,7 @@ const getStartedPageData = await sanityFetch(
       },
       ctaBanner
   }`
-)
+})
 
 const { title, heroSection, videoSection, cardsSection, ctaBanner } = getStartedPageData[0] || {}
 const { performanceCards } = heroSection || {}

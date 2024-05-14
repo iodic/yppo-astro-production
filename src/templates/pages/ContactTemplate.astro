@@ -6,10 +6,10 @@ import ContactPageComponent from "@/layouts/function-components/contactTemplate"
 
 const { lang } = Astro.props
 
-const contactPageData = await sanityFetch(
-  "contactPage",
+const contactPageData = await sanityFetch({
+  type: "contactPage",
   lang,
-  `{
+  object: `{
       title,
       heroSection,
       nameObject,
@@ -19,7 +19,7 @@ const contactPageData = await sanityFetch(
       messageObject,
       buttonString
   }`
-)
+})
 
 const { title, heroSection, nameObject, emailObject, inquiryObject, inquiryOptions, messageObject, buttonString } = contactPageData[0] || {}
 ---

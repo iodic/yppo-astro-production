@@ -9,10 +9,10 @@ import localizeURL from "@/lib/utils/localizeURL"
 const { lang } = Astro.props
 const currentLanguage = Astro.currentLocale
 
-const footerData = await sanityFetch(
-  "footer",
+const footerData = await sanityFetch({
+  type: "footer",
   lang,
-  `{
+  object: `{
       "logoSrc": logo.asset->url,
       description,
       enableLanguageSwitcher,
@@ -21,7 +21,7 @@ const footerData = await sanityFetch(
       contactObject,
       enableCopyright
   }`
-)
+})
 
 const { logoSrc, description, enableLanguageSwitcher, socials, linksObject, contactObject, enableCopyright } = footerData[0] || {}
 
