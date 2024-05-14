@@ -10,9 +10,9 @@ import Cta from "@/layouts/partials/Cta.astro"
 
 const { lang } = Astro.props
 
-const featuredPost = await sanityClient.fetch(`*[_type == 'course' && featured == true]`)
+const featuredPost = await sanityClient.fetch(`*[_type == 'course' && featured == true && language == '${lang}']`)
 
-const recentPost = await sanityClient.fetch(`*[_type == 'course' && featured != false] | order(_createdAt desc)`)
+const recentPost = await sanityClient.fetch(`*[_type == 'course' && featured != false && language == '${lang}'] | order(_createdAt desc)`)
 
 const totalPages = Math.ceil(recentPost.length / 6)
 const currentPosts = recentPost.slice(0, 6)
