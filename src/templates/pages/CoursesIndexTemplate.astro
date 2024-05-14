@@ -92,7 +92,7 @@ const currentPosts = recentPost.slice(0, 6)
       {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
       <Blogs posts={currentPosts} />
 
-      <Pagination section={"courses"} currentPage={1} totalPages={totalPages} />
+      <Pagination section={"courses"} currentPage={1} totalPages={totalPages} textPrevious={generalText?.previous} textNext={generalText?.next} />
     </div>
   </section>
 
