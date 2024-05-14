@@ -10,6 +10,8 @@ const signInPageData = await sanityFetch(
   `{
     title,
     description,
+    googleSignInText,
+    emailSignInText,
     emailObject,
     passwordObject,
     buttonString,
@@ -18,7 +20,7 @@ const signInPageData = await sanityFetch(
     signupText
   }`
 )
-const { title, description, emailObject,passwordObject, buttonString, signInSliderContent, cantLoginText, signupText } = signInPageData[0] || {}
+const { title, description, googleSignInText, emailSignInText, emailObject,passwordObject, buttonString, signInSliderContent, cantLoginText, signupText } = signInPageData[0] || {}
 ---
 
 <section>
@@ -30,12 +32,12 @@ const { title, description, emailObject,passwordObject, buttonString, signInSlid
           <h1 class="mb-4">{title}</h1>
           <p>{description}</p>
           <div class="signin-options mt-10">
-            <a class="btn btn-outline-white block w-full text-dark" href="#">Sign In With Google</a>
+            <a class="btn btn-outline-white block w-full text-dark" href="#">{googleSignInText}</a>
           </div>
           <div
             class="relative my-8 text-center after:absolute after:left-0 after:top-1/2 after:z-[0] after:w-full after:border-b after:border-border after:content-['']"
           >
-            <span class="relative z-[1] inline-block bg-white px-2">Or Sign In With Email</span>
+            <span class="relative z-[1] inline-block bg-white px-2">{emailSignInText}</span>
           </div>
 
           <form action="#">
