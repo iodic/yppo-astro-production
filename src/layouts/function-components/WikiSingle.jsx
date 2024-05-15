@@ -9,7 +9,7 @@ import { checkStatus } from "src/helper/helper.ts";
 import portableTextComponents from "../portable-text-components";
 import { sanityClient } from "sanity:client";
 
-const WikiSingle = ({ post }) => {
+const WikiSingle = ({ post, lang }) => {
   const [postStatus, setPostStatus] = useState(null);
   const [isContentRepeater, setIsContentRepeater] = useState(false);
 
@@ -26,8 +26,7 @@ const WikiSingle = ({ post }) => {
 
   const builder = imageUrlBuilder(sanityClient);
 
-  return (
-    postStatus ? (
+  return postStatus ? (
     <section className="section blog-single">
       <div className="container">
         <div className="row justify-center">
@@ -108,9 +107,8 @@ const WikiSingle = ({ post }) => {
         </div>
       </div>
     </section>
-    ) : (
-      <LockedContent />
-    )
+  ) : (
+    <LockedContent lang={lang} client:load />
   );
 };
 

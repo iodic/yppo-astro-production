@@ -22,7 +22,7 @@ export async function getStaticPaths() {
               lang: currentLocale,
               single: post.slug.current
             },
-            props: { post }
+            props: { post, lang: currentLocale }
           })
         )
     }
@@ -31,10 +31,10 @@ export async function getStaticPaths() {
   return paths
 }
 
-const { post } = Astro.props
+const { post, lang } = Astro.props
 const { title, description, image } = post
 ---
 
 <Base title={title} description={description} image={image}>
-  <WikiSingle post={post} client:load/>
+  <WikiSingle post={post} lang={lang} client:load />
 </Base>

@@ -18,7 +18,7 @@ export async function getStaticPaths() {
         single: post.slug.current,
         lang: defaultLocale
       },
-      props: { post }
+      props: { post, lang: defaultLocale }
     }))
 
   return paths
@@ -29,5 +29,5 @@ const { title, description, image } = post
 ---
 
 <Base title={title} description={description} image={image} lang={lang}>
-  <WikiSingle post={post} client:load/>
+  <WikiSingle post={post} lang={lang} client:load />
 </Base>
