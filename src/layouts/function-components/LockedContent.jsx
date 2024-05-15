@@ -6,6 +6,10 @@ const LockedContent = () => {
   const redirectUri = getRedirectUri();
   const baseUri = getBaseUri();
 
+  const handleButtonClick = () => {
+    localStorage.setItem('yppoCurrentUrl', window.location.href);
+  };
+
   const authorizationUri = `${baseUri}/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=public`;
   return (
     <div className="container lg:gx-5 row items-center" id="hidden-paywall">
@@ -30,6 +34,7 @@ const LockedContent = () => {
           </p>
           <a
             className="btn btn-outline-header mt-8"
+            onClick={handleButtonClick}
             href={authorizationUri}
             title="Let's go!"
           >
