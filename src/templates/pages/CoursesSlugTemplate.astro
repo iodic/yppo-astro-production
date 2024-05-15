@@ -5,7 +5,7 @@ import { sanityFetch } from "@/lib/utils/sanityFetch"
 import config from "@/config/config.json"
 
 import Blogs from "@/components/Blogs.astro"
-import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
+import PageHeader from "@/components/PageHeader.astro"
 import Shape from "@/components/Shape.astro"
 import Pagination from "@/layouts/components/Pagination.astro"
 
@@ -37,7 +37,7 @@ const currentPosts = recentPost.slice(indexOfFirstPost, indexOfLastPost)
 
   <section class="page-hero pt-16">
     <div class="container">
-      <PageHeaderSanity pageData={{ title: currentPage > 1 ? `${title} / ${currentPage}` : title, heroSection }} />
+      <PageHeader pageData={{ title: currentPage > 1 ? `${title} / ${currentPage}` : title, heroSection }} />
     </div>
   </section>
 

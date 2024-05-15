@@ -2,7 +2,7 @@
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 import { Image } from "astro:assets"
 
-import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
+import PageHeader from "@/components/PageHeader.astro"
 import Shape from "@/components/Shape.astro"
 import CtaSanity from "@/partials/CtaSanity.astro"
 
@@ -51,7 +51,7 @@ const { cards } = cardsSection || {}
       {
         heroSection && (
           <div class="page-hero-content mx-auto max-w-[883px] text-center">
-            <PageHeaderSanity pageData={{ title, heroSection }} />
+            <PageHeader pageData={{ title, heroSection }} />
           </div>
         )
       }

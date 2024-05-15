@@ -1,8 +1,9 @@
 ---
+import { sanityClient } from "sanity:client"
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import Shape from "@/components/Shape.astro"
-import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
+import PageHeader from "@/components/PageHeader.astro"
 import Blogs from "@/components/Blogs.astro"
 import FeaturedBlog from "@/components/blog/FeaturedBlog.astro"
 import Pagination from "@/layouts/components/Pagination.astro"
@@ -23,18 +24,8 @@ const coursesPageData = await sanityFetch({
 
 const { title, heroSection, generalText, ctaBanner } = coursesPageData[0] || {}
 
-const featuredPost = await sanityFetch({
-  type: "course",
-  query: "featured == true",
-  lang
-})
-
-const recentPost = await sanityFetch({
-  type: "course",
-  query: "featured != false",
-  lang,
-  pipe: "order(_createdAt desc)"
-})
+const featuredPost = await sanityClient.fetch(`*[_type == 'course' && featured == true && language == '${lang}']`)
+const recentPost = await sanityClient.fetch(`*[_type == 'course' && featured != false && language == '${lang}'] | order(_createdAt desc)`)
 
 const totalPages = Math.ceil(recentPost.length / 6)
 const currentPosts = recentPost.slice(0, 6)
@@ -45,30 +36,30 @@ const currentPosts = recentPost.slice(0, 6)
 
   <section class="page-hero pt-16">
     <div class="container">
-      <PageHeaderSanity pageData={{ title, heroSection }} />
+      <PageHeader pageData={{ title, heroSection }} />
     </div>
   </section>
 
   <section class="section">
     <script is:inline>
-      document.addEventListener("DOMContentLoaded", function () {
-        fetch("https://yppousers.websitetotal.com/auth/logged_in")
-          .then(response => response.json())
-          .then(data => {
-            if (!data.logged_in) {
-              const hiddenPaywall = document.getElementById("hidden-paywall")
-              if (hiddenPaywall) {
-                hiddenPaywall.classList.remove("hidden")
-              }
-            } else {
-              const hiddenContent = document.getElementById("hidden-content")
-              if (hiddenContent) {
-                hiddenContent.classList.remove("hidden")
-              }
-            }
-          })
-          .catch(error => console.error("Error checking login status:", error))
-      })
+      // document.addEventListener("DOMContentLoaded", function () {
+      //   fetch("https://yppousers.websitetotal.com/auth/logged_in")
+      //     .then(response => response.json())
+      //     .then(data => {
+      //       if (!data.logged_in) {
+      //         const hiddenPaywall = document.getElementById("hidden-paywall")
+      //         if (hiddenPaywall) {
+      //           hiddenPaywall.classList.remove("hidden")
+      //         }
+      //       } else {
+      //         const hiddenContent = document.getElementById("hidden-content")
+      //         if (hiddenContent) {
+      //           hiddenContent.classList.remove("hidden")
+      //         }
+      //       }
+      //     })
+      //     .catch(error => console.error("Error checking login status:", error))
+      // })
     </script>
 
     <div class="container hidden lg:gx-5 row items-center" id="hidden-paywall">
@@ -86,7 +77,7 @@ const currentPosts = recentPost.slice(0, 6)
       </div>
     </div>
 
-    <div class="container hidden" id="hidden-content">
+    <div class="container" id="hidden-content">
       <FeaturedBlog posts={featuredPost} title={generalText?.recentPosts} lang={lang} />
 
       {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
