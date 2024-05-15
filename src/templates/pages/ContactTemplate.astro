@@ -1,7 +1,7 @@
 ---
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
-import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
+import PageHeader from "@/components/PageHeader.astro"
 import ContactPageComponent from "@/layouts/function-components/contactTemplate"
 
 const { lang } = Astro.props
@@ -27,7 +27,7 @@ const { title, heroSection, nameObject, emailObject, inquiryObject, inquiryOptio
 <>
   <section class="page-hero pb-6 pt-16">
     <div class="container">
-      <PageHeaderSanity pageData={{ title, heroSection }} />
+      <PageHeader pageData={{ title, heroSection }} />
     </div>
   </section>
 

@@ -1,8 +1,9 @@
 ---
+import { sanityClient } from "sanity:client"
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import Shape from "@/components/Shape.astro"
-import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
+import PageHeader from "@/components/PageHeader.astro"
 import Blogs from "@/components/Blogs.astro"
 import FeaturedBlog from "@/components/blog/FeaturedBlog.astro"
 import Pagination from "@/layouts/components/Pagination.astro"
@@ -23,18 +24,8 @@ const coursesPageData = await sanityFetch({
 
 const { title, heroSection, generalText, ctaBanner } = coursesPageData[0] || {}
 
-const featuredPost = await sanityFetch({
-  type: "course",
-  query: "featured == true",
-  lang
-})
-
-const recentPost = await sanityFetch({
-  type: "course",
-  query: "featured != false",
-  lang,
-  pipe: "order(_createdAt desc)"
-})
+const featuredPost = await sanityClient.fetch(`*[_type == 'course' && featured == true && language == '${lang}']`)
+const recentPost = await sanityClient.fetch(`*[_type == 'course' && featured != false && language == '${lang}'] | order(_createdAt desc)`)
 
 const totalPages = Math.ceil(recentPost.length / 6)
 const currentPosts = recentPost.slice(0, 6)
@@ -45,7 +36,7 @@ const currentPosts = recentPost.slice(0, 6)
 
   <section class="page-hero pt-16">
     <div class="container">
-      <PageHeaderSanity pageData={{ title, heroSection }} />
+      <PageHeader pageData={{ title, heroSection }} />
     </div>
   </section>
 
