@@ -9,7 +9,7 @@ import { checkStatus } from "src/helper/helper.ts";
 import portableTextComponents from "../portable-text-components";
 import { sanityClient } from "sanity:client";
 
-const Post = ({ post }) => {
+const WikiSingle = ({ post }) => {
   const [postStatus, setPostStatus] = useState(null);
   const [isContentRepeater, setIsContentRepeater] = useState(false);
 
@@ -114,4 +114,4 @@ const Post = ({ post }) => {
   );
 };
 
-export default Post;
+export default WikiSingle;
