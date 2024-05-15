@@ -166,11 +166,13 @@ interface MenuItem {
 
   document.getElementById("authLink").addEventListener("click", function (event) {
     const authorizationUri = `${baseUri}/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=public`
+    localStorage.setItem('yppoCurrentUrl', window.location.href);
     window.location.href = authorizationUri
   })
 
   document.getElementById("authLink_desktop").addEventListener("click", function (event) {
     const authorizationUri = `${baseUri}/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=public`
+    localStorage.setItem('yppoCurrentUrl', window.location.href);
     window.location.href = authorizationUri
   })
 </script>

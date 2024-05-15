@@ -35,7 +35,11 @@
           .then((response) => response.json())
           .then((data) => {
             localStorage.setItem('yppo_user_auth', data.access_token);
-            window.history.go(-2);
+            var storedURL = localStorage.getItem('currentURL');
+            if (storedURL) {
+              window.location.href = storedURL;
+            }
+            window.location.href = "/";
           })
           .catch((error) => {
             console.error("Error exchanging token:", error);
