@@ -35,7 +35,7 @@
           .then((response) => response.json())
           .then((data) => {
             localStorage.setItem('yppo_user_auth', data.access_token);
-            var storedURL = localStorage.getItem('currentURL');
+            var storedURL = localStorage.getItem('yppoCurrentUrl');
             if (storedURL) {
               window.location.href = storedURL;
             }
