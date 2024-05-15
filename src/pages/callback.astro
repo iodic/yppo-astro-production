@@ -34,7 +34,7 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            setCookie("yppo_user_auth", data.access_token, 30);
+            localStorage.setItem('yppo_user_auth', data.access_token);
             window.location.href = "/";
           })
           .catch((error) => {
@@ -44,16 +44,6 @@
 
       if (window.location.search.includes("code=")) {
         handleAuthCallback();
-      }
-
-      function setCookie(name:any, value:any, days:any) {
-        let expires = "";
-        if (days) {
-          const date = new Date();
-          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-          expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
       }
     </script>
   </body>
