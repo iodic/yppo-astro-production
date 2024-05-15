@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { sanityClient } from "sanity:client";
 import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 
@@ -16,6 +15,13 @@ const SanityConflictInitial = ({ lang }) => {
           type: "conflictType",
           lang,
           query: "initialQuestion == true",
+          object: `{
+            ...,
+            'conflictType': conflictType[]->{
+              slug,
+              title
+            },
+        }`,
         });
 
         setSanityInitialPosts(initialPosts);
