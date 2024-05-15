@@ -43,7 +43,6 @@ const SanityConflictPost = ({ initialId, lang }) => {
 
           setPageData(pageContent);
         } catch (error) {
-          console.log(error);
           console.error("Error fetching page data");
         }
       };
