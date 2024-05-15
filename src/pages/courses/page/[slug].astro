@@ -3,7 +3,6 @@ import { sanityClient } from "sanity:client"
 
 import CoursesSlugTemplate from "@/templates/pages/CoursesSlugTemplate.astro"
 import config from "@/config/config.json"
-import Base from "@/layouts/Base.astro"
 
 import { i18nConfig } from "@/i18n/i18nConfig"
 
@@ -28,6 +27,4 @@ const { slug } = Astro.params
 const currentLanguage = Astro.currentLocale
 ---
 
-<Base title="Courses">
-  <CoursesSlugTemplate slug={slug} lang={currentLanguage} />
-</Base>
+<CoursesSlugTemplate slug={slug} lang={currentLanguage} />

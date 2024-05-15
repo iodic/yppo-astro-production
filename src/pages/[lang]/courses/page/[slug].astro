@@ -3,7 +3,6 @@ import { sanityClient } from "sanity:client"
 
 import CoursesSlugTemplate from "@/templates/pages/CoursesSlugTemplate.astro"
 import config from "@/config/config.json"
-import Base from "@/layouts/Base.astro"
 
 import { i18nConfig } from "@/i18n/i18nConfig"
 
@@ -33,6 +32,4 @@ export async function getStaticPaths() {
 const { slug, lang } = Astro.params
 ---
 
-<Base title="Courses">
-  <CoursesSlugTemplate slug={slug} lang={lang} />
-</Base>
+<CoursesSlugTemplate slug={slug} lang={lang} />

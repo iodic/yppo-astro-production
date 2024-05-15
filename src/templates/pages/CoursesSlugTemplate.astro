@@ -4,6 +4,7 @@ import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import config from "@/config/config.json"
 
+import Base from "@/layouts/Base.astro"
 import Blogs from "@/components/Blogs.astro"
 import PageHeader from "@/components/PageHeader.astro"
 import Shape from "@/components/Shape.astro"
@@ -16,12 +17,17 @@ const coursesPageData = await sanityFetch({
   lang,
   object: `{
       title,
+      pageMetadata {
+        ...,
+        "metaImage": metaImage.asset->url,
+      },
       heroSection,
       generalText
   }`
 })
 
-const { title, heroSection, generalText } = coursesPageData[0] || {}
+const { title, pageMetadata, heroSection, generalText } = coursesPageData[0] || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 
 const recentPost = await sanityClient.fetch(`*[_type == 'course' && featured != false && language == '${lang}'] | order(_createdAt desc)`)
 
@@ -32,7 +38,14 @@ const indexOfFirstPost = indexOfLastPost - config.settings.pagination
 const currentPosts = recentPost.slice(indexOfFirstPost, indexOfLastPost)
 ---
 
-<>
+<Base
+  title={title && title}
+  meta_title={metaTitle && metaTitle}
+  description={metaDescription && metaDescription}
+  image={metaImage && metaImage}
+  noindex={noIndex && noIndex}
+  canonical={canonicalUrl && canonicalUrl}
+>
   <Shape />
 
   <section class="page-hero pt-16">
@@ -56,4 +69,4 @@ const currentPosts = recentPost.slice(indexOfFirstPost, indexOfLastPost)
       />
     </div>
   </section>
-</>
+</Base>
