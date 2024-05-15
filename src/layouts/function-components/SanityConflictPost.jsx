@@ -5,6 +5,8 @@ import { PortableText } from "@portabletext/react";
 import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
 import TradeOff from "@/layouts/function-components/TradeOff.jsx";
 import portableTextComponents from "../portable-text-components";
+import { checkStatus } from "src/helper/helper.ts";
+import LockedContent from "./LockedContent";
 
 const SanityConflictPost = ({ initialId }) => {
   const [id, setId] = useState(initialId);
@@ -19,6 +21,7 @@ const SanityConflictPost = ({ initialId }) => {
   const [articleType, setArticleType] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [currentRepeaterIndex, setCurrentRepeaterIndex] = useState(0);
+  const [postStatus, setPostStatus] = useState(null);
 
   const builder = imageUrlBuilder(sanityClient);
 
@@ -32,6 +35,11 @@ const SanityConflictPost = ({ initialId }) => {
           );
 
           setSanityPost(loadedPost);
+
+          if (loadedPost) {
+            const status = await checkStatus(loadedPost?.status);
+            setPostStatus(status);
+          }
 
           const fetchedAnswers = [];
           if (loadedPost.hasOwnProperty("answers")) {
@@ -185,6 +193,20 @@ const SanityConflictPost = ({ initialId }) => {
     }
   }
 
+  if (!postStatus) {
+    return (
+      <>
+        <LockedContent />
+        <button
+          className="go go-back btn float-left border-0 pl-0 pr-0"
+          onClick={() => handleBackAction()}
+        >
+          ← Back
+        </button>
+      </>
+    );
+  }
+
   return (
     <div>
       <div
@@ -192,7 +214,6 @@ const SanityConflictPost = ({ initialId }) => {
         key={`sanityPost_${sanityPost._id}`}
       >
         <h2 className="mb-8 font-normal">{sanityPost.title}</h2>
-        {sanityPost.status}
         {sanityPost && (
           <>
             <div className={`${hiddenContent}`}>
