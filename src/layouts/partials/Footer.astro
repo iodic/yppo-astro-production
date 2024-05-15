@@ -68,10 +68,11 @@ interface LinkItem {
           localStorage.removeItem("yppo_user_auth");
           location.reload();
         }
-
-        if (!localStorage.getItem("yppo_user_auth")) {
-          document.getElementById("authLink_logout").remove();
-        }
+        document.addEventListener("astro:page-load", () => {
+          if (!localStorage.getItem("yppo_user_auth")) {
+            document.getElementById("authLink_logout").remove();
+          }
+        });
       </script>
 
       {
