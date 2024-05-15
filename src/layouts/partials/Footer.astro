@@ -111,7 +111,7 @@ interface LinkItem {
                       >
                         <a
                           class="hover:text-primary hover:underline "
-                          href={localizeURL(url, `${currentLanguage}`)}
+                          href={localizeURL(url, currentLanguage)}
                         >
                           {urlTitle}
                         </a>
@@ -156,7 +156,7 @@ interface LinkItem {
               {contactObject?.enableContactButton && (
                 <li>
                   <a
-                    href={localizeURL("/contact", `${currentLanguage}`)}
+                    href={localizeURL("/contact", currentLanguage)}
                     class="btn btn-white mt-4"
                   >
                     {contactObject?.title && contactObject?.title}

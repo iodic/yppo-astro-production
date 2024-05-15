@@ -134,10 +134,7 @@ interface MenuItem {
                         ({ urlTitle: childUrlTitle, url: childUrl }: any) => (
                           <li class="nav-dropdown-item">
                             <a
-                              href={localizeURL(
-                                `${pageUrl?.url}`,
-                                `${currentLanguage}`
-                              )}
+                              href={localizeURL( pageUrl?.url, currentLanguage )}
                               class={`nav-dropdown-link block ${(pathname === `${childUrl}/` || pathname === childUrl) && "text-primary"}`}
                             >
                               {childUrlTitle}
@@ -149,11 +146,7 @@ interface MenuItem {
                   </li>
                 ) : (
                   <li class="nav-item">
-                    <a
-                      href={localizeURL(
-                        `${pageUrl?.url}`,
-                        `${currentLanguage}`
-                      )}
+                    <a href={localizeURL(pageUrl?.url, currentLanguage )}
                       class={`nav-link inline-block lg:block ${(pathname === `${pageUrl?.url}/` || pathname === pageUrl?.url) && "active"}`}
                     >
                       {pageUrl?.urlTitle}
@@ -167,7 +160,7 @@ interface MenuItem {
           <li class="nav-item mt-2 lg:hidden">
             <a
               class="btn btn-primary btn-sm border-border"
-              href={localizeURL("/get-started", `${currentLanguage}`)}
+              href={localizeURL("/get-started", currentLanguage)}
             >
               {headerButtonsText?.getStarted
                 ? headerButtonsText?.getStarted
@@ -187,7 +180,7 @@ interface MenuItem {
     <div class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
       <a
         class="header-cta"
-        href={localizeURL("/get-started", `${currentLanguage}`)}
+        href={localizeURL("/get-started", currentLanguage)}
         >{
           headerButtonsText?.getStarted
             ? headerButtonsText?.getStarted

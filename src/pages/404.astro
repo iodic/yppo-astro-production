@@ -40,7 +40,7 @@ const { enableLink, linkObject } = buttonObject || {}
 
         {
           enableLink && linkObject && (
-            <a class="mt-4 btn btn-primary" href={localizeURL(linkObject?.url, `${currentLanguage}`)}>
+            <a class="mt-4 btn btn-primary" href={localizeURL(linkObject?.url, currentLanguage)}>
               {linkObject?.urlTitle && linkObject?.urlTitle}
             </a>
           )
