@@ -29,26 +29,23 @@ const SanityConflictPost = ({ initialId, lang }) => {
   const builder = imageUrlBuilder(sanityClient);
 
   useEffect(() => {
-    if (id) {
-      setLoading(true);
-      const fetchData = async () => {
-        try {
-          const pageContent = await sanityFetch({
-            type: "conflictGuidePage",
-            lang,
-            object: `{
+    const fetchData = async () => {
+      try {
+        const pageContent = await sanityFetch({
+          type: "conflictGuidePage",
+          lang,
+          object: `{
               generalText
             }`,
-          });
+        });
 
-          setPageData(pageContent);
-        } catch (error) {
-          console.error("Error fetching page data");
-        }
-      };
+        setPageData(pageContent);
+      } catch (error) {
+        console.error("Error fetching page data");
+      }
+    };
 
-      fetchData();
-    }
+    fetchData();
   }, []);
 
   const { generalText } = pageData[0] || {};
