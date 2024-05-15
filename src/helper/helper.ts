@@ -1,3 +1,5 @@
+import { parseJwt } from "./auth";
+
 export function calculateReadTime(content: any) {
   if (content && Array.isArray(content) && content.length > 0) {
     let fullText = "";
@@ -20,19 +22,25 @@ export function calculateReadTime(content: any) {
 }
 
 export async function checkStatus(status: string) {
-  let validation: boolean = false;
-
   if ("free" === status) {
-    validation = true;
+    return true;
   }
 
-  if ("logged" === status) {
-    validation = false;
+  if (typeof localStorage !== "undefined") {
+    const jwtToken = localStorage.getItem('yppo_user_auth');
+    const jwt = jwtToken ? parseJwt(jwtToken) : null;
+    if ("logged" === status) {
+      if (jwt && jwt.user) {
+        return true;
+      }
+    }
+
+    if ("paid" === status) {
+      if (jwt && jwt.user) {
+        return jwt.user.plan === "paid";
+      }
+    }
   }
 
-  if ("paid" === status) {
-    validation = false;
-  }
-
-  return validation;
+  return false;
 }
