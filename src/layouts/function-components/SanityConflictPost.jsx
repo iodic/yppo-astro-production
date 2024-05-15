@@ -130,7 +130,9 @@ const SanityConflictPost = ({ initialId, lang }) => {
           className="go go-forward btn btn-primary block float-right w-40 "
           onClick={reloadPage}
         >
-          Finish
+          {generalText?.finishButtonText
+            ? generalText?.finishButtonText
+            : "Finish"}
         </button>
       </div>
     );
@@ -272,7 +274,9 @@ const SanityConflictPost = ({ initialId, lang }) => {
                     className="go go-forward btn btn-primary block float-right w-40 "
                     onClick={reloadPage}
                   >
-                    Finish
+                    {generalText?.finishButtonText
+                      ? generalText?.finishButtonText
+                      : "Finish"}
                   </button>
                   <button
                     className="go go-back btn float-left border-0 pl-0 pr-0"
@@ -299,7 +303,9 @@ const SanityConflictPost = ({ initialId, lang }) => {
                         : setShowBlockContent(true)
                     }
                   >
-                    Next
+                    {generalText?.nextButtonText
+                      ? generalText?.nextButtonText
+                      : "Next"}
                   </button>
                   <button
                     className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenContent}`}
@@ -379,7 +385,13 @@ const SanityConflictPost = ({ initialId, lang }) => {
           className={`go go-forward btn btn-primary block float-right w-40 ${hiddenClass}`}
           onClick={() => (guideEnd ? reloadPage() : handleNextButtonClick())}
         >
-          {guideEnd ? "Finish" : "Next"}
+          {guideEnd
+            ? generalText?.finishButtonText
+              ? generalText?.finishButtonText
+              : "Finish"
+            : generalText?.nextButtonText
+              ? generalText?.nextButtonText
+              : "Next"}
         </button>
         <button
           className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenClass}`}
