@@ -26,11 +26,8 @@ const Post = ({ post }) => {
 
   const builder = imageUrlBuilder(sanityClient);
 
-  if (!postStatus) {
-    return null;
-  }
-
   return (
+    postStatus ? (
     <section className="section blog-single">
       <div className="container">
         <div className="row justify-center">
@@ -111,6 +108,9 @@ const Post = ({ post }) => {
         </div>
       </div>
     </section>
+    ) : (
+      <LockedContent />
+    )
   );
 };
 
