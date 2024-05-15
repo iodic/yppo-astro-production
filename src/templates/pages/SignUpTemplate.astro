@@ -5,10 +5,10 @@ import SigninSlider from "@/layouts/function-components/SigninSlider.jsx"
 
 const { lang } = Astro.props
 
-const signUpPageData = await sanityFetch(
-  "signUpPage",
-  lang,
-  `{
+const signUpPageData = await sanityFetch({
+type: "signUpPage",
+lang,
+object: `{
     title,
     description,
     googleSignUpText,
@@ -21,7 +21,7 @@ const signUpPageData = await sanityFetch(
     cantLoginText,
     signupText,
     "signUpImage": signUpImage.asset->url,
-  }`
+  }`}
 )
 const { signUpImage, title, description, googleSignUpText, emailSignUpText, nameObject, emailObject,passwordObject, buttonString, signInSliderContent } = signUpPageData[0] || {}
 ---
