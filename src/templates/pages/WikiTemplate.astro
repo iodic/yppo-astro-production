@@ -1,6 +1,7 @@
 ---
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
+import Base from "@/layouts/Base.astro"
 import Shape from "@/components/Shape.astro"
 import FeatureBannerSanity from "@/components/features/FeatureBannerSanity.astro"
 import ProjecManagement from "@/components/features/ProjecManagement.astro"
@@ -13,18 +14,30 @@ const wikiPageData = await sanityFetch({
   lang,
   object: `{
       title,
+      pageMetadata {
+        ...,
+        "metaImage": metaImage.asset->url,
+      },
       heroSection,
       postsTitle,
       ctaBanner
   }`
 })
 
-const { title, heroSection, ctaBanner, postsTitle } = wikiPageData[0] || {}
+const { title, pageMetadata, heroSection, ctaBanner, postsTitle } = wikiPageData[0] || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 ---
 
-<>
+<Base
+  title={title && title}
+  meta_title={metaTitle && metaTitle}
+  description={metaDescription && metaDescription}
+  image={metaImage && metaImage}
+  noindex={noIndex && noIndex}
+  canonical={canonicalUrl && canonicalUrl}
+>
   <Shape />
   <FeatureBannerSanity title={title} heroSection={heroSection} />
   <ProjecManagement postsTitle={postsTitle} lang={lang} />
   <Cta ctaBanner={ctaBanner} />
-</>
+</Base>

@@ -1,30 +1,27 @@
 ---
-import Base from "@/layouts/Base.astro";
-import WikiTemplate from "@/templates/pages/WikiTemplate.astro";
+import WikiTemplate from "@/templates/pages/WikiTemplate.astro"
 
 import { i18nConfig } from "../../i18n/i18nConfig"
 
 export async function getStaticPaths() {
-  const paths: any = [];
+  const paths: any = []
 
-  const {defaultLocale, locales} = i18nConfig
+  const { defaultLocale, locales } = i18nConfig
 
   locales.map((currentLocale: string) => {
     if (currentLocale !== defaultLocale) {
       paths.push({
         params: {
-          lang: currentLocale,
-        },
-    });
+          lang: currentLocale
+        }
+      })
     }
   })
 
-  return paths;
+  return paths
 }
 
-const { lang } = Astro.params;
+const { lang } = Astro.params
 ---
 
-<Base title="Wiki" lang={lang}>
-  <WikiTemplate lang={lang} />
-</Base>
+<WikiTemplate lang={lang} />

@@ -1,10 +1,7 @@
 ---
-import Base from "@/layouts/Base.astro";
-import WikiTemplate from "@/templates/pages/WikiTemplate.astro";
+import WikiTemplate from "@/templates/pages/WikiTemplate.astro"
 
-const currentLanguage  = Astro.currentLocale;
+const currentLanguage = Astro.currentLocale
 ---
 
-<Base title="Wiki" lang={currentLanguage}>
-  <WikiTemplate lang={currentLanguage} />
-</Base>
+<WikiTemplate lang={currentLanguage} />
