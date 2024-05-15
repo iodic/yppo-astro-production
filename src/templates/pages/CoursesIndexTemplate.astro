@@ -2,6 +2,7 @@
 import { sanityClient } from "sanity:client"
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
+import Base from "@/layouts/Base.astro"
 import Shape from "@/components/Shape.astro"
 import PageHeader from "@/components/PageHeader.astro"
 import Blogs from "@/components/Blogs.astro"
@@ -16,13 +17,18 @@ const coursesPageData = await sanityFetch({
   lang,
   object: `{
       title,
+      pageMetadata {
+        ...,
+        "metaImage": metaImage.asset->url,
+      },
       heroSection,
       generalText,
       ctaBanner
   }`
 })
 
-const { title, heroSection, generalText, ctaBanner } = coursesPageData[0] || {}
+const { title, pageMetadata, heroSection, generalText, ctaBanner } = coursesPageData[0] || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 
 const featuredPost = await sanityFetch({
   type: "course",
@@ -41,7 +47,14 @@ const totalPages = Math.ceil(recentPost.length / 6)
 const currentPosts = recentPost.slice(0, 6)
 ---
 
-<>
+<Base
+  title={title && title}
+  meta_title={metaTitle && metaTitle}
+  description={metaDescription && metaDescription}
+  image={metaImage && metaImage}
+  noindex={noIndex && noIndex}
+  canonical={canonicalUrl && canonicalUrl}
+>
   <Shape />
 
   <section class="page-hero pt-16">
@@ -62,4 +75,4 @@ const currentPosts = recentPost.slice(0, 6)
   </section>
 
   <Cta ctaBanner={ctaBanner} />
-</>
+</Base>
