@@ -1,28 +1,26 @@
 ---
-import config from "@/config/config.json";
 import localizeURL from "@/lib/utils/localizeURL"
 
-const currentLanguage = Astro.currentLocale
-
 const {
-  call_to_action: {
+  ctaBanner: {
     title,
-    description,
-    button: { label, link },
-  },
-} = config;
+    bannerUrl: { url, urlTitle }
+  }
+} = Astro.props
+
+const currentLanguage = Astro.currentLocale
 ---
 
 <section class="px-5 py-20 xl:py-[120px]">
   <div class="container">
-    <div
-      class="bg-gradient row justify-center rounded-b-[80px] rounded-t-[20px] px-[30px] pb-[75px] pt-16"
-    >
+    <div class="bg-gradient row justify-center rounded-b-[80px] rounded-t-[20px] px-[30px] pb-[75px] pt-16">
       <div class="lg:col-11">
         <div class="row">
           <div class="lg:col-9">
             <h2 class="h1 text-white">{title}</h2>
-            <a class="btn btn-white mt-8" href={localizeURL(link, `${currentLanguage}`)}>{label}</a>
+            <a class="btn btn-white mt-8 112" href={localizeURL(url, `${currentLanguage}`)}>
+              {urlTitle}
+            </a>
           </div>
           <div class="mt-8 lg:col-3 lg:mt-0">
             <p class="text-white"></p>

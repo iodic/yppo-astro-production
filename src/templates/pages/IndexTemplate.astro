@@ -4,7 +4,7 @@ import { sanityFetch } from "@/lib/utils/sanityFetch"
 import Banner from "@/layouts/components/Banner.astro"
 import KeyFeatures from "@/layouts/components/KeyFeatures.astro"
 import Testimonial from "@/layouts/components/Testimonial.astro"
-import CtaSanity from "@/partials/CtaSanity.astro"
+import Cta from "@/partials/Cta.astro"
 
 const { lang } = Astro.props
 
@@ -43,5 +43,5 @@ const { title, heroSection, cardsSection, reviewsSection, ctaBanner } = homepage
   <!-- testimonial -->
   <Testimonial testimonialsData={reviewsSection} />
   <!-- call to action -->
-  <CtaSanity ctaBanner={ctaBanner} />
+  <Cta ctaBanner={ctaBanner} />
 </>
