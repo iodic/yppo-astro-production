@@ -8,8 +8,17 @@ export const sanityFetch = async ({
   pipe = "",
   object = "",
 }) => {
-  return sanityClient.fetch(`[(
-        *[ _type == "${type}" && language == '${lang}' ${query ? "&& " + query : ""} ] +
-        *[ _type == "${type}" && language == '${i18nConfig.defaultLocale}' ${query ? "&& " + query : ""} ]
-      )[0]] ${pipe ? "| " + pipe : ""} ${object}`);
+  const langData = await sanityClient.fetch(
+    `*[ _type == "${type}" && language == '${lang}' ${query ? "&& " + query : ""} ]  ${pipe ? "| " + pipe : ""} ${object}`,
+  );
+
+  if (langData?.length) {
+    return langData;
+  }
+
+  const fallbackData = await sanityClient.fetch(
+    `*[ _type == "${type}" && language == '${i18nConfig.defaultLocale}' ${query ? "&& " + query : ""} ]  ${pipe ? "| " + pipe : ""} ${object}`,
+  );
+
+  return fallbackData;
 };
