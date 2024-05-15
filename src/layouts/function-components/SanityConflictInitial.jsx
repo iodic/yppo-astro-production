@@ -50,7 +50,11 @@ const SanityConflictInitial = ({ lang }) => {
     <div>
       {error && <div>Error: {error}</div>}
       {submitFormAnswer ? (
-        <SanityConflictPost client:load initialId={submitFormAnswer} />
+        <SanityConflictPost
+          initialId={submitFormAnswer}
+          lang={lang}
+          client:load
+        />
       ) : (
         sanityInitialPosts.length > 0 && (
           <div className="form-wrapper hidden form-1 mt-4">

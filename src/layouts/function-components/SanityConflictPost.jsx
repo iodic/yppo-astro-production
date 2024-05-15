@@ -8,7 +8,7 @@ import portableTextComponents from "../portable-text-components";
 import { checkStatus } from "src/helper/helper.ts";
 import LockedContent from "./LockedContent";
 
-const SanityConflictPost = ({ initialId }) => {
+const SanityConflictPost = ({ initialId, lang }) => {
   const [id, setId] = useState(initialId);
   const [sanityPost, setSanityPost] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -196,7 +196,8 @@ const SanityConflictPost = ({ initialId }) => {
   if (!postStatus) {
     return (
       <>
-        <LockedContent />
+        <LockedContent lang={lang} client:load />
+
         <button
           className="go go-back btn float-left border-0 pl-0 pr-0"
           onClick={() => handleBackAction()}
