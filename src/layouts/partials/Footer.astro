@@ -1,13 +1,13 @@
 ---
-import { Image } from "astro:assets";
-import { sanityFetch } from "@/lib/utils/sanityFetch";
+import { Image } from "astro:assets"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
-import SocialItem from "@/components/SocialItem.astro";
-import LanguageSwitcher from "@/components/LanguageSwitcher.astro";
-import localizeURL from "@/lib/utils/localizeURL";
+import SocialItem from "@/components/SocialItem.astro"
+import LanguageSwitcher from "@/components/LanguageSwitcher.astro"
+import localizeURL from "@/lib/utils/localizeURL"
 
-const { lang } = Astro.props;
-const currentLanguage = Astro.currentLocale;
+const { lang } = Astro.props
+const currentLanguage = Astro.currentLocale
 
 const footerData = await sanityFetch({
   type: "footer",
@@ -20,27 +20,19 @@ const footerData = await sanityFetch({
       linksObject,
       contactObject,
       enableCopyright
-  }`,
-});
+  }`
+})
 
-const {
-  logoSrc,
-  description,
-  enableLanguageSwitcher,
-  socials,
-  linksObject,
-  contactObject,
-  enableCopyright,
-} = footerData[0] || {};
+const { logoSrc, description, enableLanguageSwitcher, socials, linksObject, contactObject, enableCopyright } = footerData[0] || {}
 
 interface SocialItem {
-  socialsType: string;
-  url: string;
+  socialsType: string
+  url: string
 }
 
 interface LinkItem {
-  urlTitle: string;
-  url: string;
+  urlTitle: string
+  url: string
 }
 ---
 
@@ -48,13 +40,7 @@ interface LinkItem {
   <div class="container">
     <div class="lg:gx-5 row pb-10 pt-[52px]">
       <div class="col-12 mt-12 md:col-6 lg:col-3">
-        {
-          logoSrc ? (
-            <Image src={logoSrc} alt="" width={231} height={74} />
-          ) : (
-            "Yppo"
-          )
-        }
+        {logoSrc ? <Image src={logoSrc} alt="" width={231} height={74} /> : "Yppo"}
 
         {description && <p class="mt-6">{description}</p>}
 
@@ -65,14 +51,14 @@ interface LinkItem {
 
       <script is:inline>
         function logoutAndReload() {
-          localStorage.removeItem("yppo_user_auth");
-          location.reload();
+          localStorage.removeItem("yppo_user_auth")
+          location.reload()
         }
         document.addEventListener("astro:page-load", () => {
           if (!localStorage.getItem("yppo_user_auth")) {
-            document.getElementById("authLink_logout").remove();
+            document.getElementById("authLink_logout").remove()
           }
-        });
+        })
       </script>
 
       {
@@ -82,11 +68,9 @@ interface LinkItem {
 
             {socials?.socialsRepeater && (
               <ul class="social-icons mt-4 lg:mt-6">
-                {socials?.socialsRepeater?.map(
-                  ({ socialsType, url }: SocialItem) => {
-                    return <SocialItem socialsType={socialsType} url={url} />;
-                  }
-                )}
+                {socials?.socialsRepeater?.map(({ socialsType, url }: SocialItem) => {
+                  return <SocialItem socialsType={socialsType} url={url} />
+                })}
               </ul>
             )}
           </div>
@@ -100,26 +84,15 @@ interface LinkItem {
 
             {linksObject?.urlsRepeater && (
               <ul>
-                {linksObject?.urlsRepeater?.map(
-                  ({ urlTitle, url }: LinkItem, index: number) => {
-                    return (
-                      <li
-                        class={
-                          linksObject?.urlsRepeater?.length - 1 === index
-                            ? "mb-0"
-                            : "mb-4"
-                        }
-                      >
-                        <a
-                          class="hover:text-primary hover:underline "
-                          href={localizeURL(url, currentLanguage)}
-                        >
-                          {urlTitle}
-                        </a>
-                      </li>
-                    );
-                  }
-                )}
+                {linksObject?.urlsRepeater?.map(({ urlTitle, url }: LinkItem, index: number) => {
+                  return (
+                    <li class={linksObject?.urlsRepeater?.length - 1 === index ? "mb-0" : "mb-4"}>
+                      <a class="hover:text-primary hover:underline " href={localizeURL(url, currentLanguage)}>
+                        {urlTitle}
+                      </a>
+                    </li>
+                  )
+                })}
               </ul>
             )}
           </div>
@@ -134,10 +107,7 @@ interface LinkItem {
             <ul>
               {contactObject?.email && (
                 <li class="mb-2">
-                  <a
-                    class="mb-2 hover:text-primary"
-                    href={`mailto:${contactObject?.email}`}
-                  >
+                  <a class="mb-2 hover:text-primary" href={`mailto:${contactObject?.email}`}>
                     {contactObject?.email}
                   </a>
                 </li>
@@ -145,10 +115,7 @@ interface LinkItem {
 
               {contactObject?.phone && (
                 <li>
-                  <a
-                    class="hover:text-primary hover:underline"
-                    href={`tel:${contactObject?.phone}`}
-                  >
+                  <a class="hover:text-primary hover:underline" href={`tel:${contactObject?.phone}`}>
                     {contactObject?.phone}
                   </a>
                 </li>
@@ -156,10 +123,7 @@ interface LinkItem {
 
               {contactObject?.enableContactButton && (
                 <li>
-                  <a
-                    href={localizeURL("/contact", currentLanguage)}
-                    class="btn btn-white mt-4"
-                  >
+                  <a href={localizeURL("/contact", currentLanguage)} class="btn btn-white mt-4">
                     {contactObject?.title && contactObject?.title}
                   </a>
                 </li>
@@ -175,9 +139,7 @@ interface LinkItem {
     enableCopyright && (
       <div class="container max-w-[1440px]">
         <div class="footer-copyright mx-auto border-t border-border pb-10 pt-7 text-center">
-          <p class="content text-text">
-            Copyright © {new Date().getFullYear()}
-          </p>
+          <p class="content text-text">Copyright © {new Date().getFullYear()}</p>
         </div>
       </div>
     )
