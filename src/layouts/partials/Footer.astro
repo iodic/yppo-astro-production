@@ -19,11 +19,12 @@ const footerData = await sanityFetch({
       socials,
       linksObject,
       contactObject,
-      enableCopyright
+      enableCopyright,
+      generalText
   }`
 })
 
-const { logoSrc, description, enableLanguageSwitcher, socials, linksObject, contactObject, enableCopyright } = footerData[0] || {}
+const { logoSrc, description, enableLanguageSwitcher, socials, linksObject, contactObject, enableCopyright, generalText } = footerData[0] || {}
 
 interface SocialItem {
   socialsType: string
@@ -46,7 +47,9 @@ interface LinkItem {
 
         {enableLanguageSwitcher && <LanguageSwitcher />}
 
-        <button id="authLink_logout" onclick="logoutAndReload()">Logout</button>
+        <button id="authLink_logout" onclick="logoutAndReload()">
+          {generalText?.logoutButtonText ? generalText?.logoutButtonText : "Logout"}
+        </button>
       </div>
 
       <script is:inline>
