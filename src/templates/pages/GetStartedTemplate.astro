@@ -4,7 +4,7 @@ import { Image } from "astro:assets"
 
 import PageHeader from "@/components/PageHeader.astro"
 import Shape from "@/components/Shape.astro"
-import CtaSanity from "@/partials/CtaSanity.astro"
+import Cta from "@/partials/Cta.astro"
 
 const { lang } = Astro.props
 
@@ -168,5 +168,5 @@ const { cards } = cardsSection || {}
     </div>
   </section>
 
-  <CtaSanity ctaBanner={ctaBanner} />
+  <Cta ctaBanner={ctaBanner} />
 </>

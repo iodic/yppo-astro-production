@@ -7,7 +7,7 @@ import PageHeader from "@/components/PageHeader.astro"
 import Blogs from "@/components/Blogs.astro"
 import FeaturedBlog from "@/components/blog/FeaturedBlog.astro"
 import Pagination from "@/layouts/components/Pagination.astro"
-import CtaSanity from "@/partials/CtaSanity.astro"
+import Cta from "@/partials/Cta.astro"
 
 const { lang } = Astro.props
 
@@ -51,5 +51,5 @@ const currentPosts = recentPost.slice(0, 6)
     </div>
   </section>
 
-  <CtaSanity ctaBanner={ctaBanner} />
+  <Cta ctaBanner={ctaBanner} />
 </>

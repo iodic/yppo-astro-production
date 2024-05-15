@@ -4,7 +4,7 @@ import { sanityFetch } from "@/lib/utils/sanityFetch"
 import Shape from "@/components/Shape.astro"
 import FeatureBannerSanity from "@/components/features/FeatureBannerSanity.astro"
 import ProjecManagement from "@/components/features/ProjecManagement.astro"
-import CtaSanity from "@/partials/CtaSanity.astro"
+import Cta from "@/partials/Cta.astro"
 
 const { lang } = Astro.props
 
@@ -26,5 +26,5 @@ const { title, heroSection, ctaBanner, postsTitle } = wikiPageData[0] || {}
   <Shape />
   <FeatureBannerSanity title={title} heroSection={heroSection} />
   <ProjecManagement postsTitle={postsTitle} lang={lang} />
-  <CtaSanity ctaBanner={ctaBanner} />
+  <Cta ctaBanner={ctaBanner} />
 </>
