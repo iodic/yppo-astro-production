@@ -3,10 +3,34 @@ import SanityConflictPost from "@/layouts/function-components/SanityConflictPost
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 
 const SanityConflictInitial = ({ lang }) => {
+  const [pageData, setPageData] = useState([]);
+
   const [answer, setAnswer] = useState("");
   const [submitFormAnswer, setSubmitFormAnswer] = useState("");
   const [sanityInitialPosts, setSanityInitialPosts] = useState([]);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const pageContent = await sanityFetch({
+          type: "conflictGuidePage",
+          lang,
+          object: `{
+              generalText
+            }`,
+        });
+
+        setPageData(pageContent);
+      } catch (error) {
+        console.error("Error fetching page data");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const { generalText } = pageData[0] || {};
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,7 +109,9 @@ const SanityConflictInitial = ({ lang }) => {
                 className="go go-forward btn btn-primary mt-10 block float-right w-40"
                 onClick={handleNextButtonClick}
               >
-                Next
+                {generalText?.nextButtonText
+                  ? generalText?.nextButtonText
+                  : "Next"}
               </button>
             </div>
           </div>
