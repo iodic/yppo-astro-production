@@ -24,8 +24,18 @@ const coursesPageData = await sanityFetch({
 
 const { title, heroSection, generalText, ctaBanner } = coursesPageData[0] || {}
 
-const featuredPost = await sanityClient.fetch(`*[_type == 'course' && featured == true && language == '${lang}']`)
-const recentPost = await sanityClient.fetch(`*[_type == 'course' && featured != false && language == '${lang}'] | order(_createdAt desc)`)
+const featuredPost = await sanityFetch({
+  type: "course",
+  query: "featured == true",
+  lang
+})
+
+const recentPost = await sanityFetch({
+  type: "course",
+  query: "featured != false",
+  lang,
+  pipe: "order(_createdAt desc)"
+})
 
 const totalPages = Math.ceil(recentPost.length / 6)
 const currentPosts = recentPost.slice(0, 6)
