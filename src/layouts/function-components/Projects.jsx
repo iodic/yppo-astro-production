@@ -24,9 +24,11 @@ const Projects = ({ lang } = {}) => {
 
       setProjects(projectsData);
 
-      const posts = await sanityClient.fetch(
-        `*[_type == 'conflictType'] | order(_createdAt desc)`,
-      );
+      const posts = await sanityFetch({
+        type: "conflictType",
+        pipe: "order(_createdAt desc)",
+        lang,
+      });
       const fetchedConflictChoices = {};
 
       for (let post of posts) {
