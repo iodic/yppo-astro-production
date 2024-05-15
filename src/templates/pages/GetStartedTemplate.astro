@@ -2,6 +2,7 @@
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 import { Image } from "astro:assets"
 
+import Base from "@/layouts/Base.astro"
 import PageHeader from "@/components/PageHeader.astro"
 import Shape from "@/components/Shape.astro"
 import Cta from "@/partials/Cta.astro"
@@ -13,37 +14,49 @@ const getStartedPageData = await sanityFetch({
   lang,
   object: `{
     title,
-      heroSection {
-        ...,
-        performanceCards[] {
-          title,
-          description,
-          "performanceCardImage": image.asset->url,
-        }
-      },
-      videoSection {
-        ...,
-          "videoPoster": videoPoster.asset->url
-      },
-      cardsSection {
-        ...,
-        cards[] {
-          textCard,
-          buttonObject,
-          "cardImage": image.asset->url
-        }
-      },
-      ctaBanner
+    pageMetadata {
+      ...,
+      "metaImage": metaImage.asset->url,
+    },
+    heroSection {
+      ...,
+      performanceCards[] {
+        title,
+        description,
+        "performanceCardImage": image.asset->url,
+      }
+    },
+    videoSection {
+      ...,
+        "videoPoster": videoPoster.asset->url
+    },
+    cardsSection {
+      ...,
+      cards[] {
+        textCard,
+        buttonObject,
+        "cardImage": image.asset->url
+      }
+    },
+    ctaBanner
   }`
 })
 
-const { title, heroSection, videoSection, cardsSection, ctaBanner } = getStartedPageData[0] || {}
+const { title, pageMetadata, heroSection, videoSection, cardsSection, ctaBanner } = getStartedPageData[0] || {}
 const { performanceCards } = heroSection || {}
 const { videoCard, listSectionTitle, list } = videoSection || {}
 const { cards } = cardsSection || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 ---
 
-<>
+<Base
+  title={title && title}
+  meta_title={metaTitle && metaTitle}
+  description={metaDescription && metaDescription}
+  image={metaImage && metaImage}
+  noindex={noIndex && noIndex}
+  canonical={canonicalUrl && canonicalUrl}
+>
   <Shape />
 
   <section class="page-hero pb-14 pt-16">
@@ -169,4 +182,4 @@ const { cards } = cardsSection || {}
   </section>
 
   <Cta ctaBanner={ctaBanner} />
-</>
+</Base>

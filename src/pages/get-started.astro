@@ -1,17 +1,7 @@
 ---
-import { getEntryBySlug } from "astro:content"
-
-import Base from "@/layouts/Base.astro"
 import GetStartedTemplate from "@/templates/pages/GetStartedTemplate.astro"
-
-const get_started = await getEntryBySlug("get-started", "index")
-const page_data = {
-  ...get_started.data
-}
 
 const currentLanguage = Astro.currentLocale
 ---
 
-<Base title={get_started.data.title} meta_title={get_started.data.meta_title} description={get_started.data.description} image={get_started.data.image}>
-  <GetStartedTemplate lang={currentLanguage} />
-</Base>
+<GetStartedTemplate lang={currentLanguage} />
