@@ -3,7 +3,7 @@ import { sanityClient } from "sanity:client";
 import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 
-const SanityConflictInitial = () => {
+const SanityConflictInitial = ({ lang }) => {
   const [answer, setAnswer] = useState("");
   const [submitFormAnswer, setSubmitFormAnswer] = useState("");
   const [sanityInitialPosts, setSanityInitialPosts] = useState([]);
@@ -14,6 +14,7 @@ const SanityConflictInitial = () => {
       try {
         const initialPosts = await sanityFetch({
           type: "conflictType",
+          lang,
           query: "initialQuestion == true",
         });
 
