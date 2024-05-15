@@ -1,48 +1,55 @@
----
+import React, { useEffect, useState } from "react";
+import { FaRegFolder } from "react-icons/fa";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
-import { sanityClient } from "sanity:client";
 import TradeOff from "@/layouts/function-components/TradeOff.jsx";
 import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
 import LockedContent from "@/layouts/function-components/LockedContent.jsx";
-
 import { checkStatus } from "src/helper/helper.ts";
+import portableTextComponents from "../portable-text-components";
+import { sanityClient } from "sanity:client";
 
-const builder = imageUrlBuilder(sanityClient);
+const Post = ({ post }) => {
+  const [postStatus, setPostStatus] = useState(null);
+  const [isContentRepeater, setIsContentRepeater] = useState(false);
 
-import { FaRegClock, FaRegFolder } from "react-icons/fa";
-import portableTextComponents from "./portable-text-components";
+  useEffect(() => {
+    const fetchPostStatus = async () => {
+      const status = await checkStatus(post?.status);
+      setPostStatus(status);
+    };
 
-const { post } = Astro.props;
-const isContentRepeater = post?.contentRepeater?.length;
-const postStatus = await checkStatus(post?.status);
----
+    fetchPostStatus();
 
-{
-  postStatus ? (
-    <section class="section blog-single">
-      <div class="container">
-        <div class="row justify-center">
-          <div class="mt-10 max-w-[810px] lg:col-9">
-            <h1 class="h2">{post.title}</h1>
-            {post.status}
-            <div class="mb-5 mt-6 flex items-center space-x-2">
-              <ul class="mb-4">
-                {post.tags && (
-                  <li class="mr-4 inline-block">
-                    <FaRegFolder className={"mr-2 -mt-1 inline-block"} />
-                    {post.tags.map((tag: string, index: number) => (
-                      <>
-                        {tag}
-                        {index !== post.tags.length - 1 && ", "}
-                      </>
-                    ))}
-                  </li>
-                )}
+    setIsContentRepeater(post?.contentRepeater?.length > 0);
+  }, [post]);
+
+  const builder = imageUrlBuilder(sanityClient);
+
+  if (!postStatus) {
+    return null;
+  }
+
+  return (
+    <section className="section blog-single">
+      <div className="container">
+        <div className="row justify-center">
+          <div className="mt-10 max-w-[810px] lg:col-9">
+            <h1 className="h2">{post.title}</h1>
+            <div className="mb-5 mt-6 flex items-center space-x-2">
+              <ul className="mb-4">
+                {post.tags &&
+                  post.tags.map((tag, index) => (
+                    <li key={index} className="mr-4 inline-block">
+                      <FaRegFolder className="mr-2 -mt-1 inline-block" />
+                      {tag}
+                      {index !== post.tags.length - 1 && ", "}
+                    </li>
+                  ))}
               </ul>
             </div>
 
-            <div class="content">
+            <div className="content">
               {isContentRepeater ? (
                 post.contentRepeater.map(
                   (
@@ -53,10 +60,10 @@ const postStatus = await checkStatus(post?.status);
                       videoUrl,
                       videoPoster,
                       videoTranscriptRepeater,
-                    }: any,
-                    index: number
+                    },
+                    index,
                   ) => (
-                    <div class={index > 0 ? "mt-8" : ""}>
+                    <div key={index} className={index > 0 ? "mt-8" : ""}>
                       {prosSection && (
                         <TradeOff content={prosSection} type="PROS" />
                       )}
@@ -65,7 +72,7 @@ const postStatus = await checkStatus(post?.status);
                       )}
                       <PortableText
                         value={blocks}
-                        components={portableTextComponents as any}
+                        components={portableTextComponents}
                       />
                       {videoUrl && videoPoster && (
                         <SanityVideoComponent
@@ -76,7 +83,7 @@ const postStatus = await checkStatus(post?.status);
                         />
                       )}
                     </div>
-                  )
+                  ),
                 )
               ) : (
                 <div>
@@ -104,7 +111,7 @@ const postStatus = await checkStatus(post?.status);
         </div>
       </div>
     </section>
-  ) : (
-    <LockedContent client:load />
-  )
-}
+  );
+};
+
+export default Post;
