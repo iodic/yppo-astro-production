@@ -1,6 +1,12 @@
 import React from "react";
+import { getClientId, getRedirectUri, getBaseUri } from "@/helper/auth";
 
 const LockedContent = () => {
+  const clientId = getClientId();
+  const redirectUri = getRedirectUri();
+  const baseUri = getBaseUri();
+
+  const authorizationUri = `${baseUri}/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=public`;
   return (
     <div className="container lg:gx-5 row items-center" id="hidden-paywall">
       <div className="lg:col-7 lg:order-1">
@@ -24,7 +30,7 @@ const LockedContent = () => {
           </p>
           <a
             className="btn btn-outline-header mt-8"
-            href="https://yppousers.websitetotal.com/users/sign_in"
+            href={authorizationUri}
             title="Let's go!"
           >
             Let's go!
