@@ -4,29 +4,11 @@
     <title>OAuth Callback Handler</title>
   </head>
   <body>
-    <center>
-      <a href="#" id="authLink">AUTH</a>
-    </center>
     <script>
       const clientId = "Jtx8pKWLU54C7IMfz8xmAxt7tG4Ourj0jHM5KIDUrXg";
       const clientSecret = "Q4A525OFRsYM4ryOapQ-Oth65139lcshVg-q0vBRSWw";
       const redirectUri = encodeURIComponent("https://yppo.websitetotal.com/callback/");
-      const authorizationUriBase = "https://yppousers.websitetotal.com/oauth/authorize";
       const tokenUri = "https://yppousers.websitetotal.com/marko_auth.json";
-
-      const authLink = document.getElementById("authLink");
-
-      if (authLink) {
-        authLink.addEventListener("click", function (event) {
-          const responseType = "code";
-          const scope = encodeURIComponent("public");
-          const authorizationUri = `${authorizationUriBase}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
-
-          window.location.href = authorizationUri;
-        });
-      } else {
-        console.error("Element with ID 'authLink' not found.");
-      }
 
       function handleAuthCallback() {
         const queryString = window.location.search;
