@@ -57,6 +57,7 @@
           .then((data) => {
             console.log("Token received:", data);
             const userInfo = parseJwt(data.access_token);
+            setCookie("yppo_user_auth", data.access_token, 30);
             displayUserInfo(userInfo);
             // Handle token usage here (e.g., storing in sessionStorage, redirecting, etc.)
           })
@@ -100,6 +101,16 @@
                                      Plan: ${userInfo.user.plan}<br>
                                      Kind: ${userInfo.user.kind}`;
         }
+      }
+
+      function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+          const date = new Date();
+          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+          expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
       }
     </script>
   </body>
