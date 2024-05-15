@@ -1,10 +1,7 @@
 ---
-import Base from "@/layouts/Base.astro";
-import IndexTemplate from "@/templates/pages/IndexTemplate.astro";
+import IndexTemplate from "@/templates/pages/IndexTemplate.astro"
 
-const currentLanguage  = Astro.currentLocale;
+const currentLanguage = Astro.currentLocale
 ---
 
-<Base lang={currentLanguage}>
-  <IndexTemplate lang={currentLanguage} />
-</Base>
+<IndexTemplate lang={currentLanguage} />
