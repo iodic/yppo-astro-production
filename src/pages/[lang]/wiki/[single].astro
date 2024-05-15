@@ -2,7 +2,7 @@
 import { sanityClient } from "sanity:client"
 
 import Base from "@/layouts/Base.astro"
-import WikiSingle from "@/layouts/WikiSingle.astro"
+import WikiSingle from "@/layouts/function-components/WikiSingle.jsx"
 
 import { i18nConfig } from "@/i18n/i18nConfig"
 
@@ -36,5 +36,5 @@ const { title, description, image } = post
 ---
 
 <Base title={title} description={description} image={image}>
-  <WikiSingle post={post} />
+  <WikiSingle post={post} client:load/>
 </Base>
