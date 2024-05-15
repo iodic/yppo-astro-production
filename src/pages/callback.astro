@@ -13,7 +13,9 @@
         .getElementById("authLink")
         .addEventListener("click", function (event) {
           const clientId = "Jtx8pKWLU54C7IMfz8xmAxt7tG4Ourj0jHM5KIDUrXg";
-          const redirectUri = encodeURIComponent("https://yppo.websitetotal.com/callback/");
+          const redirectUri = encodeURIComponent(
+            "https://yppo.websitetotal.com/auth.html"
+          );
           const responseType = "code";
           const scope = encodeURIComponent("public");
           const authorizationUri = `https://yppousers.websitetotal.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
@@ -37,8 +39,10 @@
         const clientId = "Jtx8pKWLU54C7IMfz8xmAxt7tG4Ourj0jHM5KIDUrXg";
         // Note: Ideally, move clientSecret to your server to keep it secure
         const clientSecret = "Q4A525OFRsYM4ryOapQ-Oth65139lcshVg-q0vBRSWw";
-        const redirectUri = encodeURIComponent("https://yppo.websitetotal.com/callback/");
-        const tokenUri = "https://yppousers.websitetotal.com/oauth/token";
+        const redirectUri = encodeURIComponent(
+          "https://yppo.websitetotal.com/auth.html"
+        );
+        const tokenUri = "https://yppousers.websitetotal.com/marko_auth.json";
 
         const body = `grant_type=authorization_code&code=${code}&redirect_uri=${redirectUri}&client_id=${clientId}&client_secret=${clientSecret}`;
 
@@ -66,7 +70,7 @@
         handleAuthCallback();
       }
 
-      function parseJwt(token) {
+      function parseJwt(token: any) {
         try {
           // Split the JWT into its three parts: Header, Payload, and Signature
           const base64Url = token.split(".")[1]; // Get the payload part
@@ -87,7 +91,7 @@
         }
       }
 
-      function displayUserInfo(userInfo) {
+      function displayUserInfo(userInfo: any) {
         if (userInfo && userInfo.user) {
           const infoDiv = document.getElementById("userInfo");
           infoDiv.innerHTML = `<strong>User Information:</strong><br>
