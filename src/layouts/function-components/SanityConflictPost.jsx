@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { sanityClient } from "sanity:client";
+import { sanityFetch } from "@/lib/utils/sanityFetch";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
 import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
@@ -9,6 +10,8 @@ import { checkStatus } from "src/helper/helper.ts";
 import LockedContent from "./LockedContent";
 
 const SanityConflictPost = ({ initialId, lang }) => {
+  const [pageData, setPageData] = useState([]);
+
   const [id, setId] = useState(initialId);
   const [sanityPost, setSanityPost] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -24,6 +27,32 @@ const SanityConflictPost = ({ initialId, lang }) => {
   const [postStatus, setPostStatus] = useState(null);
 
   const builder = imageUrlBuilder(sanityClient);
+
+  useEffect(() => {
+    if (id) {
+      setLoading(true);
+      const fetchData = async () => {
+        try {
+          const pageContent = await sanityFetch({
+            type: "conflictGuidePage",
+            lang,
+            object: `{
+              generalText
+            }`,
+          });
+
+          setPageData(pageContent);
+        } catch (error) {
+          console.log(error);
+          console.error("Error fetching page data");
+        }
+      };
+
+      fetchData();
+    }
+  }, []);
+
+  const { generalText } = pageData[0] || {};
 
   useEffect(() => {
     if (id) {
@@ -202,7 +231,7 @@ const SanityConflictPost = ({ initialId, lang }) => {
           className="go go-back btn float-left border-0 pl-0 pr-0"
           onClick={() => handleBackAction()}
         >
-          ← Back
+          {generalText?.backButtonText ? generalText?.backButtonText : "← Back"}
         </button>
       </>
     );
@@ -254,7 +283,9 @@ const SanityConflictPost = ({ initialId, lang }) => {
                         : handleBackAction()
                     }
                   >
-                    ← Back
+                    {generalText?.backButtonText
+                      ? generalText?.backButtonText
+                      : "← Back"}
                   </button>
                 </div>
               ) : (
@@ -279,7 +310,9 @@ const SanityConflictPost = ({ initialId, lang }) => {
                         : handleBackAction()
                     }
                   >
-                    ← Back
+                    {generalText?.backButtonText
+                      ? generalText?.backButtonText
+                      : "← Back"}
                   </button>
                 </div>
               )}
@@ -353,7 +386,7 @@ const SanityConflictPost = ({ initialId, lang }) => {
           className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenClass}`}
           onClick={() => handleBackAction()}
         >
-          ← Back
+          {generalText?.backButtonText ? generalText?.backButtonText : "← Back"}
         </button>
       </div>
     </div>
