@@ -1,33 +1,35 @@
 ---
 import { sanityClient } from "sanity:client"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import config from "@/config/config.json"
 
 import Blogs from "@/components/Blogs.astro"
-import PageHeader from "@/components/PageHeader.astro"
+import PageHeaderSanity from "@/components/PageHeaderSanity.astro"
 import Shape from "@/components/Shape.astro"
 import Pagination from "@/layouts/components/Pagination.astro"
 
 const { slug, lang } = Astro.props
-const recentPost = await sanityClient.fetch(`*[_type == 'course' && featured != false && language == '${lang}'] | order(_createdAt desc)`)
 
-const blogIndex = {
-  collection: "courses",
-  data: {
-    title: "Courses",
-    page_title: "Deepen your conflict management skills with our curated e-courses."
-  }
-}
+const coursesPageData = await sanityFetch({
+  type: "coursesPage",
+  lang,
+  object: `{
+      title,
+      heroSection,
+      generalText
+  }`
+})
+
+const { title, heroSection, generalText } = coursesPageData[0] || {}
+
+const recentPost = await sanityClient.fetch(`*[_type == 'course' && featured != false && language == '${lang}'] | order(_createdAt desc)`)
 
 const totalPages = Math.ceil(recentPost.length / 6)
 const currentPage = slug && !isNaN(Number(slug)) ? Number(slug) : 1
 const indexOfLastPost = currentPage * config.settings.pagination
 const indexOfFirstPost = indexOfLastPost - config.settings.pagination
 const currentPosts = recentPost.slice(indexOfFirstPost, indexOfLastPost)
-const page_data = {
-  index_title: blogIndex.data.title,
-  slug: `page / ${slug}`
-}
 ---
 
 <>
@@ -35,15 +37,23 @@ const page_data = {
 
   <section class="page-hero pt-16">
     <div class="container">
-      <PageHeader page_data={page_data} />
+      <PageHeaderSanity pageData={{ title: currentPage > 1 ? `${title} / ${currentPage}` : title, heroSection }} />
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <h2 class="h4 mb-4">Recent Posts</h2>
+      {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
+
       <Blogs posts={currentPosts} />
-      <Pagination section={config.settings.blog_folder} totalPages={totalPages} currentPage={currentPage} />
+
+      <Pagination
+        section={config.settings.blog_folder}
+        totalPages={totalPages}
+        currentPage={currentPage}
+        textPrevious={generalText?.previous}
+        textNext={generalText?.next}
+      />
     </div>
   </section>
 </>
