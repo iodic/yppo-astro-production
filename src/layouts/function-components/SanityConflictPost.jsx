@@ -158,7 +158,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   if (!postStatus) {
     return (
       <>
-        <LockedContent lang={lang} />
+        <LockedContent lang={lang} client:load />
 
         <button
           className="go go-back btn float-left border-0 pl-0 pr-0"
