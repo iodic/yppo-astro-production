@@ -15,6 +15,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   const [confirmedChoice, setConfirmedChoice] = useState(initialId);
   const [selectedChapter, setSelectedChapter] = useState();
   const [currentRepeaterIndex, setCurrentRepeaterIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [postStatus, setPostStatus] = useState(null);
 
   useEffect(() => {
@@ -41,6 +42,8 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
 
   const fetchChoiceData = async () => {
     try {
+      setIsLoading(true);
+
       const loadedPost = await sanityFetch({
         type: "conflictType",
         query: `_id == '${confirmedChoice}'`,
@@ -49,8 +52,8 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
 
       setSanityPost(loadedPost[0]);
 
-      if (loadedPost) {
-        const status = await checkStatus(loadedPost?.status);
+      if (loadedPost && loadedPost[0]) {
+        const status = await checkStatus(loadedPost[0]?.status);
         setPostStatus(status);
       }
 
@@ -75,11 +78,14 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
       }
     } catch (error) {
       setError("Error fetching post");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     if (confirmedChoice) {
+      setPostStatus(null);
       fetchChoiceData();
     }
   }, [confirmedChoice]);
@@ -88,15 +94,25 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
     if (selectedChapter) {
       const fetchData = async () => {
         try {
+          setIsLoading(true);
+          setPostStatus(null);
+
           const loadedPost = await sanityFetch({
             type: "conflictType",
             query: `_id == '${selectedChapter}'`,
             lang,
           });
 
+          if (loadedPost && loadedPost[0]) {
+            const status = await checkStatus(loadedPost[0]?.status);
+            setPostStatus(status);
+          }
+
           setSanityPost(loadedPost[0]);
         } catch (error) {
           setError("Error fetching post");
+        } finally {
+          setIsLoading(false);
         }
       };
 
@@ -111,21 +127,6 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   const reloadPage = () => {
     window.location.reload();
   };
-
-  if (error) {
-    return (
-      <div className="form-navigation mt-10 mb-10 float-left w-full">
-        <button
-          className="go btn btn-primary block float-right"
-          onClick={reloadPage}
-        >
-          {generalText?.finishButtonText
-            ? generalText?.finishButtonText
-            : "Finish"}
-        </button>
-      </div>
-    );
-  }
 
   const nextChapter = () => {
     window.scrollTo(0, 0);
@@ -155,52 +156,76 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
     fetchChoiceData();
   };
 
-  if (!postStatus) {
-    return (
-      <>
-        <LockedContent lang={lang} client:load />
-
-        <button
-          className="go go-back btn float-left border-0 pl-0 pr-0"
-          onClick={() => handleBackAction()}
-        >
-          {generalText?.backButtonText ? generalText?.backButtonText : "← Back"}
-        </button>
-      </>
-    );
-  }
+  const handleLockedContentBack = () => {
+    if (selectedChapter) {
+      setSelectedChapter();
+      fetchChoiceData();
+    } else {
+      backToInitialForm();
+    }
+  };
 
   return (
     <div>
-      <div className="form-wrapper form-2 mt-4">
-        <h2 className="mb-8 font-normal">{sanityPost?.title}</h2>
-        {selectedChapter ? (
-          <SanityConflictPostChapter
-            generalText={generalText}
-            sanityPost={sanityPost}
-            currentRepeaterIndex={currentRepeaterIndex}
-            isLastChapter={
-              choices.length &&
-              choices.findIndex((choice) => choice?._id === selectedChapter) ===
-                choices.length - 1
-            }
-            setCurrentRepeaterIndex={setCurrentRepeaterIndex}
-            nextChapter={nextChapter}
-            backToChapters={backToChapters}
-          />
-        ) : (
-          <SanityConflictPostChoices
-            generalText={generalText}
-            choices={choices}
-            articleType={articleType}
-            confirmedChoice={confirmedChoice}
-            selectedChapter={selectedChapter}
-            setConfirmedChoice={setConfirmedChoice}
-            setSelectedChapter={setSelectedChapter}
-            backToInitialForm={backToInitialForm}
-          />
-        )}
-      </div>
+      {!postStatus && !isLoading && (
+        <>
+          <LockedContent lang={lang} client:load />
+
+          <button
+            className="go go-back btn float-left border-0 pl-0 pr-0"
+            onClick={handleLockedContentBack}
+          >
+            {generalText?.backButtonText
+              ? generalText?.backButtonText
+              : "← Back"}
+          </button>
+        </>
+      )}
+      {error && !isLoading && (
+        <div className="form-navigation mt-10 mb-10 float-left w-full">
+          <button
+            className="go btn btn-primary block float-right w-40"
+            onClick={reloadPage}
+          >
+            {generalText?.finishButtonText
+              ? generalText?.finishButtonText
+              : "Finish"}
+          </button>
+        </div>
+      )}
+      {postStatus && !error && !isLoading && (
+        <div className="form-wrapper form-2 mt-4">
+          <h2 className="mb-8 font-normal">{sanityPost?.title}</h2>
+          {selectedChapter ? (
+            <SanityConflictPostChapter
+              generalText={generalText}
+              sanityPost={sanityPost}
+              currentRepeaterIndex={currentRepeaterIndex}
+              isLastChapter={
+                choices.length &&
+                choices.findIndex(
+                  (choice) => choice?._id === selectedChapter,
+                ) ===
+                  choices.length - 1
+              }
+              setCurrentRepeaterIndex={setCurrentRepeaterIndex}
+              nextChapter={nextChapter}
+              backToChapters={backToChapters}
+            />
+          ) : (
+            <SanityConflictPostChoices
+              generalText={generalText}
+              choices={choices}
+              articleType={articleType}
+              confirmedChoice={confirmedChoice}
+              selectedChapter={selectedChapter}
+              setConfirmedChoice={setConfirmedChoice}
+              setSelectedChapter={setSelectedChapter}
+              backToInitialForm={backToInitialForm}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };
