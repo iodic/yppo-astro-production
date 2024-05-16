@@ -18,7 +18,7 @@ const currentLanguage = Astro.currentLocale
         <div class="row">
           <div class="lg:col-9">
             <h2 class="h1 text-white">{title}</h2>
-            <a class="btn btn-white mt-8 112" href={localizeURL(url, `${currentLanguage}`)}>
+            <a class="btn btn-white mt-8" href={localizeURL(url, currentLanguage)}>
               {urlTitle}
             </a>
           </div>

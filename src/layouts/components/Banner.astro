@@ -24,7 +24,7 @@ const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
 
         {
           enableHeroButton && (
-            <a class="btn btn-primary mt-8 mb-8 lg:mb-0" href={languageChecker(heroButtonUrl, `${currentLanguage}`)}>
+            <a class="btn btn-primary mt-8 mb-8 lg:mb-0" href={languageChecker(heroButtonUrl, currentLanguage)}>
               {heroButtonTitle}
             </a>
           )
