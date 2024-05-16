@@ -1,21 +1,29 @@
 ---
+import { sanityClient } from "sanity:client"
 import { i18nConfig } from "@/i18n/i18nConfig"
 
 import CategoryTemplate from "@/templates/pages/CategoryTemplate.astro"
 
-import config from "@/config/config.json"
-import { getTaxonomy } from "@/lib/taxonomyParser.astro"
 import { slugify } from "@/lib/utils/textConverter"
 
 export async function getStaticPaths() {
   const paths: any = []
   const { defaultLocale, locales } = i18nConfig
 
-  const categories = await getTaxonomy(config.settings.blog_folder, "categories")
+  const posts = await sanityClient.fetch(`*[_type == 'course' && language != '${defaultLocale}'] | order(_createdAt desc)`)
+  let postTagsArrays = posts.map((post: any) => post.tags)
+  let allCategories: string[] = []
+  postTagsArrays.map((tagArray: any[]) => {
+    tagArray.map(tag => {
+      if (allCategories.indexOf(tag) === -1) {
+        allCategories.push(tag)
+      }
+    })
+  })
 
   locales.map((currentLocale: string) => {
     if (currentLocale !== defaultLocale) {
-      categories.map((item: any) => {
+      allCategories.map((item: any) => {
         const category = slugify(item)
 
         paths.push({
@@ -32,8 +40,8 @@ export async function getStaticPaths() {
   return paths
 }
 
-const { category, lang } = Astro.params
+const { lang } = Astro.params
 const { item } = Astro.props
 ---
 
-<CategoryTemplate item={item} category={category} lang={lang} />
+<CategoryTemplate category={item} lang={lang} />
