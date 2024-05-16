@@ -1,32 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { sanityClient } from "sanity:client";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
-import imageUrlBuilder from "@sanity/image-url";
-import { PortableText } from "@portabletext/react";
-import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
-import TradeOff from "@/layouts/function-components/TradeOff.jsx";
-import portableTextComponents from "../portable-text-components";
+import { SanityConflictPostChoices } from "@/layouts/function-components/SanityConflictPostChoices.jsx";
+import { SanityConflictPostChapter } from "@/layouts/function-components/SanityConflictPostChapter.jsx";
 import { checkStatus } from "src/helper/helper.ts";
 import LockedContent from "./LockedContent";
 
-const SanityConflictPost = ({ initialId, lang }) => {
+const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   const [pageData, setPageData] = useState([]);
 
-  const [id, setId] = useState(initialId);
   const [sanityPost, setSanityPost] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [shouldRender, setShouldRender] = useState(false);
-  const [sanityPostAnswers, setSanityPostAnswers] = useState([]);
-  const [guideEnd, setGuideEnd] = useState(false);
-  const [answer, setAnswer] = useState("");
-  const [showBlockContent, setShowBlockContent] = useState(false);
+  const [choices, setChoices] = useState([]);
   const [articleType, setArticleType] = useState(false);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [error, setError] = useState(null);
+  const [confirmedChoice, setConfirmedChoice] = useState(initialId);
+  const [selectedChapter, setSelectedChapter] = useState();
   const [currentRepeaterIndex, setCurrentRepeaterIndex] = useState(0);
   const [postStatus, setPostStatus] = useState(null);
-
-  const builder = imageUrlBuilder(sanityClient);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,81 +39,84 @@ const SanityConflictPost = ({ initialId, lang }) => {
 
   const { generalText } = pageData[0] || {};
 
+  const fetchChoiceData = async () => {
+    try {
+      const loadedPost = await sanityFetch({
+        type: "conflictType",
+        query: `_id == '${confirmedChoice}'`,
+        lang,
+      });
+
+      setSanityPost(loadedPost[0]);
+
+      if (loadedPost) {
+        const status = await checkStatus(loadedPost?.status);
+        setPostStatus(status);
+      }
+
+      const fetchedChoices = [];
+      if (loadedPost[0].answers?.length) {
+        for (const answer of loadedPost[0].answers) {
+          const loadedPost = await sanityFetch({
+            type: "conflictType",
+            query: `_id == '${answer._ref}'`,
+          });
+
+          fetchedChoices.push(loadedPost[0]);
+        }
+
+        setChoices(fetchedChoices);
+      }
+
+      if (loadedPost[0].articleType) {
+        setArticleType(true);
+      } else {
+        setArticleType(false);
+      }
+    } catch (error) {
+      setError("Error fetching post");
+    }
+  };
+
   useEffect(() => {
-    if (id) {
-      setLoading(true);
+    if (confirmedChoice) {
+      fetchChoiceData();
+    }
+  }, [confirmedChoice]);
+
+  useEffect(() => {
+    if (selectedChapter) {
       const fetchData = async () => {
         try {
-          const loadedPost = await sanityClient.fetch(
-            `*[_type == 'conflictType' && _id == '${id}'][0]`,
-          );
+          const loadedPost = await sanityFetch({
+            type: "conflictType",
+            query: `_id == '${selectedChapter}'`,
+            lang,
+          });
 
-          setSanityPost(loadedPost);
-
-          if (loadedPost) {
-            const status = await checkStatus(loadedPost?.status);
-            setPostStatus(status);
-          }
-
-          const fetchedAnswers = [];
-          if (loadedPost.hasOwnProperty("answers")) {
-            for (const element of loadedPost.answers) {
-              const loadedPost = await sanityClient.fetch(
-                `*[_type == 'conflictType' && _id == '${element._ref}'][0]`,
-              );
-              fetchedAnswers.push(loadedPost);
-            }
-            setSanityPostAnswers(fetchedAnswers);
-          }
-
-          setGuideEnd(
-            !loadedPost?.answers && !loadedPost?.contentRepeater?.length,
-          );
-
-          if (loadedPost.content) {
-            setShowBlockContent(false);
-          } else {
-            setShowBlockContent(true);
-          }
-
-          if (loadedPost.articleType) {
-            setArticleType(true);
-          } else {
-            setArticleType(false);
-          }
-
-          localStorage.setItem("latestConflictType", id);
-
-          setLoading(false);
-          setShouldRender(true);
+          setSanityPost(loadedPost[0]);
         } catch (error) {
           setError("Error fetching post");
-          setLoading(false);
         }
       };
 
       fetchData();
     }
-  }, [id]);
+  }, [selectedChapter]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [!loading, currentRepeaterIndex]);
+  }, [currentRepeaterIndex]);
 
   const reloadPage = () => {
-    localStorage.setItem("latestConflictType", "");
     window.location.reload();
   };
-
-  if (!shouldRender) {
-    return null;
-  }
 
   if (error) {
     return (
       <div className="form-navigation mt-10 mb-10 float-left w-full">
         <button
-          className="go go-forward btn btn-primary block float-right w-40 "
+          className="go btn btn-primary block float-right w-40"
           onClick={reloadPage}
         >
           {generalText?.finishButtonText
@@ -135,95 +127,38 @@ const SanityConflictPost = ({ initialId, lang }) => {
     );
   }
 
-  if (!sanityPost) {
-    return null;
-  }
+  const nextChapter = () => {
+    window.scrollTo(0, 0);
 
-  const handleNextButtonClick = () => {
-    const conflictTypeHistory =
-      JSON.parse(localStorage.getItem("conflictTypeHistory")) || [];
-    conflictTypeHistory.push(id);
-    localStorage.setItem(
-      "conflictTypeHistory",
-      JSON.stringify(conflictTypeHistory),
-    );
-    if (answer) {
-      setId(answer);
-      setShowBlockContent(false);
-      setSanityPostAnswers([]);
-    }
-  };
-
-  const handleBackAction = () => {
-    const conflictTypeHistory =
-      JSON.parse(localStorage.getItem("conflictTypeHistory")) || [];
-
-    const previousPage = conflictTypeHistory.pop();
-
-    if (0 === conflictTypeHistory.length) {
-      localStorage.setItem("latestConflictType", "");
-      window.location.reload();
-    }
-    localStorage.setItem(
-      "conflictTypeHistory",
-      JSON.stringify(conflictTypeHistory),
+    const selectedChapterIndex = choices.findIndex(
+      (choice) => choice._id === selectedChapter,
     );
 
-    setId(previousPage);
-    setShowBlockContent(false);
-    setSanityPostAnswers([]);
+    if (
+      selectedChapterIndex >= 0 &&
+      choices.length - 1 > selectedChapterIndex &&
+      choices[selectedChapterIndex + 1]
+    ) {
+      setSelectedChapter(choices[selectedChapterIndex + 1]._id);
+      setCurrentRepeaterIndex(0);
+
+      return;
+    }
+
+    reloadPage();
   };
 
-  function calculateReadTime(content) {
-    let fullText = "";
-    if (content) {
-      content.map((text) => (fullText += text.children[0].text));
-      if (fullText) {
-        const wordsPerMinute = 180;
-        const words = fullText.split(/\s+/).length;
-        const minutes = Math.ceil(words / wordsPerMinute);
-        return minutes + " min";
-      }
-    }
-  }
+  const backToChapters = () => {
+    window.scrollTo(0, 0);
 
-  const isRepeaterContent = sanityPost.contentRepeater?.length;
-  const hiddenClass = showBlockContent && !isRepeaterContent ? "" : "hidden";
-  const hiddenContent = showBlockContent && !isRepeaterContent ? "hidden" : "";
-  let prosSection,
-    consSection,
-    blocks,
-    videoUrl,
-    videoPoster,
-    videoTranscriptRepeater;
-
-  if (sanityPost) {
-    if (isRepeaterContent) {
-      prosSection =
-        sanityPost.contentRepeater[currentRepeaterIndex]?.prosSection;
-      consSection =
-        sanityPost.contentRepeater[currentRepeaterIndex]?.consSection;
-      blocks = sanityPost.contentRepeater[currentRepeaterIndex]?.blocks;
-      videoUrl = sanityPost.contentRepeater[currentRepeaterIndex]?.videoUrl;
-      videoPoster =
-        sanityPost.contentRepeater[currentRepeaterIndex]?.videoPoster;
-      videoTranscriptRepeater =
-        sanityPost.contentRepeater[currentRepeaterIndex]
-          ?.videoTranscriptRepeater;
-    } else {
-      prosSection = sanityPost.prosSection;
-      consSection = sanityPost.consSection;
-      blocks = sanityPost.content;
-      videoUrl = sanityPost.videoUrl;
-      videoPoster = sanityPost.videoPoster;
-      videoTranscriptRepeater = sanityPost.videoTranscriptRepeater;
-    }
-  }
+    setSelectedChapter();
+    fetchChoiceData();
+  };
 
   if (!postStatus) {
     return (
       <>
-        <LockedContent lang={lang} client:load />
+        <LockedContent lang={lang} />
 
         <button
           className="go go-back btn float-left border-0 pl-0 pr-0"
@@ -237,165 +172,34 @@ const SanityConflictPost = ({ initialId, lang }) => {
 
   return (
     <div>
-      <div
-        className="form-wrapper form-2 mt-4"
-        key={`sanityPost_${sanityPost._id}`}
-      >
-        <h2 className="mb-8 font-normal">{sanityPost.title}</h2>
-        {sanityPost && (
-          <>
-            <div className={`${hiddenContent}`}>
-              {prosSection && <TradeOff content={prosSection} type="PROS" />}
-              {consSection && <TradeOff content={consSection} type="CONS" />}
-            </div>
-            <div className={`${hiddenContent}`}>
-              <PortableText
-                value={blocks}
-                components={portableTextComponents}
-              />
-              {videoUrl && videoPoster && (
-                <div className={`${hiddenContent}`}>
-                  <SanityVideoComponent
-                    videoUrl={videoUrl}
-                    videoPoster={builder.image(videoPoster).url()}
-                    videoTranscriptRepeater={videoTranscriptRepeater}
-                  />
-                </div>
-              )}
-              {guideEnd ||
-              (isRepeaterContent &&
-                currentRepeaterIndex ===
-                  sanityPost.contentRepeater.length - 1) ? (
-                <div className="form-navigation mt-10 mb-10 float-left w-full">
-                  <button
-                    className="go go-forward btn btn-primary block float-right w-40 "
-                    onClick={reloadPage}
-                  >
-                    {generalText?.finishButtonText
-                      ? generalText?.finishButtonText
-                      : "Finish"}
-                  </button>
-                  <button
-                    className="go go-back btn float-left border-0 pl-0 pr-0"
-                    onClick={() =>
-                      isRepeaterContent && currentRepeaterIndex > 0
-                        ? setCurrentRepeaterIndex(currentRepeaterIndex - 1)
-                        : handleBackAction()
-                    }
-                  >
-                    {generalText?.backButtonText
-                      ? generalText?.backButtonText
-                      : "← Back"}
-                  </button>
-                </div>
-              ) : (
-                <div className="form-navigation clear-both">
-                  <button
-                    className={`go go-forward btn btn-primary block float-right w-40 ${hiddenContent}`}
-                    onClick={() =>
-                      isRepeaterContent &&
-                      currentRepeaterIndex <
-                        sanityPost.contentRepeater.length - 1
-                        ? setCurrentRepeaterIndex(currentRepeaterIndex + 1)
-                        : setShowBlockContent(true)
-                    }
-                  >
-                    {generalText?.nextButtonText
-                      ? generalText?.nextButtonText
-                      : "Next"}
-                  </button>
-                  <button
-                    className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenContent}`}
-                    onClick={() =>
-                      isRepeaterContent && currentRepeaterIndex > 0
-                        ? setCurrentRepeaterIndex(currentRepeaterIndex - 1)
-                        : handleBackAction()
-                    }
-                  >
-                    {generalText?.backButtonText
-                      ? generalText?.backButtonText
-                      : "← Back"}
-                  </button>
-                </div>
-              )}
-            </div>
-          </>
+      <div className="form-wrapper form-2 mt-4">
+        <h2 className="mb-8 font-normal">{sanityPost?.title}</h2>
+        {selectedChapter ? (
+          <SanityConflictPostChapter
+            generalText={generalText}
+            sanityPost={sanityPost}
+            currentRepeaterIndex={currentRepeaterIndex}
+            isLastChapter={
+              choices.length &&
+              choices.findIndex((choice) => choice?._id === selectedChapter) ===
+                choices.length - 1
+            }
+            setCurrentRepeaterIndex={setCurrentRepeaterIndex}
+            nextChapter={nextChapter}
+            backToChapters={backToChapters}
+          />
+        ) : (
+          <SanityConflictPostChoices
+            generalText={generalText}
+            choices={choices}
+            articleType={articleType}
+            confirmedChoice={confirmedChoice}
+            selectedChapter={selectedChapter}
+            setConfirmedChoice={setConfirmedChoice}
+            setSelectedChapter={setSelectedChapter}
+            backToInitialForm={backToInitialForm}
+          />
         )}
-        {showBlockContent &&
-          sanityPostAnswers.map((post, index) => (
-            <div key={`root_${post._id}`}>
-              {articleType ? (
-                <div key={`nest_${post._id}`}>
-                  <div
-                    className={`form-group reading-group flex items-start w-full rounded ${selectedAnswer === post._id ? "card-highlight" : ""}`}
-                    key={`question_${post._id}`}
-                  >
-                    <span className="lg:top-1 relative w-7 min-w-7 h-7 flex items-center justify-center border-2 border-circle-gray rounded-full text-center bg-white">
-                      {index + 1}
-                    </span>
-                    <label className="ml-2 grow" htmlFor={post._id}>
-                      {post.title}
-                      <span className="text-sm block">
-                        {calculateReadTime(post.content)}
-                      </span>
-                    </label>
-                    <input
-                      type="radio"
-                      name="issue-type"
-                      id={post._id}
-                      className="hidden"
-                      onChange={() => {
-                        setAnswer(post._id);
-                        setSelectedAnswer(post._id);
-                      }}
-                    />
-                    <span className="font-semibold text-xl leading-normal">
-                      &gt;
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <div
-                  className="form-group flex w-full items-baseline rounded"
-                  key={post._id}
-                >
-                  <input
-                    type="radio"
-                    name="issue-type"
-                    id={post._id}
-                    className="top-[3px] relative"
-                    onChange={() => setAnswer(post._id)}
-                  />
-                  <label
-                    className="ml-2 real-deal chapter-choice"
-                    htmlFor={post._id}
-                  >
-                    {post.title}
-                  </label>
-                </div>
-              )}
-            </div>
-          ))}
-      </div>
-      <div className="form-navigation clear-both">
-        <button
-          className={`go go-forward btn btn-primary block float-right w-40 ${hiddenClass}`}
-          onClick={() => (guideEnd ? reloadPage() : handleNextButtonClick())}
-        >
-          {guideEnd
-            ? generalText?.finishButtonText
-              ? generalText?.finishButtonText
-              : "Finish"
-            : generalText?.nextButtonText
-              ? generalText?.nextButtonText
-              : "Next"}
-        </button>
-        <button
-          className={`go go-back btn float-left border-0 pl-0 pr-0 ${hiddenClass}`}
-          onClick={() => handleBackAction()}
-        >
-          {generalText?.backButtonText ? generalText?.backButtonText : "← Back"}
-        </button>
       </div>
     </div>
   );

@@ -55,19 +55,17 @@ const SanityConflictInitial = ({ lang }) => {
     };
 
     fetchData();
-
-    const latestStorage = localStorage.getItem("latestConflictType");
-    if (latestStorage) {
-      setSubmitFormAnswer(latestStorage);
-    }
   }, []);
 
   const handleNextButtonClick = () => {
     if (answer) {
-      localStorage.setItem("conflictTypeHistory", JSON.stringify([answer]));
       setSubmitFormAnswer(answer);
-      setSanityInitialPosts([]);
     }
+  };
+
+  const backToInitialForm = () => {
+    setSubmitFormAnswer("");
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -76,12 +74,12 @@ const SanityConflictInitial = ({ lang }) => {
       {submitFormAnswer ? (
         <SanityConflictPost
           initialId={submitFormAnswer}
+          backToInitialForm={backToInitialForm}
           lang={lang}
-          client:load
         />
       ) : (
         sanityInitialPosts.length > 0 && (
-          <div className="form-wrapper hidden form-1 mt-4">
+          <div className="form-wrapper form-1 mt-4">
             <h2 className="mb-8 font-normal">What's the issue about?</h2>
             {sanityInitialPosts.map((post) => (
               <div
@@ -106,7 +104,7 @@ const SanityConflictInitial = ({ lang }) => {
 
             <div className="form-navigation clear-both">
               <button
-                className="go go-forward btn btn-primary mt-10 block float-right w-40"
+                className="go btn btn-primary mt-10 block float-right w-40"
                 onClick={handleNextButtonClick}
               >
                 {generalText?.nextButtonText
