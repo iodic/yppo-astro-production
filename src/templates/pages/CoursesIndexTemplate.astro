@@ -65,7 +65,7 @@ const currentPosts = recentPost.slice(0, 6)
 
   <section class="section">
     <div class="container">
-      <FeaturedBlog posts={featuredPost} title={generalText?.recentPosts} lang={lang} />
+      <FeaturedBlog posts={featuredPost} title={generalText?.featuredPosts} lang={lang} />
 
       {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
       <Blogs posts={currentPosts} />
