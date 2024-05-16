@@ -116,17 +116,17 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   const isInitialContent = useMemo(() => {
     return Boolean(
       !selectedChapter &&
-        !initialContentViewed &&
-        (sanityPost?.content || sanityPost?.contentRepeater?.length),
+      !initialContentViewed &&
+      (sanityPost?.content || sanityPost?.contentRepeater?.length),
     );
   }, [selectedChapter, sanityPost, initialContentViewed]);
 
   const isLastChapter = useMemo(() => {
     return Boolean(
       choices.length &&
-        selectedChapter &&
-        choices.findIndex((choice) => choice?._id === selectedChapter) ===
-          choices.length - 1,
+      selectedChapter &&
+      choices.findIndex((choice) => choice?._id === selectedChapter) ===
+      choices.length - 1,
     );
   }, [choices, selectedChapter]);
 
@@ -221,6 +221,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
       )}
       {postStatus && !error && (
         <div className="form-wrapper form-2 mt-4">
+          <span className="text-sm font-normal uppercase">{generalText?.titleSupheading}</span>
           <h2 className="mb-8 font-normal">{sanityPost?.title}</h2>
           {selectedChapter || isInitialContent ? (
             <SanityConflictPostChapter
