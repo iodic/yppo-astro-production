@@ -58,7 +58,7 @@ const currentPosts = recentPost.slice(indexOfFirstPost, indexOfLastPost)
     <div class="container">
       {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
 
-      <Blogs posts={currentPosts} />
+      <Blogs posts={currentPosts} lang={lang} />
 
       <Pagination
         section={config.settings.blog_folder}
