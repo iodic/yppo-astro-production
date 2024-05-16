@@ -11,6 +11,8 @@ export const SanityConflictPostChapter = ({
   sanityPost,
   currentRepeaterIndex,
   isLastChapter,
+  isInitialContent,
+  setInitialContentViewed,
   setCurrentRepeaterIndex,
   nextChapter,
   backToChapters,
@@ -64,6 +66,17 @@ export const SanityConflictPostChapter = ({
   }, [sanityPost, currentRepeaterIndex]);
 
   const handleNextAction = () => {
+    if (
+      isInitialContent &&
+      ((sanityPost?.contentRepeater?.length &&
+        sanityPost?.contentRepeater?.length - 1 === currentRepeaterIndex) ||
+        sanityPost?.content)
+    ) {
+      setInitialContentViewed(true);
+
+      return;
+    }
+
     if (
       sanityPost?.contentRepeater?.length &&
       sanityPost?.contentRepeater?.length - 1 > currentRepeaterIndex

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 import { SanityConflictPostChoices } from "@/layouts/function-components/SanityConflictPostChoices.jsx";
 import { SanityConflictPostChapter } from "@/layouts/function-components/SanityConflictPostChapter.jsx";
@@ -15,7 +15,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   const [confirmedChoice, setConfirmedChoice] = useState(initialId);
   const [selectedChapter, setSelectedChapter] = useState();
   const [currentRepeaterIndex, setCurrentRepeaterIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [initialContentViewed, setInitialContentViewed] = useState(false);
   const [postStatus, setPostStatus] = useState(null);
 
   useEffect(() => {
@@ -42,8 +42,6 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
 
   const fetchChoiceData = async () => {
     try {
-      setIsLoading(true);
-
       const loadedPost = await sanityFetch({
         type: "conflictType",
         query: `_id == '${confirmedChoice}'`,
@@ -78,8 +76,6 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
       }
     } catch (error) {
       setError("Error fetching post");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -94,7 +90,6 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
     if (selectedChapter) {
       const fetchData = async () => {
         try {
-          setIsLoading(true);
           setPostStatus(null);
 
           const loadedPost = await sanityFetch({
@@ -111,14 +106,25 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
           setSanityPost(loadedPost[0]);
         } catch (error) {
           setError("Error fetching post");
-        } finally {
-          setIsLoading(false);
         }
       };
 
       fetchData();
     }
   }, [selectedChapter]);
+
+  const isInitialContent = useMemo(() => {
+    return !selectedChapter && sanityPost?.content && !initialContentViewed;
+  }, [selectedChapter, sanityPost?.content]);
+
+  const isLastChapter = useMemo(() => {
+    return (
+      choices.length &&
+      selectedChapter &&
+      choices.findIndex((choice) => choice?._id === selectedChapter) ===
+        choices.length - 1
+    );
+  }, [choices, selectedChapter]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -167,7 +173,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
 
   return (
     <div>
-      {!postStatus && !error && !isLoading && (
+      {postStatus !== null && !postStatus && !error && (
         <>
           <LockedContent lang={lang} client:load />
 
@@ -181,7 +187,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
           </button>
         </>
       )}
-      {error && !isLoading && (
+      {error && (
         <div className="form-navigation mt-10 mb-10 float-left w-full">
           <button
             className="go btn btn-primary block float-right w-40"
@@ -193,21 +199,17 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
           </button>
         </div>
       )}
-      {postStatus && !error && !isLoading && (
+      {postStatus && !error && (
         <div className="form-wrapper form-2 mt-4">
           <h2 className="mb-8 font-normal">{sanityPost?.title}</h2>
-          {selectedChapter ? (
+          {selectedChapter || isInitialContent ? (
             <SanityConflictPostChapter
               generalText={generalText}
               sanityPost={sanityPost}
               currentRepeaterIndex={currentRepeaterIndex}
-              isLastChapter={
-                choices.length &&
-                choices.findIndex(
-                  (choice) => choice?._id === selectedChapter,
-                ) ===
-                  choices.length - 1
-              }
+              isLastChapter={isLastChapter}
+              isInitialContent={isInitialContent}
+              setInitialContentViewed={setInitialContentViewed}
               setCurrentRepeaterIndex={setCurrentRepeaterIndex}
               nextChapter={nextChapter}
               backToChapters={backToChapters}
