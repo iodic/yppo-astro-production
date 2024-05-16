@@ -28,6 +28,8 @@ export async function getStaticPaths() {
       })
     }
   })
+
+  return paths
 }
 
 const { category, lang } = Astro.params
