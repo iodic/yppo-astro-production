@@ -8,17 +8,24 @@ import { getTaxonomy } from "@/lib/taxonomyParser.astro"
 import { slugify } from "@/lib/utils/textConverter"
 
 export async function getStaticPaths() {
-  const { defaultLocale } = i18nConfig
+  const paths: any = []
+  const { defaultLocale, locales } = i18nConfig
 
   const categories = await getTaxonomy(config.settings.blog_folder, "categories")
 
-  return categories.map(item => {
-    const category = slugify(item)
-    return {
-      params: { category, lang: defaultLocale },
-      props: {
-        item
-      }
+  locales.map((currentLocale: string) => {
+    if (currentLocale !== defaultLocale) {
+      categories.map((item: any) => {
+        const category = slugify(item)
+
+        paths.push({
+          params: {
+            lang: currentLocale,
+            category
+          },
+          props: { item }
+        })
+      })
     }
   })
 }

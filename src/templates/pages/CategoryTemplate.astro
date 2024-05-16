@@ -1,0 +1,67 @@
+---
+import { sanityFetch } from "@/lib/utils/sanityFetch"
+import config from "@/config/config.json"
+
+import Base from "@/layouts/Base.astro"
+import BlogCategories from "@/components/blog/BlogCategories.astro"
+import Blogs from "@/components/Blogs.astro"
+import PageHeader from "@/components/PageHeader.astro"
+import Shape from "@/components/Shape.astro"
+
+import { getSinglePage } from "@/lib/contentParser.astro"
+import { getTaxonomy } from "@/lib/taxonomyParser.astro"
+import taxonomyFilter from "@/lib/utils/taxonomyFilter"
+import { humanize } from "@/lib/utils/textConverter"
+
+const categories = await getTaxonomy(config.settings.blog_folder, "categories")
+
+const { item, category, lang } = Astro.props
+
+const categoriesPageData = await sanityFetch({
+  type: "categoriesPage",
+  lang,
+  object: `{
+      title,
+      pageMetadata {
+        ...,
+        "metaImage": metaImage.asset->url,
+      },
+      heroSection,
+  }`
+})
+
+const { title, pageMetadata, heroSection } = categoriesPageData[0] || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
+
+const posts = await getSinglePage(config.settings.blog_folder)
+const filterByTags = taxonomyFilter(posts, "categories", category)
+---
+
+<Base
+  title={title && title}
+  meta_title={metaTitle && metaTitle}
+  description={metaDescription && metaDescription}
+  image={metaImage && metaImage}
+  noindex={noIndex && noIndex}
+  canonical={canonicalUrl && canonicalUrl}
+>
+  <Shape />
+
+  <section class="page-hero pb-8 pt-16">
+    <div class="container">
+      <div class="page-hero-content mx-auto max-w-[883px] text-center">
+        <PageHeader pageData={{ title, heroSection }} />
+        <h1 class="h2 mb-14 text-center">
+          Showing posts from <span class="text-primary">{humanize(item)}</span> category
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <BlogCategories categories={categories} />
+      <Blogs posts={filterByTags} />
+    </div>
+  </section>
+</Base>
