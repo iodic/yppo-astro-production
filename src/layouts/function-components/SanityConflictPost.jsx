@@ -167,7 +167,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
 
   return (
     <div>
-      {!postStatus && !isLoading && (
+      {!postStatus && !error && !isLoading && (
         <>
           <LockedContent lang={lang} client:load />
 
