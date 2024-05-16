@@ -80,7 +80,7 @@ const SanityConflictInitial = ({ lang }) => {
       ) : (
         sanityInitialPosts.length > 0 && (
           <div className="form-wrapper form-1 mt-4">
-            <h2 className="mb-8 font-normal">What's the issue about?</h2>
+            <h2 className="mb-8 font-normal">{generalText?.introIssueTitle}</h2>
             {sanityInitialPosts.map((post) => (
               <div
                 className="form-group flex w-full items-baseline rounded"
