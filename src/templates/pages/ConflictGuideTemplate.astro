@@ -1,0 +1,34 @@
+---
+import { sanityFetch } from "@/lib/utils/sanityFetch"
+
+import Base from "@/layouts/Base.astro"
+import { ConflictGuideContent } from "@/layouts/function-components/ConflictGuideContent"
+
+const { lang } = Astro.props
+
+const conflictGuidePageData = await sanityFetch({
+  type: "conflictGuidePage",
+  lang,
+  object: `{
+      title,
+      pageMetadata {
+        ...,
+        "metaImage": metaImage.asset->url,
+      },
+  }`
+})
+
+const { title, pageMetadata } = conflictGuidePageData[0] || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
+---
+
+<Base
+  title={title && title}
+  meta_title={metaTitle && metaTitle}
+  description={metaDescription && metaDescription}
+  image={metaImage && metaImage}
+  noindex={noIndex && noIndex}
+  canonical={canonicalUrl && canonicalUrl}
+>
+  <ConflictGuideContent lang={lang} client:load />
+</Base>
