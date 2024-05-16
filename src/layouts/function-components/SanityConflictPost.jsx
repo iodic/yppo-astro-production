@@ -114,15 +114,19 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   }, [selectedChapter]);
 
   const isInitialContent = useMemo(() => {
-    return !selectedChapter && sanityPost?.content && !initialContentViewed;
-  }, [selectedChapter, sanityPost?.content]);
+    return Boolean(
+      !selectedChapter &&
+        !initialContentViewed &&
+        (sanityPost?.content || sanityPost?.contentRepeater?.length),
+    );
+  }, [selectedChapter, sanityPost, initialContentViewed]);
 
   const isLastChapter = useMemo(() => {
-    return (
+    return Boolean(
       choices.length &&
-      selectedChapter &&
-      choices.findIndex((choice) => choice?._id === selectedChapter) ===
-        choices.length - 1
+        selectedChapter &&
+        choices.findIndex((choice) => choice?._id === selectedChapter) ===
+          choices.length - 1,
     );
   }, [choices, selectedChapter]);
 
@@ -156,8 +160,6 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   };
 
   const backToChapters = () => {
-    window.scrollTo(0, 0);
-
     setSelectedChapter();
     fetchChoiceData();
   };
@@ -169,6 +171,24 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
     } else {
       backToInitialForm();
     }
+  };
+
+  const handleChoicesBackAction = () => {
+    window.scrollTo(0, 0);
+
+    if (initialId !== confirmedChoice) {
+      setConfirmedChoice(initialId);
+
+      return;
+    }
+
+    if (initialContentViewed) {
+      setInitialContentViewed(false);
+
+      return;
+    }
+
+    backToInitialForm();
   };
 
   return (
@@ -209,10 +229,12 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
               currentRepeaterIndex={currentRepeaterIndex}
               isLastChapter={isLastChapter}
               isInitialContent={isInitialContent}
+              initialContentViewed={initialContentViewed}
               setInitialContentViewed={setInitialContentViewed}
               setCurrentRepeaterIndex={setCurrentRepeaterIndex}
               nextChapter={nextChapter}
               backToChapters={backToChapters}
+              backToInitialForm={backToInitialForm}
             />
           ) : (
             <SanityConflictPostChoices
@@ -223,7 +245,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
               selectedChapter={selectedChapter}
               setConfirmedChoice={setConfirmedChoice}
               setSelectedChapter={setSelectedChapter}
-              backToInitialForm={backToInitialForm}
+              handleBackAction={handleChoicesBackAction}
             />
           )}
         </div>

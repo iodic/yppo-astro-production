@@ -8,7 +8,7 @@ export const SanityConflictPostChoices = ({
   selectedChapter,
   setConfirmedChoice,
   setSelectedChapter,
-  backToInitialForm,
+  handleBackAction,
 }) => {
   const [selectedChoice, setSelectedChoice] = useState();
 
@@ -91,7 +91,7 @@ export const SanityConflictPostChoices = ({
         </button>
         <button
           className="go btn float-left border-0 pl-0 pr-0"
-          onClick={backToInitialForm}
+          onClick={handleBackAction}
         >
           {generalText?.backButtonText ? generalText?.backButtonText : "← Back"}
         </button>

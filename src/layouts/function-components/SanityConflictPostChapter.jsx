@@ -12,10 +12,12 @@ export const SanityConflictPostChapter = ({
   currentRepeaterIndex,
   isLastChapter,
   isInitialContent,
+  initialContentViewed,
   setInitialContentViewed,
   setCurrentRepeaterIndex,
   nextChapter,
   backToChapters,
+  backToInitialForm,
 }) => {
   const builder = imageUrlBuilder(sanityClient);
 
@@ -40,25 +42,27 @@ export const SanityConflictPostChapter = ({
   }, [sanityPost, currentRepeaterIndex]);
 
   const nextButtonText = useMemo(() => {
-    if (isLastChapter) {
-      if (
-        (isRepeaterContent &&
-          sanityPost?.contentRepeater?.length - 1 === currentRepeaterIndex) ||
-        !isRepeaterContent
-      ) {
-        return generalText?.finishButtonText
-          ? generalText?.finishButtonText
-          : "Finish";
-      }
-    } else {
-      if (
-        (isRepeaterContent &&
-          sanityPost?.contentRepeater?.length - 1 === currentRepeaterIndex) ||
-        !isRepeaterContent
-      ) {
-        return generalText?.nextChapterText
-          ? generalText?.nextChapterText
-          : "Next chapter";
+    if (!isInitialContent) {
+      if (isLastChapter) {
+        if (
+          (isRepeaterContent &&
+            sanityPost?.contentRepeater?.length - 1 === currentRepeaterIndex) ||
+          !isRepeaterContent
+        ) {
+          return generalText?.finishButtonText
+            ? generalText?.finishButtonText
+            : "Finish";
+        }
+      } else {
+        if (
+          (isRepeaterContent &&
+            sanityPost?.contentRepeater?.length - 1 === currentRepeaterIndex) ||
+          !isRepeaterContent
+        ) {
+          return generalText?.nextChapterText
+            ? generalText?.nextChapterText
+            : "Next chapter";
+        }
       }
     }
 
@@ -66,6 +70,8 @@ export const SanityConflictPostChapter = ({
   }, [sanityPost, currentRepeaterIndex]);
 
   const handleNextAction = () => {
+    window.scrollTo(0, 0);
+
     if (
       isInitialContent &&
       ((sanityPost?.contentRepeater?.length &&
@@ -73,6 +79,7 @@ export const SanityConflictPostChapter = ({
         sanityPost?.content)
     ) {
       setInitialContentViewed(true);
+      setCurrentRepeaterIndex(0);
 
       return;
     }
@@ -90,8 +97,16 @@ export const SanityConflictPostChapter = ({
   };
 
   const handleBackAction = () => {
+    window.scrollTo(0, 0);
+
     if (sanityPost?.contentRepeater?.length && currentRepeaterIndex > 0) {
       setCurrentRepeaterIndex(currentRepeaterIndex - 1);
+
+      return;
+    }
+
+    if (!initialContentViewed) {
+      backToInitialForm();
 
       return;
     }
