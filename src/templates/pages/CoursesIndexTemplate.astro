@@ -1,5 +1,4 @@
 ---
-import { sanityClient } from "sanity:client"
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import Base from "@/layouts/Base.astro"
@@ -65,14 +64,20 @@ const currentPosts = recentPost.slice(0, 6)
 
   <section class="section">
     <div class="container">
-      <FeaturedBlog posts={featuredPost} title={generalText?.featuredPosts} lang={lang} />
+      {featuredPost?.length ? <FeaturedBlog posts={featuredPost} title={generalText?.featuredPosts} lang={lang} /> : null}
 
-      {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
-      <Blogs posts={currentPosts} />
+      {
+        currentPosts?.length ? (
+          <>
+            {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
+            <Blogs posts={currentPosts} />
+          </>
+        ) : null
+      }
 
       <Pagination section={"courses"} currentPage={1} totalPages={totalPages} textPrevious={generalText?.previous} textNext={generalText?.next} />
     </div>
   </section>
 
-  <Cta ctaBanner={ctaBanner} />
+  {ctaBanner && <Cta ctaBanner={ctaBanner} />}
 </Base>
