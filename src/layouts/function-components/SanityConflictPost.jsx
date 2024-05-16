@@ -116,7 +116,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
     return (
       <div className="form-navigation mt-10 mb-10 float-left w-full">
         <button
-          className="go btn btn-primary block float-right w-40"
+          className="go btn btn-primary block float-right"
           onClick={reloadPage}
         >
           {generalText?.finishButtonText

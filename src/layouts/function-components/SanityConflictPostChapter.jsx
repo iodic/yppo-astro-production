@@ -54,8 +54,8 @@ export const SanityConflictPostChapter = ({
           sanityPost?.contentRepeater?.length - 1 === currentRepeaterIndex) ||
         !isRepeaterContent
       ) {
-        return generalText?.nextChapterButtonText
-          ? generalText?.nextChapterButtonText
+        return generalText?.nextChapterText
+          ? generalText?.nextChapterText
           : "Next chapter";
       }
     }
@@ -109,7 +109,7 @@ export const SanityConflictPostChapter = ({
       </div>
       <div className="form-navigation clear-both">
         <button
-          className="go btn btn-primary block float-right w-40"
+          className="go btn btn-primary block float-right"
           onClick={handleNextAction}
         >
           {nextButtonText}

@@ -104,7 +104,7 @@ const SanityConflictInitial = ({ lang }) => {
 
             <div className="form-navigation clear-both">
               <button
-                className="go btn btn-primary mt-10 block float-right w-40"
+                className="go btn btn-primary mt-10 block float-right"
                 onClick={handleNextButtonClick}
               >
                 {generalText?.nextButtonText

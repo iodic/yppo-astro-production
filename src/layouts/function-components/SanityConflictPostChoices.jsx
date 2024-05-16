@@ -84,7 +84,7 @@ export const SanityConflictPostChoices = ({
       )}
       <div className="form-navigation clear-both">
         <button
-          className="go btn btn-primary block float-right w-40"
+          className="go btn btn-primary block float-right"
           onClick={handleNextAction}
         >
           {generalText?.nextButtonText ? generalText?.nextButtonText : "Next"}
