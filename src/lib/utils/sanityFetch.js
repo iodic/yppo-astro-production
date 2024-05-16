@@ -3,13 +3,13 @@ import { i18nConfig } from "@/i18n/i18nConfig";
 
 export const sanityFetch = async ({
   type,
-  lang,
+  lang = "",
   query = "",
   pipe = "",
   object = "",
 }) => {
   const langData = await sanityClient.fetch(
-    `*[ _type == "${type}" && language == '${lang}' ${query ? "&& " + query : ""} ] ${pipe ? "| " + pipe : ""} ${object}`,
+    `*[ _type == '${type}' ${lang ? `&& language == '${lang}'` : ""} ${query ? "&& " + query : ""} ] ${pipe ? "| " + pipe : ""} ${object}`,
   );
 
   if (langData?.length) {
@@ -17,7 +17,7 @@ export const sanityFetch = async ({
   }
 
   const fallbackData = await sanityClient.fetch(
-    `*[ _type == "${type}" && language == '${i18nConfig.defaultLocale}' ${query ? "&& " + query : ""} ] ${pipe ? "| " + pipe : ""} ${object}`,
+    `*[ _type == '${type}' ${lang ? `&& language == '${i18nConfig.defaultLocale}'` : ""} ${query ? "&& " + query : ""} ] ${pipe ? "| " + pipe : ""} ${object}`,
   );
 
   return fallbackData;
