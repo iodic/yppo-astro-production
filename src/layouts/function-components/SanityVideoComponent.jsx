@@ -14,9 +14,8 @@ const SanityVideoComponent = ({
         controls={true}
         playsInline={true}
         poster={videoPoster}
-      >
-        <source src={videoUrl} />
-      </video>
+        src={videoUrl}
+      ></video>
       <div>
         {Boolean(videoTranscriptRepeater?.length) && (
           <>
