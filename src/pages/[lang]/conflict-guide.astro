@@ -1,30 +1,30 @@
 ---
-import Base from "@/layouts/Base.astro";
-import ConflictGuideTemplate from "@/templates/pages/ConflictGuideTemplate.astro";
+import Base from "@/layouts/Base.astro"
+import { ConflictGuideTemplate } from "@/layouts/function-components/ConflictGuideTemplate"
 
 import { i18nConfig } from "../../i18n/i18nConfig"
 
 export async function getStaticPaths() {
-  const paths: any = [];
+  const paths: any = []
 
-  const {defaultLocale, locales} = i18nConfig
+  const { defaultLocale, locales } = i18nConfig
 
   locales.map((currentLocale: string) => {
     if (currentLocale !== defaultLocale) {
       paths.push({
         params: {
-          lang: currentLocale,
-        },
-    });
+          lang: currentLocale
+        }
+      })
     }
   })
 
-  return paths;
+  return paths
 }
 
-const { lang } = Astro.params;
+const { lang } = Astro.params
 ---
 
 <Base title="Conflict Guide" lang={lang}>
-  <ConflictGuideTemplate lang={lang} />
+  <ConflictGuideTemplate lang={lang} client:load />
 </Base>

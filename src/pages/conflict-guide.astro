@@ -1,10 +1,10 @@
 ---
-import Base from "@/layouts/Base.astro";
-import ConflictGuideTemplate from "@/templates/pages/ConflictGuideTemplate.astro";
+import Base from "@/layouts/Base.astro"
+import { ConflictGuideTemplate } from "@/layouts/function-components/ConflictGuideTemplate"
 
-const currentLanguage  = Astro.currentLocale;
+const currentLanguage = Astro.currentLocale
 ---
 
 <Base lang={currentLanguage}>
-  <ConflictGuideTemplate lang={currentLanguage} />
+  <ConflictGuideTemplate lang={currentLanguage} client:load />
 </Base>
