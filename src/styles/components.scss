@@ -785,3 +785,15 @@ select:invalid {
 .flip-card-back {
   transform: rotateY(-180deg);
 }
+
+.conflict-post-container:has(.hidden-paywall) {
+  .hidden-paywall {
+    .hidden-paywall-image-container {
+      display: none;
+    }
+
+    .hidden-paywall-text-container {
+      width: 100% !important;
+    }
+  }
+}

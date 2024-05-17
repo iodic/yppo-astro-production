@@ -40,8 +40,11 @@ const LockedContent = ({ lang }) => {
   const { title, description, buttonText } = authorizationBanner || {};
 
   return (
-    <div className="container lg:gx-5 row items-center" id="hidden-paywall">
-      <div className="lg:col-7 lg:order-1">
+    <div
+      className="container lg:gx-5 row items-center hidden-paywall"
+      id="hidden-paywall"
+    >
+      <div className="lg:col-7 lg:order-1 hidden-paywall-image-container">
         <div className="relative">
           <img
             className="w-full object-contain"
@@ -52,7 +55,8 @@ const LockedContent = ({ lang }) => {
           />
         </div>
       </div>
-      <div className="mt-6 lg:col-5 lg:mt-0 lg:order-0">
+
+      <div className="mt-6 lg:col-5 lg:mt-0 lg:order-0 hidden-paywall-text-container">
         <div className="text-container">
           <h2 id="paywall-info" className="lg:text-4xl mb-4">
             {title ? title : "Looks like your account needs an upgrade"}

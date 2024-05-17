@@ -192,7 +192,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   };
 
   return (
-    <div>
+    <div className="conflict-post-container">
       {postStatus !== null && !postStatus && !error && (
         <>
           <LockedContent lang={lang} client:load />
