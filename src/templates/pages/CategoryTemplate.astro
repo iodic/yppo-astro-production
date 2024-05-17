@@ -21,10 +21,11 @@ const categoriesPageData = await sanityFetch({
         "metaImage": metaImage.asset->url,
       },
       heroSection,
+      generalText,
   }`
 })
 
-const { title, pageMetadata, heroSection } = categoriesPageData[0] || {}
+const { title, pageMetadata, heroSection, generalText } = categoriesPageData[0] || {}
 const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 
 const allPosts = await sanityFetch({ type: "course", lang, pipe: "order(_createdAt desc)" })
@@ -55,9 +56,13 @@ const posts = await sanityFetch({ type: "course", lang, query: `'${category}' in
     <div class="container">
       <div class="page-hero-content mx-auto max-w-[883px] text-center">
         <PageHeader pageData={{ title, heroSection }} />
-        <h1 class="h2 mb-14 text-center">
-          Showing posts from <span class="text-primary">{humanize(category)}</span> category
-        </h1>
+        {
+          generalText?.categoryText && (
+            <h1 class="h2 mb-14 text-center">
+              {generalText?.categoryText} <br /> <span class="text-primary">{humanize(category)}</span>
+            </h1>
+          )
+        }
       </div>
     </div>
   </section>
