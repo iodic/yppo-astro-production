@@ -1,51 +1,7 @@
 ---
-import { Image } from "astro:assets"
-import { sanityFetch } from "@/lib/utils/sanityFetch"
-import localizeURL from "@/lib/utils/localizeURL"
+import NotFoundTemplate from "@/templates/pages/NotFoundTemplate.astro"
 
-import Base from "@/layouts/Base.astro"
 const currentLanguage = Astro.currentLocale
-
-const lang = Astro.currentLocale
-
-const notFoundPageData = await sanityFetch({
-  type: "notFoundPage",
-  lang,
-  object: `{
-      title,
-      pageData {
-        mainTitle,
-        subtitle,
-        "image": image.asset->url,
-        buttonObject
-      }
-  }`
-})
-
-const { title, pageData } = notFoundPageData[0] || {}
-const { mainTitle, subtitle, image, buttonObject } = pageData || {}
-const { enableLink, linkObject } = buttonObject || {}
 ---
 
-<Base title={title && title} lang={currentLanguage}>
-  <section class="section">
-    <div class="container">
-      <div class="flex flex-col h-[40vh] items-center justify-center">
-        <div class="text-center">
-          {image && <Image src={image} class="mb-4 inline" alt="logo" width={300} height={200} />}
-
-          {mainTitle && <h1 class="mb-4">{mainTitle}</h1>}
-          {subtitle && <h2>{subtitle}</h2>}
-        </div>
-
-        {
-          enableLink && linkObject && (
-            <a class="mt-4 btn btn-primary" href={localizeURL(linkObject?.url, currentLanguage)}>
-              {linkObject?.urlTitle && linkObject?.urlTitle}
-            </a>
-          )
-        }
-      </div>
-    </div>
-  </section>
-</Base>
+<NotFoundTemplate lang={currentLanguage} />
