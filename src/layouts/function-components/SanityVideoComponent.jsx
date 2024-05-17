@@ -30,7 +30,7 @@ const SanityVideoComponent = ({
               {showTranscript ? "Hide Transcript" : "Show transcript"}
             </button>
             {showTranscript && (
-              <div className="mt-2 p-4 rounded-md bg-[#00000010]">
+              <div className="mt-2 p-4 rounded-md bg-[#00000010] mb-10">
                 {videoTranscriptRepeater.map(
                   (
                     { videoTranscriptSpeaker, videoTranscriptContent },
