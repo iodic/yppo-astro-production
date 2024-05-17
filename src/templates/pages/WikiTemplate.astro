@@ -3,7 +3,7 @@ import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import Base from "@/layouts/Base.astro"
 import Shape from "@/components/Shape.astro"
-import FeatureBannerSanity from "@/components/features/FeatureBannerSanity.astro"
+import FeatureBanner from "@/components/features/FeatureBanner.astro"
 import ProjecManagement from "@/components/features/ProjecManagement.astro"
 import Cta from "@/partials/Cta.astro"
 
@@ -37,7 +37,7 @@ const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMet
   canonical={canonicalUrl && canonicalUrl}
 >
   <Shape />
-  <FeatureBannerSanity title={title} heroSection={heroSection} />
+  <FeatureBanner title={title} heroSection={heroSection} />
   <ProjecManagement postsTitle={postsTitle} lang={lang} />
   <Cta ctaBanner={ctaBanner} />
 </Base>
