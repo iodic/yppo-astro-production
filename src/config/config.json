@@ -10,37 +10,16 @@
     "logo_height": "74",
     "logo_text": "yppo"
   },
-
   "settings": {
     "pagination": 6,
     "summary_length": 100,
     "blog_folder": "courses"
   },
-
-  "call_to_action": {
-    "title": "Helping individuals resolve workplace conflicts",
-    "description": "Your Portable Personal Ombuds helps you resolve conflicts at the workplace with confidence.",
-    "button": {
-      "label": "Go to the Conflict Guide",
-      "link": "/conflict-guide"
-    }
-  },
-
   "disqus": {
     "enable": true,
     "shortname": "themefisher-template",
     "settings": {}
   },
-
-  "params": {
-    "footer_description": "Your Portable Personal Ombuds helps you resolve conflicts at the workplace with confidence.",
-    "email": "info@yppo.org",
-    "location": "2118 Thornridge Cir. Syracuse, Connecticut 35624",
-    "phone": "+704-555-0127",
-    "contact_form_action": "#",
-    "copyright": "Copyright © 2024"
-  },
-
   "metadata": {
     "meta_author": "yppo",
     "meta_image": "/images/umino.png",
