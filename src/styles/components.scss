@@ -427,12 +427,7 @@ select:invalid {
     @apply border-b-0 bg-primary/40 py-3.5;
   }
 }
-// career
-.benifit-icon {
-  svg {
-    @apply h-8 w-24 text-xl text-dark;
-  }
-}
+
 //footer
 .footer {
   h6 {
@@ -523,42 +518,6 @@ select:invalid {
   &-active,
   &.active {
     @apply border-white bg-white text-dark shadow-[0px_15px_34px_rgba(0,0,0,0.1)];
-  }
-}
-
-//career-single
-.career-single {
-  &-content {
-    h5 + p {
-      @apply mt-4;
-    }
-
-    p + h5,
-    ul + h5 {
-      @apply mt-8;
-    }
-  }
-}
-
-//integration-single
-.integrations-single {
-  &-content {
-    h4 + p,
-    p + ul {
-      @apply mt-6;
-    }
-    p + h4,
-    ul + h4 {
-      @apply mt-12;
-    }
-
-    ul {
-      @apply list-disc pl-6 marker:text-dark;
-
-      li {
-        @apply mb-3;
-      }
-    }
   }
 }
 
