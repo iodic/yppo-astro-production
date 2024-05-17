@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 
 const capitalizeString = (str) => {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
+  if (str) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
 }
 
 const SanityVideoComponent = ({
@@ -37,11 +40,11 @@ const SanityVideoComponent = ({
                     index,
                   ) => (
                     <div>
-                      <span
+                      {videoTranscriptSpeaker && <span
                         className={`rounded-md px-[0.8rem] py-[0.45rem] text-xs font-semibold text-white ${index % 2 === 0 ? "bg-[#f3873c]" : "bg-[#c068f2]"}`}
                       >
-                        {capitalizeString(videoTranscriptSpeaker)}:
-                      </span>
+                        {videoTranscriptSpeakercapitalizeString(videoTranscriptSpeaker)}:
+                      </span>}
                       <p
                         className={`mt-2 ${index === videoTranscriptRepeater.length - 1
                           ? "mb-0"
