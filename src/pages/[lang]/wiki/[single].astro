@@ -1,16 +1,15 @@
 ---
-import { sanityClient } from "sanity:client"
-
 import Base from "@/layouts/Base.astro"
 import WikiSingle from "@/layouts/function-components/WikiSingle.jsx"
 
 import { i18nConfig } from "@/i18n/i18nConfig"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 export async function getStaticPaths() {
   const paths: any = []
   const { defaultLocale, locales } = i18nConfig
 
-  const posts = await sanityClient.fetch(`*[_type == 'conflictType' && language != '${defaultLocale}'] | order(_createdAt desc)`)
+  const posts = await sanityFetch({ type: "conflictType", query: `language != '${defaultLocale}'`, pipe: "order(_createdAt desc)" })
 
   locales.map((currentLocale: string) => {
     if (currentLocale !== defaultLocale) {

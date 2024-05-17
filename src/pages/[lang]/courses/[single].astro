@@ -1,14 +1,14 @@
 ---
 import Base from "@/layouts/Base.astro"
 import BlogSingle from "@/layouts/BlogSingle.astro"
-import { sanityClient } from "sanity:client"
 
 import { i18nConfig } from "@/i18n/i18nConfig"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 export async function getStaticPaths() {
   const paths: any = []
   const { defaultLocale, locales } = i18nConfig
-  const posts = await sanityClient.fetch(`*[_type == 'course' && featured != false && language != '${defaultLocale}'] | order(_createdAt desc)`)
+  const posts = await sanityFetch({ type: "course", query: `featured != false && language != '${defaultLocale}'`, pipe: "order(_createdAt desc)" })
 
   locales.map((currentLocale: string) => {
     if (currentLocale !== defaultLocale) {

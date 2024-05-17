@@ -5,10 +5,11 @@ import CoursesSlugTemplate from "@/templates/pages/CoursesSlugTemplate.astro"
 import config from "@/config/config.json"
 
 import { i18nConfig } from "@/i18n/i18nConfig"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 export async function getStaticPaths() {
   const { defaultLocale } = i18nConfig
-  const posts = await sanityClient.fetch(`*[_type == 'course' && featured != false && language == '${defaultLocale}'] | order(_createdAt desc)`)
+  const posts = await sanityFetch({ type: "course", lang: defaultLocale, query: "featured != false", pipe: "order(_createdAt desc)" })
 
   const totalPages = Math.ceil(posts.length / config.settings.pagination)
   const paths = []

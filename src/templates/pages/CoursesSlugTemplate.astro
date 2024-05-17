@@ -1,5 +1,4 @@
 ---
-import { sanityClient } from "sanity:client"
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import config from "@/config/config.json"
@@ -29,7 +28,7 @@ const coursesPageData = await sanityFetch({
 const { title, pageMetadata, heroSection, generalText } = coursesPageData[0] || {}
 const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 
-const recentPost = await sanityClient.fetch(`*[_type == 'course' && featured != false && language == '${lang}'] | order(_createdAt desc)`)
+const recentPost = await sanityFetch({ type: "course", lang, query: "featured != false", pipe: "order(_createdAt desc)" })
 
 const totalPages = Math.ceil(recentPost.length / 6)
 const currentPage = slug && !isNaN(Number(slug)) ? Number(slug) : 1

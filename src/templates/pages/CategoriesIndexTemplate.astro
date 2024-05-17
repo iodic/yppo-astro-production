@@ -1,5 +1,4 @@
 ---
-import { sanityClient } from "sanity:client"
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import Base from "@/layouts/Base.astro"
@@ -23,7 +22,7 @@ const categoriesPageData = await sanityFetch({
   }`
 })
 
-const posts = await sanityClient.fetch(`*[_type == 'course' && language == '${lang}'] | order(_createdAt desc)`)
+const posts = await sanityFetch({ type: "course", lang, pipe: "order(_createdAt desc)" })
 
 let postTagsArrays = posts.map((post: any) => post.tags)
 let allCategories: string[] = []
