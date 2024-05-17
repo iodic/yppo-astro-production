@@ -69,7 +69,7 @@ const posts = await sanityFetch({ type: "course", lang, query: `'${category}' in
 
   <section class="section">
     <div class="container">
-      <BlogCategories categories={allCategories} />
+      <BlogCategories categories={allCategories} allCategoriesText={generalText?.allCategoriesText} lang={lang} />
       <Blogs posts={posts} />
     </div>
   </section>

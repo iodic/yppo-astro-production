@@ -1,32 +1,24 @@
 ---
-import { humanize, slugify } from "@/lib/utils/textConverter";
+import { humanize, slugify } from "@/lib/utils/textConverter"
 import localizeURL from "@/lib/utils/localizeURL"
 
-const currentLanguage = Astro.currentLocale
-const { categories } = Astro.props;
-const params = Astro.params;
+const { categories, allCategoriesText, lang } = Astro.props
+const params = Astro.params
 ---
 
 <div class="category-filter mb-10 mt-3 rounded-xl bg-[#EEEEEE] p-4">
   <ul class="filter-list flex flex-wrap items-center">
     <li>
-      <a
-        class={`filter-btn ${
-          !params.category ? "filter-btn-active" : undefined
-        } btn btn-sm`}
-        href={localizeURL('/categories', currentLanguage)}>All Categories</a
+      <a class={`filter-btn ${!params.category ? "filter-btn-active" : undefined} btn btn-sm`} href={localizeURL("/categories", lang)}
+        >{allCategoriesText ? allCategoriesText : "All Categories"}</a
       >
     </li>
     {
       categories.map((category: any) => (
         <li>
           <a
-            class={`filter-btn ${
-              params.category === slugify(category)
-                ? "filter-btn-active"
-                : undefined
-            } btn btn-sm`}
-            href={localizeURL(`/categories/${slugify(category)}`, currentLanguage)}
+            class={`filter-btn ${params.category === slugify(category) ? "filter-btn-active" : undefined} btn btn-sm`}
+            href={localizeURL(`/categories/${slugify(category)}`, lang)}
           >
             {humanize(category)}
           </a>
