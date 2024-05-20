@@ -15,7 +15,7 @@ const HomapageFeature = ({ cards }) => {
     const cardWrapper = e.target.closest(".flip-card-inner");
     let clickCounter = 0;
 
-    if (!isTouchScreenDevice) {
+    if (!isTouchScreenDevice()) {
       cardWrapper.classList.add("flip-card-inner-back");
     } else {
       clickCounter++;
@@ -27,7 +27,7 @@ const HomapageFeature = ({ cards }) => {
   };
 
   const onHoverLeave = (e) => {
-    if (!isTouchScreenDevice) {
+    if (!isTouchScreenDevice()) {
       const cardWrapper = e.target.closest(".flip-card-inner");
       cardWrapper.classList.remove("flip-card-inner-back");
     }
