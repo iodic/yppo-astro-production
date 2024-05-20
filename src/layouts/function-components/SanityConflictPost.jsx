@@ -221,9 +221,18 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
       )}
       {postStatus && !error && (
         <div className="form-wrapper form-2 mt-4">
-          <span className="text-sm font-normal uppercase">
-            {sanityPost?.titlePrefix}
-          </span>
+          {sanityPost?.titlePrefix && (
+            <span className="text-sm font-normal uppercase">
+              {sanityPost?.titlePrefix}
+            </span>
+          )}
+
+          {selectedChapter && choices && (
+            <span className="text-sm font-normal uppercase">
+              {`${generalText?.chapterText ? generalText?.chapterText : "Chapter"} ${choices.findIndex((choice) => choice._id === selectedChapter) + 1}`}
+            </span>
+          )}
+
           <h2 className="mb-8 font-normal">{sanityPost?.title}</h2>
           {selectedChapter || isInitialContent ? (
             <SanityConflictPostChapter
