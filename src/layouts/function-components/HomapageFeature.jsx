@@ -13,11 +13,16 @@ const HomapageFeature = ({ cards }) => {
 
   const onCardClick = (e) => {
     const cardWrapper = e.target.closest(".flip-card-inner");
+    let clickCounter = 0;
 
     if (!isTouchScreenDevice) {
       cardWrapper.classList.add("flip-card-inner-back");
     } else {
-      cardWrapper.classList.toggle("flip-card-inner-back");
+      clickCounter++;
+
+      if (clickCounter > 1) {
+        cardWrapper.classList.toggle("flip-card-inner-back");
+      }
     }
   };
 
