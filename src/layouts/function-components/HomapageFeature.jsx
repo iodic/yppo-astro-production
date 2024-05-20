@@ -2,6 +2,16 @@ import { humanize } from "@/lib/utils/textConverter";
 import * as Icon from "react-feather";
 
 const HomapageFeature = ({ cards }) => {
+  const onCardClick = (e) => {
+    const cardWrapper = e.target.closest(".flip-card-inner");
+    cardWrapper.classList.add("flip-card-inner-back");
+  };
+
+  const onHoverLeave = (e) => {
+    const cardWrapper = e.target.closest(".flip-card-inner");
+    cardWrapper.classList.remove("flip-card-inner-back");
+  };
+
   return (
     <div className="key-feature-grid mt-10 grid gap-7 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
       {cards.map((item, i) => {
@@ -10,7 +20,11 @@ const HomapageFeature = ({ cards }) => {
 
         return (
           <div key={i} className="flex flex-col justify-between">
-            <div className="flip-card">
+            <div
+              className="flip-card"
+              onMouseLeave={(e) => onHoverLeave(e)}
+              onClick={(e) => onCardClick(e)}
+            >
               <div className="flip-card-inner">
                 <div className="flip-card-front rounded-lg bg-white p-5 shadow-lg flex flex-col justify-between">
                   <div>
@@ -21,6 +35,7 @@ const HomapageFeature = ({ cards }) => {
                     <FeatherIcon />
                   </span>
                 </div>
+
                 <div className="flip-card-back rounded-lg bg-white p-5 shadow-lg flex items-center text-black">
                   <p>{description}</p>
                 </div>

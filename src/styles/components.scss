@@ -732,6 +732,10 @@ select:invalid {
   transform: rotateY(-180deg);
 }
 
+.flip-card-inner-back {
+  transform: rotateY(0) !important;
+}
+
 .flip-card-front,
 .flip-card-back {
   position: absolute;
