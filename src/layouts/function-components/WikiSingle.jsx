@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { FaRegFolder } from "react-icons/fa";
+
 import imageUrlBuilder from "@sanity/image-url";
+import { sanityClient } from "sanity:client";
+import { sanityFetch } from "@/lib/utils/sanityFetch";
+
+import { checkStatus } from "src/helper/helper.ts";
+
 import { PortableText } from "@portabletext/react";
+import portableTextComponents from "../portable-text-components";
+
 import TradeOff from "@/layouts/function-components/TradeOff.jsx";
 import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
 import LockedContent from "@/layouts/function-components/LockedContent.jsx";
-import { checkStatus } from "src/helper/helper.ts";
-import portableTextComponents from "../portable-text-components";
-import { sanityClient } from "sanity:client";
+
+import { FaRegFolder } from "react-icons/fa";
 
 const WikiSingle = ({ post, lang }) => {
   const [postStatus, setPostStatus] = useState(null);
@@ -32,7 +38,7 @@ const WikiSingle = ({ post, lang }) => {
           type: "wikiPage",
           lang,
           object: `{
-              generalText
+              generalText,
             }`,
         });
 
@@ -43,7 +49,7 @@ const WikiSingle = ({ post, lang }) => {
     };
 
     fetchData();
-  }, []);
+  }, [lang]);
 
   const { generalText } = pageData[0] || {};
 
