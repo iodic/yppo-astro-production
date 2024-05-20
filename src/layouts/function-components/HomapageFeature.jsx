@@ -2,14 +2,27 @@ import { humanize } from "@/lib/utils/textConverter";
 import * as Icon from "react-feather";
 
 const HomapageFeature = ({ cards }) => {
+  const isTouchScreenDevice = () => {
+    try {
+      document.createEvent("TouchEvent");
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
   const onCardClick = (e) => {
-    const cardWrapper = e.target.closest(".flip-card-inner");
-    cardWrapper.classList.add("flip-card-inner-back");
+    if (!isTouchScreenDevice) {
+      const cardWrapper = e.target.closest(".flip-card-inner");
+      cardWrapper.classList.add("flip-card-inner-back");
+    }
   };
 
   const onHoverLeave = (e) => {
-    const cardWrapper = e.target.closest(".flip-card-inner");
-    cardWrapper.classList.remove("flip-card-inner-back");
+    if (!isTouchScreenDevice) {
+      const cardWrapper = e.target.closest(".flip-card-inner");
+      cardWrapper.classList.remove("flip-card-inner-back");
+    }
   };
 
   return (
