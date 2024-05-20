@@ -10,6 +10,7 @@ const SanityVideoComponent = ({
   videoUrl,
   videoPoster,
   videoTranscriptRepeater,
+  generalText,
 }) => {
   const [showTranscript, setShowTranscript] = useState(false);
 
@@ -26,10 +27,16 @@ const SanityVideoComponent = ({
         {Boolean(videoTranscriptRepeater?.length) && (
           <>
             <button
-              className="btn w-44 mb-2 text-center rounded-md cursor-pointer hover:bg-slate-700 hover:text-[#fafafa]"
+              className="btn whitespace-nowrap w-fit mb-2 text-center rounded-md cursor-pointer hover:bg-slate-700 hover:text-[#fafafa]"
               onClick={() => setShowTranscript(!showTranscript)}
             >
-              {showTranscript ? "Hide Transcript" : "Show Transcript"}
+              {showTranscript
+                ? generalText?.hideTranscriptText
+                  ? generalText?.hideTranscriptText
+                  : "Hide Transcript"
+                : generalText?.showTranscriptText
+                  ? generalText?.showTranscriptText
+                  : "Show Transcript"}
             </button>
             {showTranscript && (
               <div className="mt-2 p-4 rounded-md bg-[#00000010] mb-10">

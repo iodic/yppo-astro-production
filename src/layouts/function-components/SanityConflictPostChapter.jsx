@@ -128,6 +128,8 @@ export const SanityConflictPostChapter = ({
               videoUrl={videoUrl}
               videoPoster={builder.image(videoPoster).url()}
               videoTranscriptRepeater={videoTranscriptRepeater}
+              generalText={generalText}
+              client:load
             />
           </div>
         )}

@@ -11,6 +11,7 @@ import { sanityClient } from "sanity:client";
 
 const WikiSingle = ({ post, lang }) => {
   const [postStatus, setPostStatus] = useState(null);
+  const [pageData, setPageData] = useState([]);
   const [isContentRepeater, setIsContentRepeater] = useState(false);
 
   useEffect(() => {
@@ -23,6 +24,28 @@ const WikiSingle = ({ post, lang }) => {
 
     setIsContentRepeater(post?.contentRepeater?.length > 0);
   }, [post]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const pageContent = await sanityFetch({
+          type: "wikiPage",
+          lang,
+          object: `{
+              generalText
+            }`,
+        });
+
+        setPageData(pageContent);
+      } catch (error) {
+        console.error("Error fetching page data");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const { generalText } = pageData[0] || {};
 
   const builder = imageUrlBuilder(sanityClient);
 
@@ -75,6 +98,7 @@ const WikiSingle = ({ post, lang }) => {
                           videoUrl={videoUrl}
                           videoPoster={builder.image(videoPoster).url()}
                           videoTranscriptRepeater={videoTranscriptRepeater}
+                          generalText={generalText}
                           client:load
                         />
                       )}
@@ -97,6 +121,7 @@ const WikiSingle = ({ post, lang }) => {
                       videoUrl={post.videoUrl}
                       videoPoster={builder.image(post.videoPoster).url()}
                       videoTranscriptRepeater={post.videoTranscriptRepeater}
+                      generalText={generalText}
                       client:load
                     />
                   )}
