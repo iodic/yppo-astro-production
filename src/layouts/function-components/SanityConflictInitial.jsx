@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 
-const SanityConflictInitial = ({ lang }) => {
+const SanityConflictInitial = ({ lang, handlePageChange }) => {
   const [pageData, setPageData] = useState([]);
 
   const [answer, setAnswer] = useState("");
@@ -57,24 +57,16 @@ const SanityConflictInitial = ({ lang }) => {
     fetchData();
   }, []);
 
-  const handleNextButtonClick = () => {
-    if (answer) {
-      setSubmitFormAnswer(answer);
-    }
-  };
-
-  const backToInitialForm = () => {
-    setSubmitFormAnswer("");
-    window.scrollTo(0, 0);
-  };
-
   return (
     <div>
       {error && <div>Error: {error}</div>}
       {submitFormAnswer ? (
         <SanityConflictPost
           initialId={submitFormAnswer}
-          backToInitialForm={backToInitialForm}
+          backToInitialForm={() =>
+            handlePageChange(() => setSubmitFormAnswer(""))
+          }
+          handlePageChange={handlePageChange}
           lang={lang}
         />
       ) : (
@@ -105,7 +97,9 @@ const SanityConflictInitial = ({ lang }) => {
             <div className="form-navigation clear-both">
               <button
                 className="go btn btn-primary mt-10 block float-right"
-                onClick={handleNextButtonClick}
+                onClick={() =>
+                  handlePageChange(() => setSubmitFormAnswer(answer || ""))
+                }
               >
                 {generalText?.nextButtonText
                   ? generalText?.nextButtonText

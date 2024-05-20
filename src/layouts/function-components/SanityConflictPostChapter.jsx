@@ -18,6 +18,7 @@ export const SanityConflictPostChapter = ({
   nextChapter,
   backToChapters,
   backToInitialForm,
+  handlePageChange,
 }) => {
   const builder = imageUrlBuilder(sanityClient);
 
@@ -70,8 +71,6 @@ export const SanityConflictPostChapter = ({
   }, [sanityPost, currentRepeaterIndex]);
 
   const handleNextAction = () => {
-    window.scrollTo(0, 0);
-
     if (
       isInitialContent &&
       ((sanityPost?.contentRepeater?.length &&
@@ -97,8 +96,6 @@ export const SanityConflictPostChapter = ({
   };
 
   const handleBackAction = () => {
-    window.scrollTo(0, 0);
-
     if (sanityPost?.contentRepeater?.length && currentRepeaterIndex > 0) {
       setCurrentRepeaterIndex(currentRepeaterIndex - 1);
 
@@ -138,13 +135,13 @@ export const SanityConflictPostChapter = ({
       <div className="form-navigation clear-both">
         <button
           className="go btn btn-primary block float-right"
-          onClick={handleNextAction}
+          onClick={() => handlePageChange(handleNextAction)}
         >
           {nextButtonText}
         </button>
         <button
           className="go btn float-left border-0 pl-0 pr-0"
-          onClick={handleBackAction}
+          onClick={() => handlePageChange(handleBackAction)}
         >
           {generalText?.backButtonText ? generalText?.backButtonText : "← Back"}
         </button>

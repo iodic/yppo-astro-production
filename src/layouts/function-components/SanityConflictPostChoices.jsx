@@ -16,12 +16,6 @@ export const SanityConflictPostChoices = ({
     if (!articleType) {
       setConfirmedChoice(selectedChoice);
     }
-
-    if (articleType && !selectedChapter) {
-      setSelectedChapter(selectedChoice);
-    }
-
-    window.scrollTo(0, 0);
   };
 
   return (
@@ -52,6 +46,10 @@ export const SanityConflictPostChoices = ({
                       className="hidden"
                       onChange={() => {
                         setSelectedChoice(post._id);
+
+                        if (articleType && !selectedChapter) {
+                          setSelectedChapter(post._id);
+                        }
                       }}
                     />
                     <span className="font-semibold text-xl leading-normal">
@@ -83,12 +81,14 @@ export const SanityConflictPostChoices = ({
           ),
       )}
       <div className="form-navigation clear-both">
-        <button
-          className="go btn btn-primary block float-right"
-          onClick={handleNextAction}
-        >
-          {generalText?.nextButtonText ? generalText?.nextButtonText : "Next"}
-        </button>
+        {!articleType && (
+          <button
+            className="go btn btn-primary block float-right"
+            onClick={handleNextAction}
+          >
+            {generalText?.nextButtonText ? generalText?.nextButtonText : "Next"}
+          </button>
+        )}
         <button
           className="go btn float-left border-0 pl-0 pr-0"
           onClick={handleBackAction}

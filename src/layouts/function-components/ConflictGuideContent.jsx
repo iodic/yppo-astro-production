@@ -10,6 +10,14 @@ export const ConflictGuideContent = ({ lang }) => {
   const [conflictGuidePageData, setConflictGuidePageData] = useState();
   const [showIntro, setShowIntro] = useState(true);
 
+  const slideAnimation = () => {
+    $(".conflict-guide-form").slideUp(300);
+
+    setTimeout(() => {
+      $(".conflict-guide-form").slideDown(300);
+    }, 300);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await sanityFetch({
@@ -32,17 +40,13 @@ export const ConflictGuideContent = ({ lang }) => {
 
     fetchData();
 
-    $(".form-wrapper").slideDown(300);
+    $(".conflict-guide-form").slideDown(300);
 
-    $(".go").on("click", function (e) {
-      $(this)
-        .parents(".form-wrapper")
-        .slideUp("300", function () {
-          $("html, body").animate({ scrollTop: 0 }, "400");
-        });
+    $(".conflict-guide-form").slideUp(300);
 
-      e.preventDefault();
-    });
+    setTimeout(() => {
+      $(".conflict-guide-form").slideDown(300);
+    }, 300);
   }, []);
 
   const introSection = useMemo(() => {
@@ -53,13 +57,32 @@ export const ConflictGuideContent = ({ lang }) => {
     return conflictGuidePageData?.signInSliderContent;
   }, [conflictGuidePageData]);
 
+  const handlePageChange = (callback) => {
+    $(".conflict-guide-form").slideUp(300);
+
+    $("html, body").animate({ scrollTop: 0 }, "400");
+
+    if (callback) {
+      setTimeout(() => {
+        callback();
+      }, 300);
+    }
+
+    setTimeout(
+      () => {
+        $(".conflict-guide-form").slideDown(300);
+      },
+      callback ? 600 : 300,
+    );
+  };
+
   return (
     <section>
       <div className="container max-w-full">
         <div className="row">
           <div className="min-h-[580px] bg-white py-8 lg:col-6 lg:py-[64px]">
             {introSection && (
-              <div className="mx-auto w-full max-w-[480px]">
+              <div className="conflict-guide-form mx-auto w-full max-w-[480px]">
                 {showIntro ? (
                   <div className="form-wrapper form-0">
                     {introSection.introMobileImage && (
@@ -86,7 +109,9 @@ export const ConflictGuideContent = ({ lang }) => {
                     {introSection.introButtonText && (
                       <button
                         className="go btn btn-primary mt-10 block w-full"
-                        onClick={() => setShowIntro(false)}
+                        onClick={() =>
+                          handlePageChange(() => setShowIntro(false))
+                        }
                         href="#"
                       >
                         {introSection.introButtonText}
@@ -94,7 +119,10 @@ export const ConflictGuideContent = ({ lang }) => {
                     )}
                   </div>
                 ) : (
-                  <SanityConflictInitial lang={lang} />
+                  <SanityConflictInitial
+                    lang={lang}
+                    handlePageChange={handlePageChange}
+                  />
                 )}
               </div>
             )}

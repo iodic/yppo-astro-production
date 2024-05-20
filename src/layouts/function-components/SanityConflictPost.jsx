@@ -4,8 +4,14 @@ import { SanityConflictPostChoices } from "@/layouts/function-components/SanityC
 import { SanityConflictPostChapter } from "@/layouts/function-components/SanityConflictPostChapter.jsx";
 import { checkStatus } from "src/helper/helper.ts";
 import LockedContent from "./LockedContent";
+import { sanityClient } from "sanity:client";
 
-const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
+const SanityConflictPost = ({
+  initialId,
+  backToInitialForm,
+  lang,
+  handlePageChange,
+}) => {
   const [pageData, setPageData] = useState([]);
 
   const [sanityPost, setSanityPost] = useState(null);
@@ -55,18 +61,16 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
         setPostStatus(status);
       }
 
-      const fetchedChoices = [];
       if (loadedPost[0].answers?.length) {
-        for (const answer of loadedPost[0].answers) {
-          const loadedPost = await sanityFetch({
-            type: "conflictType",
-            query: `_id == '${answer._ref}'`,
-          });
+        const queries = loadedPost[0].answers.reduce(
+          (prev, curr, index) =>
+            `${prev}${prev.length ? "," : ""} "${index}": *[_type == 'conflictType' && _id == '${curr._ref}'][0]`,
+          "",
+        );
 
-          fetchedChoices.push(loadedPost[0]);
-        }
+        const loadedAnswers = await sanityClient.fetch(`{ ${queries} }`);
 
-        setChoices(fetchedChoices);
+        setChoices(Object.values(loadedAnswers));
       }
 
       if (loadedPost[0].articleType) {
@@ -131,7 +135,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   }, [choices, selectedChapter]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    handlePageChange();
   }, [currentRepeaterIndex]);
 
   const reloadPage = () => {
@@ -139,8 +143,6 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   };
 
   const nextChapter = () => {
-    window.scrollTo(0, 0);
-
     const selectedChapterIndex = choices.findIndex(
       (choice) => choice._id === selectedChapter,
     );
@@ -174,8 +176,6 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
   };
 
   const handleChoicesBackAction = () => {
-    window.scrollTo(0, 0);
-
     if (initialId !== confirmedChoice) {
       setConfirmedChoice(initialId);
 
@@ -199,7 +199,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
 
           <button
             className="go go-back btn float-left border-0 pl-0 pr-0"
-            onClick={handleLockedContentBack}
+            onClick={() => handlePageChange(handleLockedContentBack)}
           >
             {generalText?.backButtonText
               ? generalText?.backButtonText
@@ -247,6 +247,7 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
               nextChapter={nextChapter}
               backToChapters={backToChapters}
               backToInitialForm={backToInitialForm}
+              handlePageChange={handlePageChange}
             />
           ) : (
             <SanityConflictPostChoices
@@ -255,9 +256,13 @@ const SanityConflictPost = ({ initialId, backToInitialForm, lang }) => {
               articleType={articleType}
               confirmedChoice={confirmedChoice}
               selectedChapter={selectedChapter}
-              setConfirmedChoice={setConfirmedChoice}
-              setSelectedChapter={setSelectedChapter}
-              handleBackAction={handleChoicesBackAction}
+              setConfirmedChoice={(choice) =>
+                handlePageChange(() => setConfirmedChoice(choice))
+              }
+              setSelectedChapter={(chapter) =>
+                handlePageChange(() => setSelectedChapter(chapter))
+              }
+              handleBackAction={() => handlePageChange(handleChoicesBackAction)}
             />
           )}
         </div>
