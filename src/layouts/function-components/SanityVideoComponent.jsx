@@ -30,7 +30,7 @@ const SanityVideoComponent = ({
               className="btn w-44 mb-2 text-center rounded-md cursor-pointer hover:bg-slate-700 hover:text-[#fafafa]"
               onClick={() => setShowTranscript(!showTranscript)}
             >
-              {showTranscript ? "Hide Transcript" : "Show transcript"}
+              {showTranscript ? "Hide Transcript" : "Show Transcript"}
             </button>
             {showTranscript && (
               <div className="mt-2 p-4 rounded-md bg-[#00000010] mb-10">
