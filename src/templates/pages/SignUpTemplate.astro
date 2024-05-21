@@ -1,16 +1,21 @@
 ---
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
+import Base from "@/layouts/Base.astro"
 import SigninSlider from "@/layouts/function-components/SigninSlider.jsx"
 
 const { lang } = Astro.props
 
 const signUpPageData = await sanityFetch({
-type: "signUpPage",
-lang,
-object: `{
+  type: "signUpPage",
+  lang,
+  object: `{
     title,
     description,
+    pageMetadata {
+      ...,
+      "metaImage": metaImage.asset->url,
+    },
     googleSignUpText,
     emailSignUpText,
     nameObject,
@@ -21,46 +26,72 @@ object: `{
     cantLoginText,
     signupText,
     "signUpImage": signUpImage.asset->url,
-  }`}
-)
-const { signUpImage, title, description, googleSignUpText, emailSignUpText, nameObject, emailObject,passwordObject, buttonString, signInSliderContent } = signUpPageData[0] || {}
+  }`
+})
+
+const {
+  signUpImage,
+  title,
+  description,
+  pageMetadata,
+  googleSignUpText,
+  emailSignUpText,
+  nameObject,
+  emailObject,
+  passwordObject,
+  buttonString,
+  signInSliderContent
+} = signUpPageData[0] || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 ---
 
-<section>
-  <div class="container max-w-full">
-    <div class="row">
-      <div class="min-h-[980px] bg-white py-10 lg:col-6 lg:py-[114px]">
-        <div class="mx-auto w-full max-w-[480px]">
-          {signUpImage && <img class="mb-8 w-20" src={signUpImage} alt="Sign Up Image" />}
-          {title && <h1 class="mb-4">{title}</h1>}
-          {description &&<p>{description}</p>}
-          <div class="signin-options mt-10">
-            <a class="btn btn-outline-white block w-full text-dark" href="/signin">{googleSignUpText}</a>
-          </div>
-          <div
-            class="relative my-8 text-center after:absolute after:left-0 after:top-1/2 after:z-[0] after:w-full after:border-b after:border-border after:content-['']"
-          >
-            <span class="relative z-[1] inline-block bg-white px-2">{emailSignUpText}</span>
-          </div>
+<Base
+  title={title && title}
+  meta_title={metaTitle && metaTitle}
+  description={metaDescription && metaDescription}
+  image={metaImage && metaImage}
+  noindex={noIndex && noIndex}
+  canonical={canonicalUrl && canonicalUrl}
+>
+  <section>
+    <div class="container max-w-full">
+      <div class="row">
+        <div class="min-h-[980px] bg-white py-10 lg:col-6 lg:py-[114px]">
+          <div class="mx-auto w-full max-w-[480px]">
+            {signUpImage && <img class="mb-8 w-20" src={signUpImage} alt="Sign Up Image" />}
+            {title && <h1 class="mb-4">{title}</h1>}
+            {description && <p>{description}</p>}
 
-          <form action="#">
-            <div class="form-group">
-              <label for="name" class="form-label">{nameObject?.fieldName}</label>
-              <input type="text" id="name" class="form-control" placeholder={nameObject?.placeholder} />
+            <div class="signin-options mt-10">
+              <a class="btn btn-outline-white block w-full text-dark" href="/signin">{googleSignUpText}</a>
             </div>
-            <div class="form-group mt-4">
-              <label for="email" class="form-label">{emailObject?.fieldName}</label>
-              <input type="email" id="email" class="form-control" placeholder={emailObject?.placeholder} />
+
+            <div
+              class="relative my-8 text-center after:absolute after:left-0 after:top-1/2 after:z-[0] after:w-full after:border-b after:border-border after:content-['']"
+            >
+              <span class="relative z-[1] inline-block bg-white px-2">{emailSignUpText}</span>
             </div>
-            <div class="form-group mt-4">
-              <label for="password" class="form-label">{passwordObject?.fieldName}</label>
-              <input type="password" id="password" class="form-control" placeholder={passwordObject?.placeholder} />
-            </div>
-            <input class="btn btn-primary mt-10 block w-full" type="submit" value={buttonString} />
-          </form>
+
+            <form action="#">
+              <div class="form-group">
+                <label for="name" class="form-label">{nameObject?.fieldName}</label>
+                <input type="text" id="name" class="form-control" placeholder={nameObject?.placeholder} />
+              </div>
+              <div class="form-group mt-4">
+                <label for="email" class="form-label">{emailObject?.fieldName}</label>
+                <input type="email" id="email" class="form-control" placeholder={emailObject?.placeholder} />
+              </div>
+              <div class="form-group mt-4">
+                <label for="password" class="form-label">{passwordObject?.fieldName}</label>
+                <input type="password" id="password" class="form-control" placeholder={passwordObject?.placeholder} />
+              </div>
+              <input class="btn btn-primary mt-10 block w-full" type="submit" value={buttonString} />
+            </form>
+          </div>
         </div>
+
+        <SigninSlider client:load title={signInSliderContent?.title} />
       </div>
-      <SigninSlider client:load title={signInSliderContent?.title} />
     </div>
-  </div>
-</section>
+  </section>
+</Base>

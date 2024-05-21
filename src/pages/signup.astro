@@ -1,10 +1,7 @@
 ---
-import Base from "@/layouts/Base.astro"
 import SignUpTemplate from "@/templates/pages/SignUpTemplate.astro"
 
 const currentLanguage = Astro.currentLocale
 ---
 
-<Base lang={currentLanguage}>
-  <SignUpTemplate lang={currentLanguage} />
-</Base>
+<SignUpTemplate lang={currentLanguage} />
