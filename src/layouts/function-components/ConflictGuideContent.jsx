@@ -122,6 +122,7 @@ export const ConflictGuideContent = ({ lang }) => {
                   <SanityConflictInitial
                     lang={lang}
                     handlePageChange={handlePageChange}
+                    showIntro={() => setShowIntro(true)}
                   />
                 )}
               </div>

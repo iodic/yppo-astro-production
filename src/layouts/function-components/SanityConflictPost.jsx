@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 import { SanityConflictPostChoices } from "@/layouts/function-components/SanityConflictPostChoices.jsx";
 import { SanityConflictPostChapter } from "@/layouts/function-components/SanityConflictPostChapter.jsx";
+import { BackBlockButton } from "@/layouts/function-components/BackBlockButton.jsx";
 import { checkStatus } from "src/helper/helper.ts";
 import LockedContent from "./LockedContent";
 import { sanityClient } from "sanity:client";
@@ -11,6 +12,7 @@ const SanityConflictPost = ({
   backToInitialForm,
   lang,
   handlePageChange,
+  backToIntro,
 }) => {
   const [pageData, setPageData] = useState([]);
 
@@ -164,6 +166,7 @@ const SanityConflictPost = ({
   const backToChapters = () => {
     setSelectedChapter();
     fetchChoiceData();
+    setCurrentRepeaterIndex(0);
   };
 
   const handleLockedContentBack = () => {
@@ -189,6 +192,17 @@ const SanityConflictPost = ({
     }
 
     backToInitialForm();
+  };
+
+  const handleBackBlockClick = () => {
+    handlePageChange(() => {
+      if (selectedChapter) {
+        backToChapters();
+        setSanityPost(null);
+      } else {
+        backToIntro();
+      }
+    });
   };
 
   return (
@@ -221,6 +235,13 @@ const SanityConflictPost = ({
       )}
       {postStatus && !error && (
         <div className="form-wrapper form-2 mt-4">
+          <BackBlockButton
+            text={
+              Boolean(selectedChapter) ? "Back to Overview" : "Conflict guide"
+            }
+            onClick={handleBackBlockClick}
+            arrow={Boolean(selectedChapter)}
+          />
           {sanityPost?.titlePrefix && (
             <span className="text-sm font-normal uppercase">
               {sanityPost?.titlePrefix}

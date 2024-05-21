@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 
-const SanityConflictInitial = ({ lang, handlePageChange }) => {
+const SanityConflictInitial = ({ lang, handlePageChange, showIntro }) => {
   const [pageData, setPageData] = useState([]);
 
   const [answer, setAnswer] = useState("");
@@ -57,6 +57,12 @@ const SanityConflictInitial = ({ lang, handlePageChange }) => {
     fetchData();
   }, []);
 
+  const backToIntro = () => {
+    showIntro();
+    setAnswer("");
+    setSubmitFormAnswer("");
+  };
+
   return (
     <div>
       {error && <div>Error: {error}</div>}
@@ -68,6 +74,7 @@ const SanityConflictInitial = ({ lang, handlePageChange }) => {
           }
           handlePageChange={handlePageChange}
           lang={lang}
+          backToIntro={backToIntro}
         />
       ) : (
         sanityInitialPosts.length > 0 && (
