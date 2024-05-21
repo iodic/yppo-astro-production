@@ -38,19 +38,6 @@ const { post } = Astro.props;
               <FaRegClock className={"mr-2 -mt-1 inline-block"} />
               {calculateReadTime(post.content)}
             </li>
-            {
-              post.tags && (
-                <li class="mr-4 inline-block">
-                  <FaRegFolder className={"mr-2 -mt-1 inline-block"} />
-                  {post.tags.map((tag: string, index: number) => (
-                    <>
-                      {tag}
-                      {index !== post.tags.length - 1 && ", "}
-                    </>
-                  ))}
-                </li>
-              )
-            }
           </ul>
         </div>
 
