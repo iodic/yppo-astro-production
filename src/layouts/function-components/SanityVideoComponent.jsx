@@ -27,7 +27,7 @@ const SanityVideoComponent = ({
         {Boolean(videoTranscriptRepeater?.length) && (
           <>
             <button
-              className="btn whitespace-nowrap w-fit mb-2 text-center rounded-md cursor-pointer hover:bg-slate-700 hover:text-[#fafafa]"
+              className="btn whitespace-nowrap w-fit mb-2 text-center capitalize rounded-md cursor-pointer hover:bg-slate-700 hover:text-[#fafafa]"
               onClick={() => setShowTranscript(!showTranscript)}
             >
               {showTranscript
@@ -54,11 +54,10 @@ const SanityVideoComponent = ({
                         </span>
                       )}
                       <p
-                        className={`mt-2 ${
-                          index === videoTranscriptRepeater.length - 1
+                        className={`mt-2 ${index === videoTranscriptRepeater.length - 1
                             ? "mb-0"
                             : ""
-                        }`}
+                          }`}
                       >
                         {videoTranscriptContent}
                       </p>
