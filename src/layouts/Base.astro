@@ -37,10 +37,8 @@ export interface Props {
 }
 
 // distructure frontmatters
-const { title, meta_title, description, image, noindex, canonical } =
+const { title, lang, meta_title, description, image, noindex, canonical } =
   Astro.props;
-
-const lang  = Astro.currentLocale;
 
 // Prepare body element class to identify pages
 const { pathname } = Astro.url;
