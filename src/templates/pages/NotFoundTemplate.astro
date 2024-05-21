@@ -1,7 +1,7 @@
 ---
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 import { Image } from "astro:assets"
 
-import { sanityFetch } from "@/lib/utils/sanityFetch"
 import localizeURL from "@/lib/utils/localizeURL"
 
 import Base from "@/layouts/Base.astro"
@@ -27,7 +27,7 @@ const { mainTitle, subtitle, image, buttonObject } = pageData || {}
 const { enableLink, linkObject } = buttonObject || {}
 ---
 
-<Base title={title && title}>
+<Base title={title && title} lang={lang}>
   <section class="section">
     <div class="container">
       <div class="flex flex-col h-[40vh] items-center justify-center">

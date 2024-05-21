@@ -49,6 +49,7 @@ const posts = await sanityFetch({ type: "course", lang, query: `'${category}' in
   image={metaImage && metaImage}
   noindex={noIndex && noIndex}
   canonical={canonicalUrl && canonicalUrl}
+  lang={lang}
 >
   <Shape />
 

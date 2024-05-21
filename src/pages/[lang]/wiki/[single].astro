@@ -1,9 +1,10 @@
 ---
-import Base from "@/layouts/Base.astro"
-import WikiSingle from "@/layouts/function-components/WikiSingle.jsx"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import { i18nConfig } from "@/i18n/i18nConfig"
-import { sanityFetch } from "@/lib/utils/sanityFetch"
+
+import Base from "@/layouts/Base.astro"
+import WikiSingle from "@/layouts/function-components/WikiSingle.jsx"
 
 export async function getStaticPaths() {
   const paths: any = []
@@ -21,7 +22,7 @@ export async function getStaticPaths() {
               lang: currentLocale,
               single: post.slug.current
             },
-            props: { post, lang: currentLocale }
+            props: { post }
           })
         )
     }
@@ -30,10 +31,11 @@ export async function getStaticPaths() {
   return paths
 }
 
-const { post, lang } = Astro.props
+const { lang } = Astro.params
+const { post } = Astro.props
 const { title, description, image } = post
 ---
 
-<Base title={title} description={description} image={image}>
+<Base title={title} description={description} image={image} lang={lang}>
   <WikiSingle post={post} lang={lang} client:load />
 </Base>

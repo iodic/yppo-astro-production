@@ -1,9 +1,10 @@
 ---
-import Base from "@/layouts/Base.astro"
-import BlogSingle from "@/layouts/BlogSingle.astro"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import { i18nConfig } from "@/i18n/i18nConfig"
-import { sanityFetch } from "@/lib/utils/sanityFetch"
+
+import Base from "@/layouts/Base.astro"
+import BlogSingle from "@/layouts/BlogSingle.astro"
 
 export async function getStaticPaths() {
   const paths: any = []
@@ -27,10 +28,11 @@ export async function getStaticPaths() {
   return paths
 }
 
+const { lang } = Astro.params
 const { post } = Astro.props
 const { title, description, image } = post
 ---
 
-<Base title={title} description={description} image={image}>
+<Base title={title} description={description} image={image} lang={lang}>
   <BlogSingle post={post} />
 </Base>

@@ -29,6 +29,7 @@ const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMet
   image={metaImage && metaImage}
   noindex={noIndex && noIndex}
   canonical={canonicalUrl && canonicalUrl}
+  lang={lang}
 >
   <ConflictGuideContent lang={lang} client:load />
 </Base>
