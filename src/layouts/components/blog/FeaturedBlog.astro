@@ -25,8 +25,6 @@ const builder = imageUrlBuilder(sanityClient)
         <div class="card">
           <Image class="card-img" width={235} height={304} src={builder.image(post.image).url()} alt={post.title} />
           <div class="card-content">
-            <div class="card-tags space-x-1">{post.tags && post.tags.map((tag: string) => <div class="tag">{tag}</div>)}</div>
-
             <h3 class="h4 card-title">
               <a href={localizeURL(`/courses/${post.slug.current}`, lang)}>{post.title}</a>
             </h3>

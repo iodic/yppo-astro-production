@@ -35,7 +35,6 @@ const builder = imageUrlBuilder(sanityClient)
             </span>
           )}
           <div class="card-content">
-            {!embed && <div class="card-tags space-x-1">{item.tags && item.tags.map((tag: string) => <div class="tag">{tag}</div>)}</div>}
             <h3 class="h4 card-title">
               <a href={localizeURL(`/courses/${item.slug.current}`, lang)}>{item.title}</a>
             </h3>

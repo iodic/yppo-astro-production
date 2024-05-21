@@ -5,7 +5,6 @@ import Base from "@/layouts/Base.astro"
 import Shape from "@/components/Shape.astro"
 import PageHeader from "@/components/PageHeader.astro"
 import Blogs from "@/components/Blogs.astro"
-import BlogCategories from "@/components/blog/BlogCategories.astro"
 import FeaturedBlog from "@/components/blog/FeaturedBlog.astro"
 import Pagination from "@/layouts/components/Pagination.astro"
 import Cta from "@/partials/Cta.astro"
@@ -77,8 +76,6 @@ const currentPosts = recentPost.slice(0, 6)
   <section class="section">
     <div class="container">
       {featuredPost?.length ? <FeaturedBlog posts={featuredPost} title={generalText?.featuredPosts} lang={lang} /> : null}
-
-      {allCategories.length ? <BlogCategories categories={allCategories} /> : null}
 
       {
         currentPosts?.length ? (
