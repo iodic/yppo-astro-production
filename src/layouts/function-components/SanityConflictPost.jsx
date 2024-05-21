@@ -237,7 +237,9 @@ const SanityConflictPost = ({
         <div className="form-wrapper form-2 mt-4">
           <BackBlockButton
             text={
-              Boolean(selectedChapter) ? "Back to Overview" : "Conflict guide"
+              Boolean(selectedChapter)
+                ? generalText?.toOverviewText
+                : generalText?.toConflictGuideText
             }
             onClick={handleBackBlockClick}
             arrow={Boolean(selectedChapter)}
