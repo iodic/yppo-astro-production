@@ -36,7 +36,7 @@ const HomapageFeature = ({ cards }) => {
   };
 
   return (
-    <div className="key-feature-grid mt-10 grid gap-7 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <div className="key-feature-grid mt-10 grid gap-7 grid-cols-1 sm:grid-cols-2">
       {cards.map((item, i) => {
         const { title, description, shortDescription, icon } = item;
         const FeatherIcon = Icon[humanize(icon)];
