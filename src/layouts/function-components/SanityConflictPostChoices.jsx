@@ -9,6 +9,7 @@ export const SanityConflictPostChoices = ({
   setConfirmedChoice,
   setSelectedChapter,
   handleBackAction,
+  selectedChapterNumber,
 }) => {
   const [selectedChoice, setSelectedChoice] = useState();
 
@@ -31,6 +32,9 @@ export const SanityConflictPostChoices = ({
                     key={`question_${post._id}`}
                   >
                     <span className="lg:top-1 relative w-7 min-w-7 h-7 flex items-center justify-center border-2 border-circle-gray rounded-full text-center bg-white">
+                      {selectedChapterNumber && (
+                        <span>{selectedChapterNumber}.</span>
+                      )}
                       {index + 1}
                     </span>
                     <label className="ml-2 grow" htmlFor={post._id}>
@@ -89,12 +93,16 @@ export const SanityConflictPostChoices = ({
             {generalText?.nextButtonText ? generalText?.nextButtonText : "Next"}
           </button>
         )}
-        <button
-          className="go btn float-left border-0 pl-0 pr-0"
-          onClick={handleBackAction}
-        >
-          {generalText?.backButtonText ? generalText?.backButtonText : "← Back"}
-        </button>
+        {handleBackAction && (
+          <button
+            className="go btn float-left border-0 pl-0 pr-0"
+            onClick={handleBackAction}
+          >
+            {generalText?.backButtonText
+              ? generalText?.backButtonText
+              : "← Back"}
+          </button>
+        )}
       </div>
     </>
   );

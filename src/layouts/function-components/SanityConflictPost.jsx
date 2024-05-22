@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 import { SanityConflictPostChoices } from "@/layouts/function-components/SanityConflictPostChoices.jsx";
 import { SanityConflictPostChapter } from "@/layouts/function-components/SanityConflictPostChapter.jsx";
@@ -18,10 +18,12 @@ const SanityConflictPost = ({
 
   const [sanityPost, setSanityPost] = useState(null);
   const [choices, setChoices] = useState([]);
+  const [subChoices, setSubChoices] = useState([]);
   const [articleType, setArticleType] = useState(false);
   const [error, setError] = useState(null);
   const [confirmedChoice, setConfirmedChoice] = useState(initialId);
   const [selectedChapter, setSelectedChapter] = useState();
+  const [selectedSubChapter, setSelectedSubChapter] = useState();
   const [currentRepeaterIndex, setCurrentRepeaterIndex] = useState(0);
   const [initialContentViewed, setInitialContentViewed] = useState(false);
   const [postStatus, setPostStatus] = useState(null);
@@ -85,6 +87,44 @@ const SanityConflictPost = ({
     }
   };
 
+  const fetchChapterData = async (selectedChapter) => {
+    try {
+      setCurrentRepeaterIndex(0);
+      setPostStatus(null);
+
+      const loadedPost = await sanityFetch({
+        type: "conflictType",
+        query: `_id == '${selectedChapter}'`,
+        lang,
+      });
+
+      if (loadedPost && loadedPost[0]) {
+        const status = await checkStatus(loadedPost[0]?.status);
+        setPostStatus(status);
+      }
+
+      if (!selectedSubChapter) {
+        if (loadedPost[0].answers?.length) {
+          const queries = loadedPost[0].answers.reduce(
+            (prev, curr, index) =>
+              `${prev}${prev.length ? "," : ""} "${index}": *[_type == 'conflictType' && _id == '${curr._ref}'][0]`,
+            "",
+          );
+
+          const loadedAnswers = await sanityClient.fetch(`{ ${queries} }`);
+
+          setSubChoices(Object.values(loadedAnswers));
+        } else {
+          setSubChoices([]);
+        }
+      }
+
+      setSanityPost(loadedPost[0]);
+    } catch (error) {
+      setError("Error fetching post");
+    }
+  };
+
   useEffect(() => {
     if (confirmedChoice) {
       setPostStatus(null);
@@ -94,30 +134,15 @@ const SanityConflictPost = ({
 
   useEffect(() => {
     if (selectedChapter) {
-      const fetchData = async () => {
-        try {
-          setPostStatus(null);
-
-          const loadedPost = await sanityFetch({
-            type: "conflictType",
-            query: `_id == '${selectedChapter}'`,
-            lang,
-          });
-
-          if (loadedPost && loadedPost[0]) {
-            const status = await checkStatus(loadedPost[0]?.status);
-            setPostStatus(status);
-          }
-
-          setSanityPost(loadedPost[0]);
-        } catch (error) {
-          setError("Error fetching post");
-        }
-      };
-
-      fetchData();
+      fetchChapterData(selectedChapter);
     }
   }, [selectedChapter]);
+
+  useEffect(() => {
+    if (selectedSubChapter) {
+      fetchChapterData(selectedSubChapter);
+    }
+  }, [selectedSubChapter]);
 
   const isInitialContent = useMemo(() => {
     return Boolean(
@@ -136,6 +161,20 @@ const SanityConflictPost = ({
     );
   }, [choices, selectedChapter]);
 
+  const selectedChapterNumber = useMemo(() => {
+    if (selectedChapter && choices.length) {
+      return choices.findIndex((choice) => choice._id === selectedChapter) + 1;
+    }
+  }, [selectedChapter, choices]);
+
+  const selectedSubChapterNumber = useMemo(() => {
+    if (selectedSubChapter && subChoices.length) {
+      return (
+        subChoices.findIndex((choice) => choice._id === selectedSubChapter) + 1
+      );
+    }
+  }, [selectedSubChapter, subChoices]);
+
   useEffect(() => {
     handlePageChange();
   }, [currentRepeaterIndex]);
@@ -144,7 +183,28 @@ const SanityConflictPost = ({
     window.location.reload();
   };
 
-  const nextChapter = () => {
+  const nextSubChapter = () => {
+    const selectedSubChapterIndex = subChoices.findIndex(
+      (choice) => choice._id === selectedSubChapter,
+    );
+
+    if (
+      selectedSubChapterIndex >= 0 &&
+      subChoices.length - 1 > selectedSubChapterIndex &&
+      subChoices[selectedSubChapterIndex + 1]
+    ) {
+      setSelectedSubChapter(subChoices[selectedSubChapterIndex + 1]._id);
+      setCurrentRepeaterIndex(0);
+
+      return;
+    } else {
+      setSelectedSubChapter();
+      setCurrentRepeaterIndex(0);
+      nextChapter();
+    }
+  };
+
+  const nextChapter = useCallback(() => {
     const selectedChapterIndex = choices.findIndex(
       (choice) => choice._id === selectedChapter,
     );
@@ -161,12 +221,23 @@ const SanityConflictPost = ({
     }
 
     reloadPage();
+  }, [selectedChapter, choices, selectedSubChapter, subChoices]);
+
+  const leaveSubChapters = () => {
+    const lastChapterRepeaterIndex =
+      choices.find((choice) => choice._id === selectedChapter)?.contentRepeater
+        ?.length - 1;
+
+    fetchChapterData(selectedChapter);
+    setCurrentRepeaterIndex(lastChapterRepeaterIndex || 0);
+    setSelectedSubChapter();
   };
 
   const backToChapters = () => {
     setSelectedChapter();
     fetchChoiceData();
     setCurrentRepeaterIndex(0);
+    setSelectedSubChapter();
   };
 
   const handleLockedContentBack = () => {
@@ -250,9 +321,9 @@ const SanityConflictPost = ({
             </span>
           )}
 
-          {selectedChapter && choices && (
+          {selectedChapter && choices.length && (
             <span className="text-sm font-normal uppercase">
-              {`${generalText?.chapterText ? generalText?.chapterText : "Chapter"} ${choices.findIndex((choice) => choice._id === selectedChapter) + 1}`}
+              {`${generalText?.chapterText ? generalText?.chapterText : "Chapter"} ${selectedChapterNumber}${selectedSubChapterNumber ? `.${selectedSubChapterNumber}` : ""}`}
             </span>
           )}
 
@@ -268,16 +339,21 @@ const SanityConflictPost = ({
               setInitialContentViewed={setInitialContentViewed}
               setCurrentRepeaterIndex={setCurrentRepeaterIndex}
               nextChapter={nextChapter}
+              nextSubChapter={nextSubChapter}
               backToChapters={backToChapters}
+              leaveSubChapters={leaveSubChapters}
               backToInitialForm={backToInitialForm}
               handlePageChange={handlePageChange}
+              subChoices={subChoices}
+              selectedSubChapter={selectedSubChapter}
+              setSelectedSubChapter={setSelectedSubChapter}
+              selectedChapterNumber={selectedChapterNumber}
             />
           ) : (
             <SanityConflictPostChoices
               generalText={generalText}
               choices={choices}
               articleType={articleType}
-              confirmedChoice={confirmedChoice}
               selectedChapter={selectedChapter}
               setConfirmedChoice={(choice) =>
                 handlePageChange(() => setConfirmedChoice(choice))

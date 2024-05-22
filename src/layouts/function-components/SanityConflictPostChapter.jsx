@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { PortableText } from "@portabletext/react";
 import imageUrlBuilder from "@sanity/image-url";
 import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
+import { SanityConflictPostChoices } from "@/layouts/function-components/SanityConflictPostChoices.jsx";
 import TradeOff from "@/layouts/function-components/TradeOff.jsx";
 import portableTextComponents from "../portable-text-components";
 import { sanityClient } from "sanity:client";
@@ -16,9 +17,15 @@ export const SanityConflictPostChapter = ({
   setInitialContentViewed,
   setCurrentRepeaterIndex,
   nextChapter,
+  nextSubChapter,
   backToChapters,
+  leaveSubChapters,
   backToInitialForm,
   handlePageChange,
+  subChoices,
+  selectedSubChapter,
+  setSelectedSubChapter,
+  selectedChapterNumber,
 }) => {
   const builder = imageUrlBuilder(sanityClient);
 
@@ -92,7 +99,11 @@ export const SanityConflictPostChapter = ({
       return;
     }
 
-    nextChapter();
+    if (selectedSubChapter) {
+      nextSubChapter();
+    } else {
+      nextChapter();
+    }
   };
 
   const handleBackAction = () => {
@@ -108,7 +119,11 @@ export const SanityConflictPostChapter = ({
       return;
     }
 
-    backToChapters();
+    if (selectedSubChapter) {
+      leaveSubChapters();
+    } else {
+      backToChapters();
+    }
   };
 
   return (
@@ -134,6 +149,23 @@ export const SanityConflictPostChapter = ({
           </div>
         )}
       </div>
+      {Boolean(
+        !selectedSubChapter &&
+          subChoices.length &&
+          sanityPost?.contentRepeater?.length >= 0 &&
+          sanityPost?.contentRepeater?.length - 1 === currentRepeaterIndex,
+      ) && (
+        <SanityConflictPostChoices
+          generalText={generalText}
+          choices={subChoices}
+          articleType={true}
+          selectedChapter={selectedSubChapter}
+          selectedChapterNumber={selectedChapterNumber}
+          setSelectedChapter={(chapter) =>
+            handlePageChange(() => setSelectedSubChapter(chapter))
+          }
+        />
+      )}
       <div className="form-navigation clear-both">
         <button
           className="go btn btn-primary block float-right"
