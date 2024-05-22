@@ -36,6 +36,6 @@ const { post } = Astro.props
 const { title, description, image } = post
 ---
 
-<Base title={title} description={description} image={image} lang={lang}>
+<Base title={title} description={description} metaImage={image} lang={lang}>
   <WikiSingle post={post} lang={lang} client:load />
 </Base>

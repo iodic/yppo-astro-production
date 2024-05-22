@@ -33,15 +33,15 @@ classslug = classslug ? `downstream ${classslug}` : "home"
 // Props
 export interface Props {
   title?: string
-  lang?: string
-  meta_title?: string
+  lang: string
+  metaTitle?: string
   description?: string
-  image?: string
-  noindex?: boolean
+  metaImage?: string
+  noIndex?: boolean
   canonical?: string
 }
 
-const { title, lang, meta_title, description, image, noindex, canonical } = Astro.props
+const { title, lang, metaTitle, description, metaImage, noIndex, canonical } = Astro.props
 ---
 
 <!doctype html>
@@ -87,14 +87,14 @@ const { title, lang, meta_title, description, image, noindex, canonical } = Astr
 
     <!-- title -->
     <title>
-      {plainify(meta_title ? meta_title : title ? title : config.site.title)}
+      {plainify(metaTitle ? metaTitle : title ? title : config.site.title)}
     </title>
 
     <!-- canonical url -->
     {canonical && <link rel="canonical" href={canonical} item-prop="url" />}
 
     <!-- noindex robots -->
-    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    {noIndex && <meta name="robots" content="noindex,nofollow" />}
 
     <!-- meta-description -->
     <meta name="description" content={plainify(description ? description : config.metadata.meta_description)} />
@@ -105,7 +105,7 @@ const { title, lang, meta_title, description, image, noindex, canonical } = Astr
     <meta name="author" content={config.metadata.meta_author} />
 
     <!-- og-title -->
-    <meta property="og:title" content={plainify(meta_title ? meta_title : title ? title : config.site.title)} />
+    <meta property="og:title" content={plainify(metaTitle ? metaTitle : title ? title : config.site.title)} />
 
     <!-- og-description -->
     <meta property="og:description" content={plainify(description ? description : config.metadata.meta_description)} />
@@ -113,16 +113,16 @@ const { title, lang, meta_title, description, image, noindex, canonical } = Astr
     <meta property="og:url" content={`${config.site.base_url}/${Astro.url.pathname.replace("/", "")}`} />
 
     <!-- twitter-title -->
-    <meta name="twitter:title" content={plainify(meta_title ? meta_title : title ? title : config.site.title)} />
+    <meta name="twitter:title" content={plainify(metaTitle ? metaTitle : title ? title : config.site.title)} />
 
     <!-- twitter-description -->
     <meta name="twitter:description" content={plainify(description ? description : config.metadata.meta_description)} />
 
     <!-- og-image -->
-    <meta property="og:image" content={`${config.site.base_url}${image ? image : config.metadata.meta_image}`} />
+    <meta property="og:image" content={`${config.site.base_url}${metaImage ? metaImage : config.metadata.meta_image}`} />
 
     <!-- twitter-image -->
-    <meta name="twitter:image" content={`${config.site.base_url}${image ? image : config.metadata.meta_image}`} />
+    <meta name="twitter:image" content={`${config.site.base_url}${metaImage ? metaImage : config.metadata.meta_image}`} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <script is:inline src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
