@@ -37,7 +37,7 @@ const featuredPost = await sanityFetch({
 
 const recentPost = await sanityFetch({
   type: "course",
-  query: "featured != false",
+  query: "featured != true",
   lang,
   pipe: "order(_createdAt desc)"
 })
