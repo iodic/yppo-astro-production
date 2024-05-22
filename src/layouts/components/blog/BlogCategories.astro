@@ -1,5 +1,5 @@
 ---
-import { humanize, slugify } from "@/lib/utils/textConverter"
+import { slugify } from "@/lib/utils/textConverter"
 import localizeURL from "@/lib/utils/localizeURL"
 
 const { categories, allCategoriesText, lang } = Astro.props
@@ -13,14 +13,15 @@ const params = Astro.params
         >{allCategoriesText ? allCategoriesText : "All Categories"}</a
       >
     </li>
+
     {
-      categories.map((category: any) => (
+      categories.map((categoryItem: any) => (
         <li>
           <a
-            class={`filter-btn ${params.category === slugify(category) ? "filter-btn-active" : undefined} btn btn-sm`}
-            href={localizeURL(`/categories/${slugify(category)}`, lang)}
+            class={`filter-btn ${params.category === slugify(Object.keys(categoryItem)?.[0]) ? "filter-btn-active" : undefined} btn btn-sm`}
+            href={localizeURL(`/categories/${slugify(Object.keys(categoryItem)?.[0])}`, lang)}
           >
-            {humanize(category)}
+            {Object.values(categoryItem)?.[0]}
           </a>
         </li>
       ))

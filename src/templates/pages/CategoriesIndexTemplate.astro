@@ -1,6 +1,8 @@
 ---
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
+import getCoursesCategories from "@/lib/utils/getCoursesCategories"
+
 import Base from "@/layouts/Base.astro"
 import PageHeader from "@/components/PageHeader.astro"
 import Blogs from "@/components/Blogs.astro"
@@ -24,16 +26,7 @@ const categoriesPageData = await sanityFetch({
 })
 
 const posts = await sanityFetch({ type: "course", lang, pipe: "order(_createdAt desc)" })
-
-let postTagsArrays = posts.map((post: any) => post.tags)
-let allCategories: string[] = []
-postTagsArrays.map((tagArray: any[]) => {
-  tagArray.map(tag => {
-    if (allCategories.indexOf(tag) === -1) {
-      allCategories.push(tag)
-    }
-  })
-})
+const allCategories = getCoursesCategories(posts)
 
 const { title, pageMetadata, heroSection, generalText } = categoriesPageData[0] || {}
 const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}

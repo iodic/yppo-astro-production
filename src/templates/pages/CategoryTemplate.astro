@@ -9,7 +9,7 @@ import Shape from "@/components/Shape.astro"
 
 import { humanize } from "@/lib/utils/textConverter"
 
-const { category, lang } = Astro.props
+const { category, allCategories, allPosts, lang } = Astro.props
 
 const categoriesPageData = await sanityFetch({
   type: "categoriesPage",
@@ -25,21 +25,17 @@ const categoriesPageData = await sanityFetch({
   }`
 })
 
-const { title, pageMetadata, heroSection, generalText } = categoriesPageData[0] || {}
-const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
+const posts: any = []
+allPosts.map((post: any) => {
+  const { tags } = post
 
-const allPosts = await sanityFetch({ type: "course", lang, pipe: "order(_createdAt desc)" })
-let postTagsArrays = allPosts.map((post: any) => post.tags)
-let allCategories: string[] = []
-postTagsArrays.map((tagArray: any[]) => {
-  tagArray.map(tag => {
-    if (allCategories.indexOf(tag) === -1) {
-      allCategories.push(tag)
-    }
-  })
+  if (tags?.length && tags.some((tagObject: any) => tagObject.tag === category)) {
+    posts.push(post)
+  }
 })
 
-const posts = await sanityFetch({ type: "course", lang, query: `'${category}' in tags[]`, pipe: "order(_createdAt desc)" })
+const { title, pageMetadata, heroSection, generalText } = categoriesPageData[0] || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 ---
 
 <Base
