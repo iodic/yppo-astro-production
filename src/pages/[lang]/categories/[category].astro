@@ -14,9 +14,9 @@ export async function getStaticPaths() {
   const posts = await sanityFetch({ type: "course", query: `language != '${defaultLocale}'`, pipe: "order(_createdAt desc)" })
   const allCategories = getCoursesCategories(posts)
 
-  locales.map((currentLocale: string) => {
+  locales?.map((currentLocale: string) => {
     if (currentLocale !== defaultLocale) {
-      allCategories.map((categoryItem: any) => {
+      allCategories?.map((categoryItem: any) => {
         const categorySlug = slugify(Object.keys(categoryItem)?.[0])
 
         paths.push({

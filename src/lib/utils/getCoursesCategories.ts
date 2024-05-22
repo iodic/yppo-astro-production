@@ -1,10 +1,10 @@
 const getCoursesCategories = (posts: []) => {
-  let postTagsArrays = posts.map((post: any) => post.tags);
+  let postTagsArrays = posts?.map((post: any) => post.tags);
   let allCategories: object[] = [];
 
-  postTagsArrays.map((tagArray: any[]) => {
-    tagArray.map((tagItem) => {
-      const uniqueObject = allCategories.some((object) =>
+  postTagsArrays?.map((tagArray: any[]) => {
+    tagArray?.map((tagItem) => {
+      const uniqueObject = allCategories?.some((object) =>
         Object.keys(object).includes(tagItem.tagSlug?.current),
       );
 
