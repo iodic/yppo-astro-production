@@ -1,0 +1,47 @@
+---
+import { i18nConfig } from "@/i18n/i18nConfig"
+
+import CategoryTemplate from "@/templates/pages/CategoryTemplate.astro"
+
+import { slugify } from "@/lib/utils/textConverter"
+import { sanityFetch } from "@/lib/utils/sanityFetch"
+
+export async function getStaticPaths() {
+  const paths: any = []
+  const { defaultLocale, locales } = i18nConfig
+
+  const posts = await sanityFetch({ type: "course", query: `language != '${defaultLocale}'`, pipe: "order(_createdAt desc)" })
+  let postTagsArrays = posts.map((post: any) => post.tags)
+  let allCategories: string[] = []
+  postTagsArrays.map((tagArray: any[]) => {
+    tagArray.map(tag => {
+      if (allCategories.indexOf(tag) === -1) {
+        allCategories.push(tag)
+      }
+    })
+  })
+
+  locales.map((currentLocale: string) => {
+    if (currentLocale !== defaultLocale) {
+      allCategories.map((item: any) => {
+        const category = slugify(item)
+
+        paths.push({
+          params: {
+            lang: currentLocale,
+            category
+          },
+          props: { item }
+        })
+      })
+    }
+  })
+
+  return paths
+}
+
+const { lang } = Astro.params
+const { item } = Astro.props
+---
+
+<CategoryTemplate category={item} lang={lang} />
