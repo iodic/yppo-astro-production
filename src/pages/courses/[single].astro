@@ -9,7 +9,7 @@ import BlogSingle from "@/layouts/BlogSingle.astro"
 export async function getStaticPaths() {
   const { defaultLocale } = i18nConfig
 
-  const posts = await sanityFetch({ type: "course", lang: defaultLocale, query: "featured != false", pipe: "order(_createdAt desc)" })
+  const posts = await sanityFetch({ type: "course", lang: defaultLocale, pipe: "order(_createdAt desc)" })
 
   const paths = posts.map((post: any) => ({
     params: {
