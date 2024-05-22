@@ -44,8 +44,8 @@ const recentPost = await sanityFetch({
 
 let postTagsArrays = recentPost.map((post: any) => post.tags)
 let allCategories: string[] = []
-postTagsArrays.map((tagArray: any[]) => {
-  tagArray.map(tag => {
+postTagsArrays?.map((tagArray: any[]) => {
+  tagArray?.map(tag => {
     if (allCategories.indexOf(tag) === -1) {
       allCategories.push(tag)
     }
