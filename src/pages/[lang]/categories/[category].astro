@@ -1,5 +1,6 @@
 ---
 import { i18nConfig } from "@/i18n/i18nConfig"
+import getCoursesCategories from "@/lib/utils/getCoursesCategories"
 
 import CategoryTemplate from "@/templates/pages/CategoryTemplate.astro"
 
@@ -11,27 +12,19 @@ export async function getStaticPaths() {
   const { defaultLocale, locales } = i18nConfig
 
   const posts = await sanityFetch({ type: "course", query: `language != '${defaultLocale}'`, pipe: "order(_createdAt desc)" })
-  let postTagsArrays = posts.map((post: any) => post.tags)
-  let allCategories: string[] = []
-  postTagsArrays.map((tagArray: any[]) => {
-    tagArray.map(tag => {
-      if (allCategories.indexOf(tag) === -1) {
-        allCategories.push(tag)
-      }
-    })
-  })
+  const allCategories = getCoursesCategories(posts)
 
   locales.map((currentLocale: string) => {
     if (currentLocale !== defaultLocale) {
-      allCategories.map((item: any) => {
-        const category = slugify(item)
+      allCategories.map((categoryItem: any) => {
+        const categorySlug = slugify(Object.keys(categoryItem)?.[0])
 
         paths.push({
           params: {
             lang: currentLocale,
-            category
+            category: categorySlug
           },
-          props: { item }
+          props: { category: Object.values(categoryItem)[0], allCategories, allPosts: posts }
         })
       })
     }
@@ -41,7 +34,7 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params
-const { item } = Astro.props
+const { category, allCategories, allPosts } = Astro.props
 ---
 
-<CategoryTemplate category={item} lang={lang} />
+<CategoryTemplate category={category} allCategories={allCategories} allPosts={allPosts} lang={lang} />
