@@ -161,6 +161,15 @@ const SanityConflictPost = ({
     );
   }, [choices, selectedChapter]);
 
+  const isLastSubChapter = useMemo(() => {
+    return Boolean(
+      subChoices.length &&
+        selectedSubChapter &&
+        subChoices.findIndex((choice) => choice?._id === selectedSubChapter) ===
+          subChoices.length - 1,
+    );
+  }, [subChoices, selectedSubChapter]);
+
   const selectedChapterNumber = useMemo(() => {
     if (selectedChapter && choices.length) {
       return choices.findIndex((choice) => choice._id === selectedChapter) + 1;
@@ -334,6 +343,7 @@ const SanityConflictPost = ({
               sanityPost={sanityPost}
               currentRepeaterIndex={currentRepeaterIndex}
               isLastChapter={isLastChapter}
+              isLastSubChapter={isLastSubChapter}
               isInitialContent={isInitialContent}
               initialContentViewed={initialContentViewed}
               setInitialContentViewed={setInitialContentViewed}

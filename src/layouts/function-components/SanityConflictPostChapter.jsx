@@ -12,6 +12,7 @@ export const SanityConflictPostChapter = ({
   sanityPost,
   currentRepeaterIndex,
   isLastChapter,
+  isLastSubChapter,
   isInitialContent,
   initialContentViewed,
   setInitialContentViewed,
@@ -51,7 +52,10 @@ export const SanityConflictPostChapter = ({
 
   const nextButtonText = useMemo(() => {
     if (!isInitialContent) {
-      if (isLastChapter) {
+      if (
+        isLastChapter &&
+        ((selectedSubChapter && isLastSubChapter) || !selectedSubChapter)
+      ) {
         if (
           (isRepeaterContent &&
             sanityPost?.contentRepeater?.length - 1 === currentRepeaterIndex) ||
