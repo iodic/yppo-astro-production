@@ -23,8 +23,11 @@ const LockedContent = ({ lang }) => {
           type: "authorization",
           lang,
           object: `{
-            authorizationBanner,
-        }`,
+            authorizationBanner {
+              ...,
+              "image": image.asset->url,
+            },
+          }`,
         });
 
         setPageContent(pageData);
@@ -37,7 +40,7 @@ const LockedContent = ({ lang }) => {
   }, []);
 
   const { authorizationBanner } = pageContent[0] || {};
-  const { title, description, buttonText } = authorizationBanner || {};
+  const { title, description, image, buttonText } = authorizationBanner || {};
 
   return (
     <div
@@ -46,13 +49,15 @@ const LockedContent = ({ lang }) => {
     >
       <div className="lg:col-7 lg:order-1 hidden-paywall-image-container">
         <div className="relative">
-          <img
-            className="w-full object-contain"
-            alt="service"
-            width="473"
-            height="286"
-            src="/images/mascots/conflict-guide.png"
-          />
+          {image && (
+            <img
+              className="w-full object-contain"
+              alt=""
+              width="473"
+              height="286"
+              src={image}
+            />
+          )}
         </div>
       </div>
 
