@@ -155,7 +155,7 @@ export const SanityConflictPostChapter = ({
       </div>
       {Boolean(
         !selectedSubChapter &&
-          subChoices.length &&
+          subChoices?.length &&
           sanityPost?.contentRepeater?.length >= 0 &&
           sanityPost?.contentRepeater?.length - 1 === currentRepeaterIndex,
       ) && (

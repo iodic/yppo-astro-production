@@ -134,6 +134,7 @@ const SanityConflictPost = ({
 
   useEffect(() => {
     if (selectedChapter) {
+      setInitialContentViewed(true);
       fetchChapterData(selectedChapter);
     }
   }, [selectedChapter]);
@@ -154,7 +155,7 @@ const SanityConflictPost = ({
 
   const isLastChapter = useMemo(() => {
     return Boolean(
-      choices.length &&
+      choices?.length &&
         selectedChapter &&
         choices.findIndex((choice) => choice?._id === selectedChapter) ===
           choices.length - 1,
@@ -163,21 +164,21 @@ const SanityConflictPost = ({
 
   const isLastSubChapter = useMemo(() => {
     return Boolean(
-      subChoices.length &&
+      subChoices?.length &&
         selectedSubChapter &&
         subChoices.findIndex((choice) => choice?._id === selectedSubChapter) ===
-          subChoices.length - 1,
+          subChoices?.length - 1,
     );
   }, [subChoices, selectedSubChapter]);
 
   const selectedChapterNumber = useMemo(() => {
-    if (selectedChapter && choices.length) {
+    if (selectedChapter && choices?.length) {
       return choices.findIndex((choice) => choice._id === selectedChapter) + 1;
     }
   }, [selectedChapter, choices]);
 
   const selectedSubChapterNumber = useMemo(() => {
-    if (selectedSubChapter && subChoices.length) {
+    if (selectedSubChapter && subChoices?.length) {
       return (
         subChoices.findIndex((choice) => choice._id === selectedSubChapter) + 1
       );
@@ -199,7 +200,7 @@ const SanityConflictPost = ({
 
     if (
       selectedSubChapterIndex >= 0 &&
-      subChoices.length - 1 > selectedSubChapterIndex &&
+      subChoices?.length - 1 > selectedSubChapterIndex &&
       subChoices[selectedSubChapterIndex + 1]
     ) {
       setSelectedSubChapter(subChoices[selectedSubChapterIndex + 1]._id);
@@ -220,7 +221,7 @@ const SanityConflictPost = ({
 
     if (
       selectedChapterIndex >= 0 &&
-      choices.length - 1 > selectedChapterIndex &&
+      choices?.length - 1 > selectedChapterIndex &&
       choices[selectedChapterIndex + 1]
     ) {
       setSelectedChapter(choices[selectedChapterIndex + 1]._id);
@@ -247,6 +248,7 @@ const SanityConflictPost = ({
     fetchChoiceData();
     setCurrentRepeaterIndex(0);
     setSelectedSubChapter();
+    setSubChoices();
   };
 
   const handleLockedContentBack = () => {
@@ -265,7 +267,10 @@ const SanityConflictPost = ({
       return;
     }
 
-    if (initialContentViewed) {
+    if (
+      initialContentViewed &&
+      (sanityPost?.content || sanityPost?.contentRepeater?.length)
+    ) {
       setInitialContentViewed(false);
 
       return;
@@ -330,7 +335,7 @@ const SanityConflictPost = ({
             </span>
           )}
 
-          {selectedChapter && choices.length && (
+          {selectedChapter && choices?.length && (
             <span className="text-sm font-normal uppercase">
               {`${generalText?.chapterText ? generalText?.chapterText : "Chapter"} ${selectedChapterNumber}${selectedSubChapterNumber ? `.${selectedSubChapterNumber}` : ""}`}
             </span>
