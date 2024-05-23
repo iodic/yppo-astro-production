@@ -31,7 +31,7 @@ export const SanityConflictPostChoices = ({
                     className={`form-group reading-group flex items-start w-full rounded ${selectedChoice === post._id ? "card-highlight" : ""}`}
                     key={`question_${post._id}`}
                   >
-                    <span className="lg:top-1 relative w-7 min-w-7 h-7 flex items-center justify-center border-2 border-circle-gray rounded-full text-center bg-white">
+                    <span className="lg:top-1 relative w-10 min-w-10 h-10 flex items-center justify-center border-2 border-circle-gray rounded-full text-center bg-white">
                       {selectedChapterNumber && (
                         <span>{selectedChapterNumber}.</span>
                       )}
