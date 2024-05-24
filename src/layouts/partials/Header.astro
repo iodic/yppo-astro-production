@@ -1,20 +1,20 @@
 ---
-import { sanityFetch } from "@/lib/utils/sanityFetch";
+import { sanityFetch } from "@/lib/utils/sanityFetch"
 
-import { i18nConfig } from "@/i18n/i18nConfig";
-import { getClientId, getRedirectUri, getBaseUri } from "@/helper/auth";
-import localizeURL from "@/lib/utils/localizeURL";
+import { i18nConfig } from "@/i18n/i18nConfig"
+import { getClientId, getRedirectUri, getBaseUri } from "@/helper/auth"
+import localizeURL from "@/lib/utils/localizeURL"
 
-const { lang } = Astro.props;
-const { pathname } = Astro.url;
+const { lang } = Astro.props
+const { pathname } = Astro.url
 
-const currentLanguage = Astro.currentLocale;
-const { defaultLocale } = i18nConfig;
-const languagePrefix = currentLanguage === defaultLocale ? false : true;
+const currentLanguage = Astro.currentLocale
+const { defaultLocale } = i18nConfig
+const languagePrefix = currentLanguage === defaultLocale ? false : true
 
-const clientId = getClientId();
-const redirectUri = getRedirectUri();
-const baseUri = getBaseUri();
+const clientId = getClientId()
+const redirectUri = getRedirectUri()
+const baseUri = getBaseUri()
 
 const headerData = await sanityFetch({
   type: "header",
@@ -24,20 +24,19 @@ const headerData = await sanityFetch({
       "mobileLogoSrc": mobileLogo.asset->url,
       mainMenuObject,
       headerButtonsText
-  }`,
-});
+  }`
+})
 
-const { logoSrc, mobileLogoSrc, mainMenuObject, headerButtonsText } =
-  headerData[0] || {};
+const { logoSrc, mobileLogoSrc, mainMenuObject, headerButtonsText } = headerData[0] || {}
 
 interface MenuObject {
-  urlTitle: string;
-  url: string;
+  urlTitle: string
+  url: string
 }
 
 interface MenuItem {
-  pageUrl: MenuObject;
-  menuItemChildren: object[];
+  pageUrl: MenuObject
+  menuItemChildren: object[]
 }
 ---
 
@@ -50,27 +49,14 @@ interface MenuItem {
     <!-- logo -->
     <div class="order-0">
       <div class="order-0">
-        <a
-          href={languagePrefix ? `/${currentLanguage}` : "/"}
-          class="navbar-brand block"
-        >
+        <a href={languagePrefix ? `/${currentLanguage}` : "/"} class="navbar-brand block">
           {
             (logoSrc || mobileLogoSrc) && (
               <picture class="header-logo">
-                {logoSrc && (
-                  <source srcset={logoSrc} media="(min-width: 1024px)" />
-                )}
+                {logoSrc && <source srcset={logoSrc} media="(min-width: 1024px)" />}
                 {mobileLogoSrc && <source srcset={mobileLogoSrc} />}
 
-                <img
-                  src={logoSrc ? logoSrc : mobileLogoSrc}
-                  data-image-component="true"
-                  alt="yppo"
-                  width="462"
-                  height="148"
-                  loading="eager"
-                  decoding="async"
-                />
+                <img src={logoSrc ? logoSrc : mobileLogoSrc} data-image-component="true" alt="yppo" width="462" height="148" loading="eager" decoding="async" />
               </picture>
             )
           }
@@ -80,91 +66,67 @@ interface MenuItem {
 
     <!-- navbar toggler -->
     <input id="nav-toggle" type="checkbox" class="hidden" />
-    <label
-      id="show-button"
-      for="nav-toggle"
-      class="order-2 flex cursor-pointer items-center lg:order-1 lg:hidden"
-    >
+    <label id="show-button" for="nav-toggle" class="order-2 flex cursor-pointer items-center lg:order-1 lg:hidden">
       <svg class="h-6 fill-current" viewBox="0 0 20 20">
         <title>Menu Open</title>
         <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
       </svg>
     </label>
-    <label
-      id="hide-button"
-      for="nav-toggle"
-      class="order-2 hidden cursor-pointer items-center lg:order-1"
-    >
+    <label id="hide-button" for="nav-toggle" class="order-2 hidden cursor-pointer items-center lg:order-1">
       <svg class="h-6 fill-current" viewBox="0 0 20 20">
         <title>Menu Close</title>
-        <polygon
-          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
-          transform="rotate(45 10 10)"></polygon>
+        <polygon points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2" transform="rotate(45 10 10)"></polygon>
       </svg>
     </label>
     <!-- /navbar toggler -->
 
     {
       mainMenuObject?.menuRepeater && (
-        <ul
-          id="nav-menu"
-          class="navbar-nav order-3 hidden w-full lg:order-1 lg:flex lg:w-auto lg:space-x-2"
-        >
-          {mainMenuObject?.menuRepeater.map(
-            ({ pageUrl, menuItemChildren }: MenuItem) => (
-              <>
-                {menuItemChildren ? (
-                  <li
-                    class="nav-item nav-dropdown group relative cursor-pointer "
-                    id="dropdown-button"
+        <ul id="nav-menu" class="navbar-nav order-3 hidden w-full lg:order-1 lg:flex lg:w-auto lg:space-x-2">
+          {mainMenuObject?.menuRepeater.map(({ pageUrl, menuItemChildren }: MenuItem) => (
+            <>
+              {menuItemChildren ? (
+                <li class="nav-item nav-dropdown group relative cursor-pointer " id="dropdown-button">
+                  <span
+                    class={`nav-link inline-flex items-center ${menuItemChildren?.map(({ url: childUrl }: any) => localizeURL(childUrl, currentLanguage)).includes(pathname) ? "active" : ""}`}
                   >
-                    <span
-                      class={`nav-link inline-flex items-center ${menuItemChildren?.map(({ url: childUrl }: any) => childUrl).includes(pathname) ? "active" : ""}`}
-                    >
-                      {pageUrl?.urlTitle}
-                      <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                      </svg>
-                    </span>
-                    <ul
-                      id="dropdown"
-                      class="nav-dropdown-list mx-auto hidden duration-300 lg:invisible lg:absolute lg:block lg:h-auto lg:w-[13.5rem] lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100"
-                    >
-                      {menuItemChildren?.map(
-                        ({ urlTitle: childUrlTitle, url: childUrl }: any) => (
-                          <li class="nav-dropdown-item">
-                            <a
-                              href={localizeURL( pageUrl?.url, currentLanguage )}
-                              class={`nav-dropdown-link block ${(pathname === `${childUrl}/` || pathname === childUrl) && "text-primary"}`}
-                            >
-                              {childUrlTitle}
-                            </a>
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </li>
-                ) : (
-                  <li class="nav-item">
-                    <a href={localizeURL(pageUrl?.url, currentLanguage )}
-                      class={`nav-link inline-block lg:block ${(pathname === `${pageUrl?.url}/` || pathname === pageUrl?.url) && "active"}`}
-                    >
-                      {pageUrl?.urlTitle}
-                    </a>
-                  </li>
-                )}
-              </>
-            )
-          )}
+                    {pageUrl?.urlTitle}
+                    <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </span>
+                  <ul
+                    id="dropdown"
+                    class="nav-dropdown-list mx-auto hidden duration-300 lg:invisible lg:absolute lg:block lg:h-auto lg:w-[13.5rem] lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100"
+                  >
+                    {menuItemChildren?.map(({ urlTitle: childUrlTitle, url: childUrl }: any) => (
+                      <li class="nav-dropdown-item">
+                        <a
+                          href={localizeURL(pageUrl?.url, currentLanguage)}
+                          class={`nav-dropdown-link block ${(pathname === `${childUrl}/` || pathname === childUrl) && "text-primary"}`}
+                        >
+                          {childUrlTitle}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ) : (
+                <li class="nav-item">
+                  <a
+                    href={localizeURL(pageUrl?.url, currentLanguage)}
+                    class={`nav-link inline-block lg:block ${(pathname === localizeURL(`${pageUrl?.url}/`, currentLanguage) || pathname === localizeURL(pageUrl?.url, currentLanguage)) && "active"}`}
+                  >
+                    {pageUrl?.urlTitle}
+                  </a>
+                </li>
+              )}
+            </>
+          ))}
 
           <li class="nav-item mt-2 lg:hidden">
-            <a
-              class="btn btn-primary btn-sm border-border"
-              href={localizeURL("/get-started", currentLanguage)}
-            >
-              {headerButtonsText?.getStarted
-                ? headerButtonsText?.getStarted
-                : "Get Started"}
+            <a class="btn btn-primary btn-sm border-border" href={localizeURL("/get-started", currentLanguage)}>
+              {headerButtonsText?.getStarted ? headerButtonsText?.getStarted : "Get Started"}
             </a>
           </li>
 
@@ -178,53 +140,41 @@ interface MenuItem {
     }
 
     <div class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
-      <a
-        class="header-cta"
-        href={localizeURL("/get-started", currentLanguage)}
-        >{
-          headerButtonsText?.getStarted
-            ? headerButtonsText?.getStarted
-            : "Get Started"
-        }</a
+      <a class="header-cta" href={localizeURL("/get-started", currentLanguage)}
+        >{headerButtonsText?.getStarted ? headerButtonsText?.getStarted : "Get Started"}</a
       >
-      <button class="ml-5 header-cta" id="authLink_desktop"
-        >{headerButtonsText?.login ? headerButtonsText?.login : "Login"}</button
-      >
+      <button class="ml-5 header-cta" id="authLink_desktop">{headerButtonsText?.login ? headerButtonsText?.login : "Login"}</button>
     </div>
   </nav>
 </header>
 
 <script is:inline>
   document.addEventListener("astro:page-load", () => {
-    const header = document.querySelector(".header");
+    const header = document.querySelector(".header")
     window.addEventListener("scroll", () => {
       if (window.scrollY > 0) {
-        header.classList.add("header-sticky");
+        header.classList.add("header-sticky")
       } else {
-        header.classList.remove("header-sticky");
+        header.classList.remove("header-sticky")
       }
-    });
-    const jwtToken = localStorage.getItem("yppo_user_auth");
+    })
+    const jwtToken = localStorage.getItem("yppo_user_auth")
     if (jwtToken) {
-      document.getElementById("authLink").remove();
-      document.getElementById("authLink_desktop").remove();
+      document.getElementById("authLink").remove()
+      document.getElementById("authLink_desktop").remove()
     } else {
-      const clientId = document.getElementById("clientId").value;
-      const redirectUri = document.getElementById("redirectUri").value;
-      const baseUri = document.getElementById("baseUri").value;
+      const clientId = document.getElementById("clientId").value
+      const redirectUri = document.getElementById("redirectUri").value
+      const baseUri = document.getElementById("baseUri").value
 
       function handleAuthLinkClick(event) {
-        const authorizationUri = `${baseUri}/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=public`;
-        localStorage.setItem("yppoCurrentUrl", window.location.href);
-        window.location.href = authorizationUri;
+        const authorizationUri = `${baseUri}/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=public`
+        localStorage.setItem("yppoCurrentUrl", window.location.href)
+        window.location.href = authorizationUri
       }
 
-      document
-        .getElementById("authLink")
-        .addEventListener("click", handleAuthLinkClick);
-      document
-        .getElementById("authLink_desktop")
-        .addEventListener("click", handleAuthLinkClick);
+      document.getElementById("authLink").addEventListener("click", handleAuthLinkClick)
+      document.getElementById("authLink_desktop").addEventListener("click", handleAuthLinkClick)
     }
-  });
+  })
 </script>
