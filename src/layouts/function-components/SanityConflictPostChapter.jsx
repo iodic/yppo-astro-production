@@ -171,12 +171,17 @@ export const SanityConflictPostChapter = ({
         />
       )}
       <div className="form-navigation clear-both">
-        <button
-          className="go btn btn-primary block float-right"
-          onClick={() => handlePageChange(handleNextAction)}
-        >
-          {nextButtonText}
-        </button>
+        {Boolean(
+          !subChoices?.length || (subChoices?.length && selectedSubChapter),
+        ) && (
+          <button
+            className="go btn btn-primary block float-right"
+            onClick={() => handlePageChange(handleNextAction)}
+          >
+            {nextButtonText}
+          </button>
+        )}
+
         <button
           className="go btn float-left border-0 pl-0 pr-0"
           onClick={() => handlePageChange(handleBackAction)}
