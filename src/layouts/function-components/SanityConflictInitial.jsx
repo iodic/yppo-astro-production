@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
+
+import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
 
 const SanityConflictInitial = ({ lang, handlePageChange, showIntro }) => {
   const [pageData, setPageData] = useState([]);
@@ -66,6 +67,7 @@ const SanityConflictInitial = ({ lang, handlePageChange, showIntro }) => {
   return (
     <div>
       {error && <div>Error: {error}</div>}
+
       {submitFormAnswer ? (
         <SanityConflictPost
           initialId={submitFormAnswer}
@@ -79,7 +81,12 @@ const SanityConflictInitial = ({ lang, handlePageChange, showIntro }) => {
       ) : (
         sanityInitialPosts.length > 0 && (
           <div className="form-wrapper form-1 mt-4">
-            <h2 className="mb-8 font-normal">{generalText?.introIssueTitle}</h2>
+            {generalText?.introIssueTitle && (
+              <h2 className="mb-8 font-normal">
+                {generalText?.introIssueTitle}
+              </h2>
+            )}
+
             {sanityInitialPosts.map((post) => (
               <div
                 className="form-group flex w-full items-baseline rounded"
