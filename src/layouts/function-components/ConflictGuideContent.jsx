@@ -1,10 +1,10 @@
+import { useEffect, useMemo, useState } from "react";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 import { PortableText } from "@portabletext/react";
-import portableTextComponents from "@/layouts/portable-text-components";
 
+import portableTextComponents from "@/layouts/portable-text-components";
 import SigninSlider from "@/layouts/function-components/SigninSlider.jsx";
 import SanityConflictInitial from "@/layouts/function-components/SanityConflictInitial.jsx";
-import { useEffect, useMemo, useState } from "react";
 
 export const ConflictGuideContent = ({ lang }) => {
   const [conflictGuidePageData, setConflictGuidePageData] = useState();
