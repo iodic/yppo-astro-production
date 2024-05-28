@@ -3,11 +3,19 @@ import { sanityFetch } from "@/lib/utils/sanityFetch";
 
 import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
 
-const SanityConflictInitial = ({ lang, handlePageChange, showIntro }) => {
+const SanityConflictInitial = ({
+  lang,
+  handlePageChange,
+  showIntro,
+  getConflictGuideState,
+  changeConflictGuideState,
+}) => {
   const [pageData, setPageData] = useState([]);
 
   const [answer, setAnswer] = useState("");
-  const [submitFormAnswer, setSubmitFormAnswer] = useState("");
+  const [submitFormAnswer, setSubmitFormAnswer] = useState(
+    getConflictGuideState("submitFormAnswer", ""),
+  );
   const [sanityInitialPosts, setSanityInitialPosts] = useState([]);
   const [error, setError] = useState(null);
 
@@ -58,10 +66,15 @@ const SanityConflictInitial = ({ lang, handlePageChange, showIntro }) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    changeConflictGuideState({ submitFormAnswer });
+  }, [submitFormAnswer]);
+
   const backToIntro = () => {
     showIntro();
     setAnswer("");
     setSubmitFormAnswer("");
+    localStorage.setItem("conflict-guide-state", "{}");
   };
 
   return (
@@ -77,6 +90,8 @@ const SanityConflictInitial = ({ lang, handlePageChange, showIntro }) => {
           handlePageChange={handlePageChange}
           lang={lang}
           backToIntro={backToIntro}
+          getConflictGuideState={getConflictGuideState}
+          changeConflictGuideState={changeConflictGuideState}
         />
       ) : (
         sanityInitialPosts.length > 0 && (

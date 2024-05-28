@@ -7,16 +7,40 @@ import SigninSlider from "@/layouts/function-components/SigninSlider.jsx";
 import SanityConflictInitial from "@/layouts/function-components/SanityConflictInitial.jsx";
 
 export const ConflictGuideContent = ({ lang }) => {
-  const [conflictGuidePageData, setConflictGuidePageData] = useState();
-  const [showIntro, setShowIntro] = useState(true);
+  const changeConflictGuideState = (newState) => {
+    const conflictGuideState = JSON.parse(
+      localStorage.getItem("conflict-guide-state") || "{}",
+    );
 
-  const slideAnimation = () => {
-    $(".conflict-guide-form").slideUp(300);
-
-    setTimeout(() => {
-      $(".conflict-guide-form").slideDown(300);
-    }, 300);
+    localStorage.setItem(
+      "conflict-guide-state",
+      JSON.stringify({ ...conflictGuideState, ...newState }),
+    );
   };
+
+  const getConflictGuideState = (key, defaultValue) => {
+    const conflictGuideState = JSON.parse(
+      localStorage.getItem("conflict-guide-state") || "{}",
+    );
+
+    if (
+      conflictGuideState &&
+      typeof conflictGuideState === "object" &&
+      conflictGuideState[key] !== null &&
+      conflictGuideState[key] !== undefined
+    ) {
+      return conflictGuideState[key];
+    }
+
+    if (defaultValue !== undefined) {
+      return defaultValue;
+    }
+  };
+
+  const [conflictGuidePageData, setConflictGuidePageData] = useState();
+  const [showIntro, setShowIntro] = useState(
+    getConflictGuideState("showIntro", true),
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +72,10 @@ export const ConflictGuideContent = ({ lang }) => {
       $(".conflict-guide-form").slideDown(300);
     }, 300);
   }, []);
+
+  useEffect(() => {
+    changeConflictGuideState({ showIntro });
+  }, [showIntro]);
 
   const introSection = useMemo(() => {
     return conflictGuidePageData?.introSection;
@@ -123,6 +151,8 @@ export const ConflictGuideContent = ({ lang }) => {
                     lang={lang}
                     handlePageChange={handlePageChange}
                     showIntro={() => setShowIntro(true)}
+                    getConflictGuideState={getConflictGuideState}
+                    changeConflictGuideState={changeConflictGuideState}
                   />
                 )}
               </div>
