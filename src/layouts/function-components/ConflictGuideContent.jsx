@@ -60,17 +60,13 @@ export const ConflictGuideContent = ({ lang }) => {
       if (data?.length) {
         setConflictGuidePageData(data[0]);
       }
+
+      setTimeout(() => {
+        $(".conflict-guide-form").slideDown(300);
+      }, 300);
     };
 
     fetchData();
-
-    $(".conflict-guide-form").slideDown(300);
-
-    $(".conflict-guide-form").slideUp(300);
-
-    setTimeout(() => {
-      $(".conflict-guide-form").slideDown(300);
-    }, 300);
   }, []);
 
   useEffect(() => {
@@ -85,7 +81,7 @@ export const ConflictGuideContent = ({ lang }) => {
     return conflictGuidePageData?.signInSliderContent;
   }, [conflictGuidePageData]);
 
-  const handlePageChange = (callback) => {
+  const handlePageChange = (callback, skipSlideDown) => {
     $(".conflict-guide-form").slideUp(300);
 
     $("html, body").animate({ scrollTop: 0 }, "400");
@@ -96,12 +92,14 @@ export const ConflictGuideContent = ({ lang }) => {
       }, 300);
     }
 
-    setTimeout(
-      () => {
-        $(".conflict-guide-form").slideDown(300);
-      },
-      callback ? 600 : 300,
-    );
+    if (!skipSlideDown) {
+      setTimeout(
+        () => {
+          $(".conflict-guide-form").slideDown(300);
+        },
+        callback ? 600 : 300,
+      );
+    }
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { PortableText } from "@portabletext/react";
 import imageUrlBuilder from "@sanity/image-url";
 import SanityVideoComponent from "@/layouts/function-components/SanityVideoComponent.jsx";
@@ -27,8 +27,11 @@ export const SanityConflictPostChapter = ({
   selectedSubChapter,
   setSelectedSubChapter,
   selectedChapterNumber,
+  reloadPage,
 }) => {
   const builder = imageUrlBuilder(sanityClient);
+
+  const [isFinishAction, setIsFinishAction] = useState(false);
 
   const isRepeaterContent = useMemo(() => {
     return sanityPost?.contentRepeater?.length;
@@ -51,6 +54,8 @@ export const SanityConflictPostChapter = ({
   }, [sanityPost, currentRepeaterIndex]);
 
   const nextButtonText = useMemo(() => {
+    setIsFinishAction(false);
+
     if (!isInitialContent) {
       if (
         isLastChapter &&
@@ -61,6 +66,8 @@ export const SanityConflictPostChapter = ({
             sanityPost?.contentRepeater?.length - 1 === currentRepeaterIndex) ||
           !isRepeaterContent
         ) {
+          setIsFinishAction(true);
+
           return generalText?.finishButtonText
             ? generalText?.finishButtonText
             : "Finish";
@@ -111,6 +118,8 @@ export const SanityConflictPostChapter = ({
   };
 
   const handleBackAction = () => {
+    setIsFinishAction(false);
+
     if (sanityPost?.contentRepeater?.length && currentRepeaterIndex > 0) {
       setCurrentRepeaterIndex(currentRepeaterIndex - 1);
 
@@ -176,7 +185,7 @@ export const SanityConflictPostChapter = ({
         ) && (
           <button
             className="go btn btn-primary block float-right"
-            onClick={() => handlePageChange(handleNextAction)}
+            onClick={() => handlePageChange(handleNextAction, isFinishAction)}
           >
             {nextButtonText}
           </button>

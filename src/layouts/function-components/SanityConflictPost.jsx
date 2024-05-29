@@ -222,6 +222,7 @@ const SanityConflictPost = ({
   }, [currentRepeaterIndex]);
 
   const reloadPage = () => {
+    localStorage.removeItem("conflict-guide-state");
     window.location.reload();
   };
 
@@ -283,12 +284,19 @@ const SanityConflictPost = ({
   };
 
   const handleLockedContentBack = () => {
-    if (selectedChapter) {
-      setSelectedChapter();
-      setSelectedSubChapter();
-    } else {
-      backToInitialForm();
+    if (selectedSubChapter) {
+      leaveSubChapters();
+
+      return;
     }
+
+    if (selectedChapter) {
+      backToChapters();
+
+      return;
+    }
+
+    handleChoicesBackAction();
   };
 
   const handleChoicesBackAction = () => {
@@ -309,6 +317,7 @@ const SanityConflictPost = ({
       return;
     }
 
+    setConfirmedChoice();
     backToInitialForm();
   };
 
