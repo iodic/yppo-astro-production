@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { calculateReadTime } from "src/helper/helper.ts";
+import { useCallback, useEffect, useState } from "react";
+import { calculateReadTime, checkStatus } from "src/helper/helper.ts";
 
 export const SanityConflictPostChoices = ({
   generalText,
@@ -12,6 +12,7 @@ export const SanityConflictPostChoices = ({
   selectedChapterNumber,
 }) => {
   const [selectedChoice, setSelectedChoice] = useState();
+  const [lockedChoices, setLockedChoices] = useState([]);
 
   const handleNextAction = () => {
     if (!articleType) {
@@ -19,12 +20,32 @@ export const SanityConflictPostChoices = ({
     }
   };
 
+  useEffect(() => {
+    setLockedChoices([]);
+
+    const checkChoices = async () => {
+      const ids = [];
+
+      for (const choice of choices) {
+        const isNotLocked = await checkStatus(choice.status);
+
+        if (!isNotLocked) {
+          ids.push(choice._id);
+        }
+      }
+
+      setLockedChoices(ids);
+    };
+
+    checkChoices();
+  }, [choices]);
+
   return (
     <>
       {choices.map(
         (post, index) =>
           post && (
-            <div key={`root_${post._id}`}>
+            <div className="relative" key={`root_${post._id}`}>
               {articleType ? (
                 <div key={`nest_${post._id}`}>
                   <div
@@ -56,9 +77,11 @@ export const SanityConflictPostChoices = ({
                         }
                       }}
                     />
-                    <span className="font-semibold text-xl leading-normal">
-                      &gt;
-                    </span>
+                    {!lockedChoices.includes(post._id) && (
+                      <span className="font-semibold text-xl leading-normal">
+                        &gt;
+                      </span>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -79,6 +102,11 @@ export const SanityConflictPostChoices = ({
                   >
                     {post.title}
                   </label>
+                </div>
+              )}
+              {lockedChoices.includes(post._id) && (
+                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                  <img src="/images/icons/lock.svg" className="w-6" />
                 </div>
               )}
             </div>

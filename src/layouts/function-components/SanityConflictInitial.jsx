@@ -18,6 +18,7 @@ const SanityConflictInitial = ({
   );
   const [sanityInitialPosts, setSanityInitialPosts] = useState([]);
   const [error, setError] = useState(null);
+  const [lockedPosts, setLockedPosts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,6 +71,26 @@ const SanityConflictInitial = ({
     changeConflictGuideState({ submitFormAnswer });
   }, [submitFormAnswer]);
 
+  useEffect(() => {
+    setLockedPosts([]);
+
+    const checkPosts = async () => {
+      const ids = [];
+
+      for (const post of sanityInitialPosts) {
+        const isNotLocked = await checkStatus(post.status);
+
+        if (!isNotLocked) {
+          ids.push(post._id);
+        }
+      }
+
+      setLockedPosts(ids);
+    };
+
+    checkPosts();
+  }, [sanityInitialPosts]);
+
   const backToIntro = () => {
     showIntro();
     setAnswer("");
@@ -103,23 +124,30 @@ const SanityConflictInitial = ({
             )}
 
             {sanityInitialPosts.map((post) => (
-              <div
-                className="form-group flex w-full items-baseline rounded"
-                key={post._id}
-              >
-                <input
-                  type="radio"
-                  name="issue-type"
-                  id={post._id}
-                  className="top-[3px] relative"
-                  onChange={() => setAnswer(post._id)}
-                />
-                <label
-                  className="ml-2 real-deal chapter-choice"
-                  htmlFor={post._id}
+              <div className="relative">
+                <div
+                  className="form-group flex w-full items-baseline rounded"
+                  key={post._id}
                 >
-                  {post.title}
-                </label>
+                  <input
+                    type="radio"
+                    name="issue-type"
+                    id={post._id}
+                    className="top-[3px] relative"
+                    onChange={() => setAnswer(post._id)}
+                  />
+                  <label
+                    className="ml-2 real-deal chapter-choice"
+                    htmlFor={post._id}
+                  >
+                    {post.title}
+                  </label>
+                </div>
+                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                  {lockedPosts.includes(post._id) && (
+                    <img src="/images/icons/lock.svg" className="w-6" />
+                  )}
+                </div>
               </div>
             ))}
 
