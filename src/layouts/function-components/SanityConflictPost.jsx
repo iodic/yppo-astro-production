@@ -338,6 +338,12 @@ const SanityConflictPost = ({
     <div className="conflict-post-container">
       {postStatus !== null && !postStatus && !error && (
         <>
+          <BackBlockButton
+            text={generalText?.toConflictGuideText}
+            onClick={() => handlePageChange(backToIntro)}
+            className="!mb-8"
+          />
+
           <LockedContent lang={lang} client:load />
 
           <button
