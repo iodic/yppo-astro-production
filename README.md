@@ -36,7 +36,7 @@ After finishing all the customization, you can create a production build by runn
 npm run build
 ```
 
-## Troubleshooting notes
+## 🩹 Troubleshooting Notes
 
 Node must be above version 18 for Astro to work; use asdf to change the shell version to the appropriate one:
 
