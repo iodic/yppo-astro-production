@@ -407,6 +407,7 @@ const SanityConflictPost = ({
               selectedSubChapter={selectedSubChapter}
               setSelectedSubChapter={setSelectedSubChapter}
               selectedChapterNumber={selectedChapterNumber}
+              setConfirmedChoice={setConfirmedChoice}
             />
           ) : (
             <SanityConflictPostChoices

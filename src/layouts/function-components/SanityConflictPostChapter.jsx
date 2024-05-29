@@ -27,7 +27,7 @@ export const SanityConflictPostChapter = ({
   selectedSubChapter,
   setSelectedSubChapter,
   selectedChapterNumber,
-  reloadPage,
+  setConfirmedChoice,
 }) => {
   const builder = imageUrlBuilder(sanityClient);
 
@@ -127,6 +127,7 @@ export const SanityConflictPostChapter = ({
     }
 
     if (!initialContentViewed) {
+      setConfirmedChoice();
       backToInitialForm();
 
       return;
