@@ -35,21 +35,21 @@ export default function LanguageSwitcherDropdown({
       <div ref={dropdownRef} className="relative flex items-center ml-4">
         <button onClick={toggleOpen}>
           <IoGlobeOutline
-            className={`w-5 h-5 transition-colors ${open ? "stroke-dark" : "stroke-primary"}`}
+            className={`w-5 h-5 transition-colors ${open ? "stroke-dark" : "stroke-primary hover:stroke-dark"}`}
           />
         </button>
 
         <div
-          className={`absolute -left-[3.2rem] top-8 z-20 rounded border bg-white overflow-hidden my-1 overflow-y-auto ${open ? "shadow-md" : "hidden"}`}
+          className={`absolute -left-[3.2rem] xl:-left-6 top-8 z-20 rounded bg-theme-light overflow-hidden my-1 overflow-y-auto ${open ? "shadow-md" : "hidden"}`}
         >
           <ul
             onClick={() => setOpen(false)}
-            className="divide-y text-sm text-dark"
+            className="divide-y divide-gray-50 text-sm text-dark"
           >
             {Object.entries(localeNames).map(([lang, label]) => (
               <li
                 key={lang}
-                className={`px-2.5 text-center py-1.5 ${currentLanguage === lang ? "text-orange-500 pointer-events-none" : ""}`}
+                className={`px-2.5 text-center py-1.5 transition-colors ${currentLanguage === lang ? "text-orange-500 pointer-events-none" : "hover:text-orange-500"}`}
               >
                 <a
                   href={`${lang === defaultLocale ? "/" : `/${lang}`}${currentLanguage !== defaultLocale ? currentPath.substring(4) : currentPath}`}
