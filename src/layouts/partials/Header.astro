@@ -5,12 +5,15 @@ import { i18nConfig } from "@/i18n/i18nConfig"
 import { getClientId, getRedirectUri, getBaseUri } from "@/helper/auth"
 import localizeURL from "@/lib/utils/localizeURL"
 
+import LanguageSwitcherDropdown from "../function-components/LanguageSwitcherDropdown"
+
 const { lang } = Astro.props
 const { pathname } = Astro.url
 
 const currentLanguage = Astro.currentLocale
 const { defaultLocale } = i18nConfig
 const languagePrefix = currentLanguage === defaultLocale ? false : true
+const currentPath = Astro.url.pathname.replace(/\/$/, "")
 
 const clientId = getClientId()
 const redirectUri = getRedirectUri()
@@ -144,6 +147,8 @@ interface MenuItem {
         >{headerButtonsText?.getStarted ? headerButtonsText?.getStarted : "Get Started"}</a
       >
       <button class="ml-5 header-cta" id="authLink_desktop">{headerButtonsText?.login ? headerButtonsText?.login : "Login"}</button>
+
+      <LanguageSwitcherDropdown currentLanguage={currentLanguage} currentPath={currentPath} client:load />
     </div>
   </nav>
 </header>
