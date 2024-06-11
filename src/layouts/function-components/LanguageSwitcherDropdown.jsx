@@ -34,15 +34,17 @@ export default function LanguageSwitcherDropdown({
     <div className="flex flex-wrap">
       <div ref={dropdownRef} className="relative flex items-center ml-4">
         <button onClick={toggleOpen}>
-          <IoGlobeOutline className="w-5 h-5 stroke-primary" />
+          <IoGlobeOutline
+            className={`w-5 h-5 transition-colors ${open ? "stroke-dark" : "stroke-primary"}`}
+          />
         </button>
 
         <div
-          className={`absolute -left-14 top-8 z-20 rounded border border-gray-300 bg-white overflow-hidden my-1 overflow-y-auto ${open ? "shadow-md" : "hidden"}`}
+          className={`absolute -left-12 top-8 z-20 rounded border bg-white overflow-hidden my-1 overflow-y-auto ${open ? "shadow-md" : "hidden"}`}
         >
           <ul
             onClick={() => setOpen(false)}
-            className="divide-y divide-gray-200 text-gray-700"
+            className="divide-y text-sm text-dark"
           >
             {Object.entries(localeNames).map(([lang, label]) => (
               <li
