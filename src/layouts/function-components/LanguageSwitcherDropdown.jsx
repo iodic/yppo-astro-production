@@ -40,7 +40,7 @@ export default function LanguageSwitcherDropdown({
         </button>
 
         <div
-          className={`absolute -left-12 top-8 z-20 rounded border bg-white overflow-hidden my-1 overflow-y-auto ${open ? "shadow-md" : "hidden"}`}
+          className={`absolute -left-[3.2rem] top-8 z-20 rounded border bg-white overflow-hidden my-1 overflow-y-auto ${open ? "shadow-md" : "hidden"}`}
         >
           <ul
             onClick={() => setOpen(false)}
@@ -49,7 +49,7 @@ export default function LanguageSwitcherDropdown({
             {Object.entries(localeNames).map(([lang, label]) => (
               <li
                 key={lang}
-                className={`px-2 py-1 ${currentLanguage === lang ? "text-orange-500 pointer-events-none" : ""}`}
+                className={`px-2.5 text-center py-1.5 ${currentLanguage === lang ? "text-orange-500 pointer-events-none" : ""}`}
               >
                 <a
                   href={`${lang === defaultLocale ? "/" : `/${lang}`}${currentLanguage !== defaultLocale ? currentPath.substring(4) : currentPath}`}
