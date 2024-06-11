@@ -36,13 +36,16 @@ const HomapageFeature = ({ cards }) => {
   };
 
   return (
-    <div className="key-feature-grid mt-10 grid gap-7 grid-cols-1 sm:grid-cols-2">
+    <div className="key-feature-grid mt-10 grid gap-7 grid-cols-1 md:grid-cols-8">
       {cards.map((item, i) => {
         const { title, description, shortDescription, icon } = item;
         const FeatherIcon = Icon[humanize(icon)];
 
         return (
-          <div key={i} className="flex flex-col justify-between">
+          <div
+            key={i}
+            className={`flex flex-col justify-between ${i === 2 ? "md:col-span-4 md:col-start-3" : "md:col-span-4"}`}
+          >
             <div
               className="flip-card"
               onMouseLeave={(e) => onHoverLeave(e)}
