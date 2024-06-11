@@ -156,6 +156,11 @@ interface MenuItem {
 <script is:inline>
   document.addEventListener("astro:page-load", () => {
     const header = document.querySelector(".header")
+
+    if (window.scrollY > 0) {
+      header.classList.add("header-sticky")
+    }
+
     window.addEventListener("scroll", () => {
       if (window.scrollY > 0) {
         header.classList.add("header-sticky")
@@ -163,6 +168,7 @@ interface MenuItem {
         header.classList.remove("header-sticky")
       }
     })
+
     const jwtToken = localStorage.getItem("yppo_user_auth")
     if (jwtToken) {
       document.getElementById("authLink").remove()
