@@ -1,4 +1,4 @@
-# Personal Ombudsman — yppo
+# Personal Ombudsman — YPPO
 ## An Astro JS project
 
 <!-- installation -->
