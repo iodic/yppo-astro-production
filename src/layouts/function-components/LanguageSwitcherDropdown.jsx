@@ -35,12 +35,12 @@ export default function LanguageSwitcherDropdown({
       <div ref={dropdownRef} className="relative flex items-center ml-4">
         <button onClick={toggleOpen} onMouseEnter={() => setOpen(true)}>
           <IoGlobeOutline
-            className={`w-5 h-5 transition-colors ${open ? "stroke-primary" : "stroke-text hover:stroke-primary"}`}
+            className={`w-6 h-6 transition-colors ${open ? "stroke-primary" : "stroke-text hover:stroke-primary"}`}
           />
         </button>
 
         <div
-          className={`absolute top-8 -left-16 xl:-left-9 ml-1 rounded-lg  border-primary/25 px-4 py-2 duration-300 lg:mt-0 border bg-white shadow-[0_0.9rem_1.56rem_rgb(0,0,0,0.1) ${open ? "shadow-md" : "hidden"}`}
+          className={`absolute top-[38px] -left-[66px] ml-1 rounded-lg  border-primary/25 px-4 py-2 duration-300 lg:mt-0 border bg-white shadow-[0_0.9rem_1.56rem_rgb(0,0,0,0.1) ${open ? "shadow-md" : "hidden"}`}
         >
           <ul onClick={() => setOpen(false)}>
             {Object.entries(localeNames).map(([lang, label]) => (
