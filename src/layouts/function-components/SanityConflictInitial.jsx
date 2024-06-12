@@ -49,6 +49,7 @@ const SanityConflictInitial = ({
         const initialPosts = await sanityFetch({
           type: "conflictType",
           lang,
+          pipe: "order(orderRank)",
           query: "initialQuestion == true",
           object: `{
             ...,
