@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
+import { checkStatus } from "src/helper/helper.ts";
 
 import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
 
@@ -124,7 +125,7 @@ const SanityConflictInitial = ({
             )}
 
             {sanityInitialPosts.map((post) => (
-              <div className="relative">
+              <div className="relative" key={post._id}>
                 <div
                   className="form-group flex w-full items-baseline rounded"
                   key={post._id}
