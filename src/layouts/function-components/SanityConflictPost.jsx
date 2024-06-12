@@ -379,6 +379,7 @@ const SanityConflictPost = ({
             onClick={handleBackBlockClick}
             arrow={Boolean(selectedChapter)}
           />
+
           {sanityPost?.titlePrefix && isInitialContent && (
             <span className="text-sm font-normal uppercase">
               {sanityPost?.titlePrefix}
@@ -392,6 +393,11 @@ const SanityConflictPost = ({
           )}
 
           <h2 className="mb-8 font-normal">{sanityPost?.title}</h2>
+          {sanityPost?.tableTitle && articleType && (
+            <p className="text-sm font-normal uppercase mb-3">
+              {sanityPost?.tableTitle}
+            </p>
+          )}
           {selectedChapter || isInitialContent ? (
             <SanityConflictPostChapter
               generalText={generalText}
