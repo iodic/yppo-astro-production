@@ -33,7 +33,7 @@ export default function LanguageSwitcherDropdown({
   return (
     <div className="flex flex-wrap">
       <div ref={dropdownRef} className="relative flex items-center ml-[30px]">
-        <button onClick={toggleOpen} onMouseEnter={() => setOpen(true)}>
+        <button onClick={toggleOpen} title="Change language">
           <IoGlobeOutline
             className={`w-8 h-8 transition-colors stroke-[#666666]`}
           />
