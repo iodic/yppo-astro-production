@@ -33,14 +33,14 @@ export default function LanguageSwitcherDropdown({
   return (
     <div className="flex flex-wrap">
       <div ref={dropdownRef} className="relative flex items-center ml-4">
-        <button onClick={toggleOpen}>
+        <button onClick={toggleOpen} onMouseEnter={() => setOpen(true)}>
           <IoGlobeOutline
             className={`w-5 h-5 transition-colors ${open ? "stroke-primary" : "stroke-circle-gray hover:stroke-primary"}`}
           />
         </button>
 
         <div
-          className={`absolute -left-[3.2rem] xl:-left-6 top-8 z-20 rounded border border-primary bg-white overflow-hidden my-1 overflow-y-auto ${open ? "shadow-md" : "hidden"}`}
+          className={`absolute -left-[3.2rem] xl:-left-6 py-1 top-8 z-20 rounded-md border border-primary bg-white overflow-hidden my-1 overflow-y-auto ${open ? "shadow-md" : "hidden"}`}
         >
           <ul
             onClick={() => setOpen(false)}
@@ -49,7 +49,7 @@ export default function LanguageSwitcherDropdown({
             {Object.entries(localeNames).map(([lang, label]) => (
               <li
                 key={lang}
-                className={`px-2.5 py-1.5 transition-colors ${currentLanguage === lang ? "text-orange-500 pointer-events-none" : "hover:text-orange-500"}`}
+                className={`px-2.5 py-1 transition-colors ${currentLanguage === lang ? "text-orange-500 pointer-events-none" : "hover:text-orange-500"}`}
               >
                 <a
                   href={`${lang === defaultLocale ? "/" : `/${lang}`}${currentLanguage !== defaultLocale ? currentPath.substring(4) : currentPath}`}
