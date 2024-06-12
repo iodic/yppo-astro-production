@@ -178,26 +178,26 @@ const SanityConflictPost = ({
   const isInitialContent = useMemo(() => {
     return Boolean(
       !selectedChapter &&
-        !initialContentViewed &&
-        (sanityPost?.content || sanityPost?.contentRepeater?.length),
+      !initialContentViewed &&
+      (sanityPost?.content || sanityPost?.contentRepeater?.length),
     );
   }, [selectedChapter, sanityPost, initialContentViewed]);
 
   const isLastChapter = useMemo(() => {
     return Boolean(
       choices?.length &&
-        selectedChapter &&
-        choices.findIndex((choice) => choice?._id === selectedChapter) ===
-          choices.length - 1,
+      selectedChapter &&
+      choices.findIndex((choice) => choice?._id === selectedChapter) ===
+      choices.length - 1,
     );
   }, [choices, selectedChapter]);
 
   const isLastSubChapter = useMemo(() => {
     return Boolean(
       subChoices?.length &&
-        selectedSubChapter &&
-        subChoices.findIndex((choice) => choice?._id === selectedSubChapter) ===
-          subChoices?.length - 1,
+      selectedSubChapter &&
+      subChoices.findIndex((choice) => choice?._id === selectedSubChapter) ===
+      subChoices?.length - 1,
     );
   }, [subChoices, selectedSubChapter]);
 
@@ -379,7 +379,7 @@ const SanityConflictPost = ({
             onClick={handleBackBlockClick}
             arrow={Boolean(selectedChapter)}
           />
-          {sanityPost?.titlePrefix && (
+          {sanityPost?.titlePrefix && isInitialContent && (
             <span className="text-sm font-normal uppercase">
               {sanityPost?.titlePrefix}
             </span>
