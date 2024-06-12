@@ -1,5 +1,9 @@
 const BulletComponent = ({ children }) => {
-  return <ul className="list-disc list-outside pl-6 mb-3">{children}</ul>;
+  return (
+    <ul className="portable-ul-component list-disc list-outside pl-6 mb-3">
+      {children}
+    </ul>
+  );
 };
 
 const NumberListComponent = ({ children }) => {

@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import "transcript-speaker";
+@import "portable-text-components";
 
 @layer base {
   @import "base";
