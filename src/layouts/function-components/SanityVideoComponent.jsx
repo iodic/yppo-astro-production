@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const capitalizeString = (str) => {
   if (str) {
@@ -13,6 +13,10 @@ const SanityVideoComponent = ({
   generalText,
 }) => {
   const [showTranscript, setShowTranscript] = useState(false);
+
+  useEffect(() => {
+    setShowTranscript(false);
+  }, [videoUrl]);
 
   return (
     <>
