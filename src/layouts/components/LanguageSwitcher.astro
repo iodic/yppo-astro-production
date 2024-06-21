@@ -1,16 +1,18 @@
 ---
-import { i18nConfig } from "@/i18n/i18nConfig";
+import { i18nConfig } from "@/i18n/i18nConfig"
 
-const { localeNames, defaultLocale } = i18nConfig;
+const { localeNames, defaultLocale } = i18nConfig
 
-const currentLanguage  = Astro.currentLocale;
-const currentPath = Astro.url.pathname.replace(/\/$/, "");
+const currentLanguage = Astro.currentLocale
+const currentPath = Astro.url.pathname.replace(/\/$/, "")
 ---
 
 <ul class="flex space-x-2">
-  {Object.entries(localeNames).map(([lang, label]) => (
-    <li class=`${currentLanguage === lang ? "text-orange-500 pointer-events-none" : ""}`>
-      <a href={`${lang === defaultLocale ? '/' : `/${lang}`}${currentLanguage !== defaultLocale ? currentPath.substring(4) : currentPath}`}>{label}</a>
-    </li>
-  ))}
+  {
+    Object.entries(localeNames).map(([lang, label]) => (
+      <li class={`language-switcher ${currentLanguage === lang ? "text-orange-500 pointer-events-none" : ""}`}>
+        <a href={`${lang === defaultLocale ? "/" : `/${lang}`}${currentLanguage !== defaultLocale ? currentPath.substring(4) : currentPath}`}>{label}</a>
+      </li>
+    ))
+  }
 </ul>

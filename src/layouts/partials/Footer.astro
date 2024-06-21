@@ -61,6 +61,12 @@ interface LinkItem {
           if (!localStorage.getItem("yppo_user_auth")) {
             document.getElementById("authLink_logout").remove()
           }
+
+          document.querySelectorAll(".language-switcher").forEach(el => {
+            el?.addEventListener("click", () => {
+              localStorage.removeItem("conflict-guide-state")
+            })
+          })
         })
       </script>
 

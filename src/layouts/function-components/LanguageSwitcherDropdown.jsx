@@ -46,7 +46,7 @@ export default function LanguageSwitcherDropdown({
             {Object.entries(localeNames).map(([lang, label]) => (
               <li
                 key={lang}
-                className={`py-1 mb-1 text-sm font-medium text-dark transition ${currentLanguage === lang ? "text-primary pointer-events-none" : "hover:text-primary"}`}
+                className={`language-switcher py-1 mb-1 text-sm font-medium text-dark transition ${currentLanguage === lang ? "text-primary pointer-events-none" : "hover:text-primary"}`}
               >
                 <a
                   href={`${lang === defaultLocale ? "/" : `/${lang}`}${currentLanguage !== defaultLocale ? currentPath.substring(4) : currentPath}`}
