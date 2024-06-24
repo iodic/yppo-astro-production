@@ -22,7 +22,6 @@ export function calculateReadTime(content: any) {
 }
 
 export async function checkStatus(status: string) {
-  return true; //tmp change for demo.
   if ("free" === status) {
     return true;
   }
