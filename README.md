@@ -38,7 +38,7 @@ npm run build
 
 ## 🩹 Troubleshooting Notes
 
-Node must be above version 18 for Astro to work; use asdf to change the shell version to the appropriate one:
+Node must be above version 18 for Astro to work; use *asdf* to change the shell version to the appropriate one:
 
 ```bash
 asdf shell nodejs 18.14.1
