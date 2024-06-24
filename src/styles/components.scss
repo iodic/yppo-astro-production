@@ -699,6 +699,15 @@ select:invalid {
       height: 74px;
     }
   }
+
+  &--es {
+    &,
+    img {
+      @media screen and (min-width: 1024px) {
+        height: 104px;
+      }
+    }
+  }
 }
 
 // Flip cards

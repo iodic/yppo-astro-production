@@ -55,7 +55,7 @@ interface MenuItem {
         <a href={languagePrefix ? `/${currentLanguage}` : "/"} class="navbar-brand block">
           {
             (logoSrc || mobileLogoSrc) && (
-              <picture class="header-logo">
+              <picture class={`header-logo ${lang === "es" ? "header-logo--es" : ""}`}>
                 {logoSrc && <source srcset={logoSrc} media="(min-width: 1024px)" />}
                 {mobileLogoSrc && <source srcset={mobileLogoSrc} />}
 

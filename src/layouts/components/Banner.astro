@@ -4,7 +4,7 @@ import { Image } from "astro:assets"
 import Video from "@/layouts/shortcodes/Video.jsx"
 import languageChecker from "@/lib/utils/localizeURL"
 
-const currentLanguage  = Astro.currentLocale;
+const currentLanguage = Astro.currentLocale
 const {
   banner: { textCard, videoCard, buttonObject }
 } = Astro.props
@@ -15,7 +15,7 @@ const { enableLink: enableHeroButton, linkObject } = buttonObject || {}
 const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
 ---
 
-<section class="section banner relative">
+<section class="section banner">
   <div class="container">
     <div class="row items-center">
       <div class="lg:col-6">
@@ -43,5 +43,5 @@ const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
     </div>
   </div>
 
-  <Image class="banner-shape absolute -top-28 right-0 -z-[1] w-full max-w-[30%]" alt="banner" src="/images/banner-shape.png" width={496} height={466} />
+  <Image class="banner-shape absolute top-0 right-0 -z-[1] w-full max-w-[30%]" alt="banner" src="/images/banner-shape.png" width={496} height={466} />
 </section>
