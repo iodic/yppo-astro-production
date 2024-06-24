@@ -49,5 +49,9 @@
 }
 
 .downstream .header-cta {
+  @apply btn-outline-primary;
+}
+
+.downstream .header-sticky .header-cta {
   @apply btn-primary;
 }
