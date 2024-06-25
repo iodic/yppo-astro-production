@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Dropdown = ({ title, options, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -16,6 +16,12 @@ const Dropdown = ({ title, options, onSelect }) => {
       onSelect(option);
     }
   };
+
+  useEffect(() => {
+    if (options) {
+      setSelectedOption(options[0]);
+    }
+  }, [options]);
 
   return (
     <div className="relative w-[150px] xl:w-[180px] my-4">
