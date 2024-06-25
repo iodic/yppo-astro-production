@@ -44,10 +44,13 @@ const PricingCard = ({ card }) => {
   }, [card]);
 
   return (
-    <div className="mt-8 px-3 md:col-6 lg:col-4 lg:mt-0" key={title && title}>
+    <div
+      className="mt-8 px-3 mx-auto md:col-6 xl:col-4 xl:mt-0"
+      key={title && title}
+    >
       <div
-        className={`rounded-xl bg-white px-8 py-10 shadow-lg ${
-          featured ? "-mt-16 border border-primary " : undefined
+        className={`relative rounded-xl bg-white px-8 py-10 overflow-hidden shadow-lg ${
+          featured ? "md:-mt-16 border border-primary " : undefined
         }`}
       >
         <div className="flex items-center justify-between">
@@ -69,7 +72,7 @@ const PricingCard = ({ card }) => {
           </div>
 
           <span
-            className={`inline-flex h-16 w-16 items-center justify-center rounded-full font-bold ${
+            className={`inline-flex h-16 w-16 min-w-16 items-center justify-center rounded-full font-bold ${
               featured ? "bg-gradient text-white" : "bg-theme-light text-dark"
             }`}
           >
