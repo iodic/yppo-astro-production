@@ -23,7 +23,7 @@ const { textCard, buttonObject } = heroSection || {}
   </ul>
 
   {textCard?.title && <h1 class="mb-5 mt-8">{textCard.title}</h1>}
-  {textCard?.description && <p>{textCard?.description}</p>}
+  {textCard?.description && <p class="mx-auto max-w-[64ch] mb-6">{textCard?.description}</p>}
 
   {
     buttonObject?.enableLink && (
