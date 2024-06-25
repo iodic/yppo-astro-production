@@ -1,6 +1,5 @@
 ---
 import { sanityFetch } from "@/lib/utils/sanityFetch"
-import { getEntryBySlug } from "astro:content"
 
 import Base from "@/layouts/Base.astro"
 import Shape from "@/components/Shape.astro"
@@ -21,14 +20,13 @@ const pricingPageData = await sanityFetch({
       },
       heroSection,
       cards,
+      faqSection,
       generalText,
   }`
 })
 
-const { title, pageMetadata, heroSection, cards, generalText } = pricingPageData[0] || {}
+const { title, pageMetadata, heroSection, cards, faqSection, generalText } = pricingPageData[0] || {}
 const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
-
-const pricing = await getEntryBySlug("pricing", "index")
 ---
 
 <Base
@@ -51,10 +49,10 @@ const pricing = await getEntryBySlug("pricing", "index")
   <section class="section mt-12 pt-0">
     <div class="container">
       <div class="row lg:px-10">
-        {cards.map((card: any, i: number) => <PricingCard card={card} generalText={generalText} client:load />)}
+        {cards.map((card: any) => <PricingCard card={card} generalText={generalText} client:load />)}
       </div>
     </div>
   </section>
 
-  <Faq client:load data={pricing.data} />
+  <Faq data={faqSection} client:load />
 </Base>

@@ -32,8 +32,6 @@ const PricingCard = ({ card, generalText }) => {
       });
 
       pricePerEmployee.map((priceObject) => {
-        console.log("object: " + priceObject?.price);
-
         setPriceOptions((priceOptions) => [
           ...priceOptions,
           {
