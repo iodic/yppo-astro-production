@@ -6,7 +6,7 @@ import Dropdown from "./Dropdown";
 import * as Icon from "react-feather";
 import { BsPinAngleFill } from "react-icons/bs";
 
-const PricingCard = ({ card }) => {
+const PricingCard = ({ card, generalText }) => {
   const {
     title,
     description,
@@ -16,6 +16,8 @@ const PricingCard = ({ card }) => {
     pricePerEmployee,
     listSection,
   } = card;
+
+  const { numberOfEmployeesText, mainButtonText, ctaText } = generalText;
 
   const CardIcon = Icon[humanize(cardIcon)];
 
@@ -57,14 +59,6 @@ const PricingCard = ({ card }) => {
           <div>
             {title && <h2 className="h3">{title}</h2>}
 
-            {priceOptions && (
-              <Dropdown
-                onSelect={setSelectedPricing}
-                options={priceOptions}
-                title={title}
-              />
-            )}
-
             <p className="mt-3 text-2xl text-dark">
               {priceDetails?.pricePrefix} {selectedPricing.value}.00{" "}
               {priceDetails?.priceSuffix}
@@ -79,6 +73,22 @@ const PricingCard = ({ card }) => {
             <CardIcon className="font-semibold" />
           </span>
         </div>
+
+        {priceOptions && (
+          <div className="my-4">
+            <span className="text-sm">
+              {numberOfEmployeesText
+                ? numberOfEmployeesText
+                : "Number of Employees"}
+            </span>
+
+            <Dropdown
+              onSelect={setSelectedPricing}
+              options={priceOptions}
+              title={title}
+            />
+          </div>
+        )}
 
         {description && <p className="mt-6">{description}</p>}
 
@@ -110,13 +120,12 @@ const PricingCard = ({ card }) => {
             } block h-[48px] w-full rounded-[50px] leading-[30px]`}
             href="#"
           >
-            Buy Now
-            {/* TODO: Update with data from Sanity */}
+            {mainButtonText ? mainButtonText : "Buy Now"}
           </a>
 
           <a className="mt-6 inline-flex items-center text-dark" href="#">
-            Request a Demo
-            {/* TODO: Update with data from Sanity */}
+            {ctaText ? ctaText : "Request a Demo"}
+
             <svg
               className="ml-1.5"
               width="13"

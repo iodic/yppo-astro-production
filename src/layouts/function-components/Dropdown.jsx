@@ -24,7 +24,7 @@ const Dropdown = ({ title, options, onSelect }) => {
   }, [options]);
 
   return (
-    <div className="relative w-[150px] xl:w-[180px] my-4">
+    <div className="relative w-[150px] xl:w-[180px]">
       <div
         className="cursor-pointer px-3 py-2 border border-primary/25 rounded-xl"
         onClick={toggleDropdown}

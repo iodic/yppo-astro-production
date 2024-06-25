@@ -20,11 +20,12 @@ const pricingPageData = await sanityFetch({
         "metaImage": metaImage.asset->url,
       },
       heroSection,
-      cards
+      cards,
+      generalText,
   }`
 })
 
-const { title, pageMetadata, heroSection, cards } = pricingPageData[0] || {}
+const { title, pageMetadata, heroSection, cards, generalText } = pricingPageData[0] || {}
 const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 
 const pricing = await getEntryBySlug("pricing", "index")
@@ -50,7 +51,7 @@ const pricing = await getEntryBySlug("pricing", "index")
   <section class="section mt-12 pt-0">
     <div class="container">
       <div class="row lg:px-10">
-        {cards.map((card: any, i: number) => <PricingCard card={card} client:load />)}
+        {cards.map((card: any, i: number) => <PricingCard card={card} generalText={generalText} client:load />)}
       </div>
     </div>
   </section>
