@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Dropdown = ({ options, onSelect }) => {
+const Dropdown = ({ title, options, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
@@ -30,7 +30,7 @@ const Dropdown = ({ options, onSelect }) => {
           {options.map((option) => (
             <li
               className={`list-none cursor-pointer px-3 py-2 hover:text-primary ${option.value === selectedOption?.value ? "text-primary" : ""}`}
-              key={option.value}
+              key={`${option.value}-${title}`}
               onClick={() => handleOptionClick(option)}
             >
               {option.label}
