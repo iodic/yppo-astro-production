@@ -50,7 +50,7 @@ const pricing = await getEntryBySlug("pricing", "index")
   <section class="section mt-12 pt-0">
     <div class="container">
       <div class="row lg:px-10">
-        {pricing.data.pricing_card.map((item: any, i: number) => <PricingCard item={item} client:load />)}
+        {cards.map((card: any, i: number) => <PricingCard card={card} client:load />)}
       </div>
     </div>
   </section>
