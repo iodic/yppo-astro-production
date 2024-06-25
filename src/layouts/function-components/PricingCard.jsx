@@ -57,10 +57,21 @@ const PricingCard = ({ card, generalText }) => {
           <div>
             {title && <h2 className="h3">{title}</h2>}
 
-            <p className="mt-3 text-2xl text-dark">
-              {priceDetails?.pricePrefix} {selectedPricing.value}.00{" "}
-              {priceDetails?.priceSuffix}
-            </p>
+            {priceOptions && (
+              <div className="my-4">
+                <span className="text-sm">
+                  {numberOfEmployeesText
+                    ? numberOfEmployeesText
+                    : "Number of Employees"}
+                </span>
+
+                <Dropdown
+                  onSelect={setSelectedPricing}
+                  options={priceOptions}
+                  title={title}
+                />
+              </div>
+            )}
           </div>
 
           <span
@@ -72,21 +83,10 @@ const PricingCard = ({ card, generalText }) => {
           </span>
         </div>
 
-        {priceOptions && (
-          <div className="my-4">
-            <span className="text-sm">
-              {numberOfEmployeesText
-                ? numberOfEmployeesText
-                : "Number of Employees"}
-            </span>
-
-            <Dropdown
-              onSelect={setSelectedPricing}
-              options={priceOptions}
-              title={title}
-            />
-          </div>
-        )}
+        <p className="mt-3 text-2xl text-dark">
+          {priceDetails?.pricePrefix} {selectedPricing.value}.00{" "}
+          {priceDetails?.priceSuffix}
+        </p>
 
         {description && <p className="mt-6">{description}</p>}
 
