@@ -1,8 +1,10 @@
-import { marked } from "marked";
 import { useState } from "react";
 
 const Faq = ({ data }) => {
   const [isActive, setIsActive] = useState([]);
+
+  const { title, description, faqItems } = data;
+
   const accordionHandler = (index) => {
     if (isActive.includes(index)) {
       setIsActive(isActive.filter((item) => item !== index));
@@ -16,12 +18,16 @@ const Faq = ({ data }) => {
       <div className="container max-w-[1230px]">
         <div className="row">
           <div className="text-center lg:col-4 lg:text-start">
-            <h2>{data.faq.title}</h2>
-            <p className="mt-6 lg:max-w-[404px]">{data.faq.description}</p>
+            {title && <h2>{title}</h2>}
+
+            {description && (
+              <p className="mt-6 lg:max-w-[404px]">{description}</p>
+            )}
           </div>
+
           <div className="mt-8 lg:col-8 lg:mt-0">
             <div className="rounded-xl bg-white px-5 py-5 shadow-lg lg:px-10 lg:py-8">
-              {data.faq.faq_list.map((item, i) => (
+              {faqItems.map((item, i) => (
                 <div
                   className={`accordion border-b border-border ${
                     isActive.includes(i) ? "active" : undefined
@@ -29,11 +35,9 @@ const Faq = ({ data }) => {
                   onClick={() => accordionHandler(i)}
                   key={`item-${i}`}
                 >
-                  <div
-                    className="accordion-header relative pl-6 text-lg font-semibold text-dark"
-                    
-                  >
-                    {item.title}
+                  <div className="accordion-header relative pl-6 text-lg font-semibold text-dark">
+                    {item?.title && item.title}
+
                     <svg
                       className="accordion-icon absolute left-0 top-[22px]"
                       x="0px"
@@ -47,13 +51,12 @@ const Faq = ({ data }) => {
                       ></path>
                     </svg>
                   </div>
-                  <div className="accordion-content pl-6">
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: marked.parseInline(item.content),
-                      }}
-                    />
-                  </div>
+
+                  {item?.description && (
+                    <div className="accordion-content pl-6">
+                      <p>{item.description}</p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
