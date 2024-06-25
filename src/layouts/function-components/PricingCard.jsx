@@ -28,7 +28,7 @@ const PricingCard = ({ card, generalText }) => {
     if (pricePerEmployee) {
       setSelectedPricing({
         value: pricePerEmployee[0].price,
-        label: `${pricePerEmployee[0]?.minEmployees}-${pricePerEmployee[0]?.maxEmployees}`,
+        label: pricePerEmployee[0]?.employeeRange,
       });
 
       pricePerEmployee.map((priceObject) => {
@@ -36,7 +36,7 @@ const PricingCard = ({ card, generalText }) => {
           ...priceOptions,
           {
             value: priceObject?.price,
-            label: `${priceObject?.minEmployees}-${priceObject?.maxEmployees}`,
+            label: priceObject?.employeeRange,
           },
         ]);
       });
@@ -83,10 +83,12 @@ const PricingCard = ({ card, generalText }) => {
           </span>
         </div>
 
-        <p className="mt-3 text-2xl text-dark">
-          {priceDetails?.pricePrefix} {selectedPricing.value}.00{" "}
-          {priceDetails?.priceSuffix}
-        </p>
+        {selectedPricing?.value && (
+          <p className="mt-3 text-2xl text-dark">
+            {priceDetails?.pricePrefix} {selectedPricing.value}.00{" "}
+            {priceDetails?.priceSuffix}
+          </p>
+        )}
 
         {description && <p className="mt-6">{description}</p>}
 
