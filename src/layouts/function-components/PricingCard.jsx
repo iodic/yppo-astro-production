@@ -85,8 +85,9 @@ const PricingCard = ({ card, generalText }) => {
 
         {selectedPricing?.value && (
           <p className="mt-3 text-2xl text-dark">
-            {priceDetails?.pricePrefix} {selectedPricing.value}.00{" "}
-            {priceDetails?.priceSuffix}
+            {priceDetails?.pricePrefix}
+            {selectedPricing.value}{" "}
+            <span className="text-base">{priceDetails?.priceSuffix}</span>
           </p>
         )}
 
