@@ -49,7 +49,7 @@ const Dropdown = ({ title, options, onSelect }) => {
         <ul className="absolute top-full left-0 w-full max-h-[200px] mt-1 overflow-y-auto border border-primary/25 rounded-xl bg-white shadow-md z-50">
           {options.map((option) => (
             <li
-              className={`list-none cursor-pointer px-3 py-2 hover:text-primary ${option.value === selectedOption?.value ? "text-primary" : ""}`}
+              className={`list-none cursor-pointer px-3 py-2 hover:text-primary ${option.label === selectedOption?.label ? "text-primary" : ""}`}
               key={`${option.value}-${title}`}
               onClick={() => handleOptionClick(option)}
             >
