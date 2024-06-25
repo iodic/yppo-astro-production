@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { humanize } from "@/lib/utils/textConverter";
 
 import Dropdown from "./Dropdown";
@@ -13,15 +13,35 @@ const PricingCard = ({ card }) => {
     featured,
     icon: cardIcon,
     priceDetails,
+    pricePerEmployee,
     listSection,
   } = card;
 
   const CardIcon = Icon[humanize(cardIcon)];
 
-  const [selectedPricing, setSelectedPricing] = useState({
-    value: "5,000",
-    label: "1-100",
-  });
+  const [selectedPricing, setSelectedPricing] = useState({});
+  const [priceOptions, setPriceOptions] = useState([]);
+
+  useEffect(() => {
+    if (pricePerEmployee) {
+      setSelectedPricing({
+        value: pricePerEmployee[0].price,
+        label: `${pricePerEmployee[0]?.minEmployees}-${pricePerEmployee[0]?.maxEmployees}`,
+      });
+
+      pricePerEmployee.map((priceObject) => {
+        console.log("object: " + priceObject?.price);
+
+        setPriceOptions((priceOptions) => [
+          ...priceOptions,
+          {
+            value: priceObject?.price,
+            label: `${priceObject?.minEmployees}-${priceObject?.maxEmployees}`,
+          },
+        ]);
+      });
+    }
+  }, [card]);
 
   return (
     <div className="mt-8 px-3 md:col-6 lg:col-4 lg:mt-0" key={title && title}>
@@ -34,14 +54,13 @@ const PricingCard = ({ card }) => {
           <div>
             {title && <h2 className="h3">{title}</h2>}
 
-            <Dropdown
-              onSelect={setSelectedPricing}
-              options={[
-                { value: "5,000", label: "1-100" },
-                { value: "6,200", label: "101-250" },
-                { value: "8,075", label: "251-500" },
-              ]}
-            />
+            {priceOptions && (
+              <Dropdown
+                onSelect={setSelectedPricing}
+                options={priceOptions}
+                title={title}
+              />
+            )}
 
             <p className="mt-3 text-2xl text-dark">
               {priceDetails?.pricePrefix} {selectedPricing.value}.00{" "}
