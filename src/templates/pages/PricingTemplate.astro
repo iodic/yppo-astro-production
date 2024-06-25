@@ -1,0 +1,59 @@
+---
+import { sanityFetch } from "@/lib/utils/sanityFetch"
+import { getEntryBySlug } from "astro:content"
+
+import Base from "@/layouts/Base.astro"
+import Shape from "@/components/Shape.astro"
+import PageHeader from "@/components/PageHeader.astro"
+import Faq from "@/layouts/function-components/Faq.jsx"
+import PricingCard from "@/layouts/function-components/PricingCard.jsx"
+
+const { lang } = Astro.props
+
+const pricingPageData = await sanityFetch({
+  type: "pricingPage",
+  lang,
+  object: `{
+      title,
+      pageMetadata {
+        ...,
+        "metaImage": metaImage.asset->url,
+      },
+      heroSection,
+      cards
+  }`
+})
+
+const { title, pageMetadata, heroSection, cards } = pricingPageData[0] || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
+
+const pricing = await getEntryBySlug("pricing", "index")
+---
+
+<Base
+  title={title && title}
+  metaTitle={metaTitle && metaTitle}
+  description={metaDescription && metaDescription}
+  metaImage={metaImage && metaImage}
+  noIndex={noIndex && noIndex}
+  canonical={canonicalUrl && canonicalUrl}
+  lang={lang}
+>
+  <Shape />
+
+  <section class="page-hero pb-6 pt-16">
+    <div class="container">
+      <PageHeader pageData={{ title, heroSection }} />
+    </div>
+  </section>
+
+  <section class="section mt-12 pt-0">
+    <div class="container">
+      <div class="row lg:px-10">
+        {pricing.data.pricing_card.map((item: any, i: number) => <PricingCard item={item} client:load />)}
+      </div>
+    </div>
+  </section>
+
+  <Faq client:load data={pricing.data} />
+</Base>
