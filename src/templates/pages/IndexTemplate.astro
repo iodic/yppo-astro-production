@@ -4,7 +4,6 @@ import { sanityFetch } from "@/lib/utils/sanityFetch"
 import Base from "@/layouts/Base.astro"
 import Banner from "@/layouts/components/Banner.astro"
 import KeyFeatures from "@/layouts/components/KeyFeatures.astro"
-import Testimonial from "@/layouts/components/Testimonial.astro"
 import Cta from "@/partials/Cta.astro"
 
 const { lang } = Astro.props
@@ -54,8 +53,6 @@ const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMet
   <Banner banner={heroSection} />
   <!-- key features -->
   <KeyFeatures cardsData={cardsSection} />
-  <!-- testimonial -->
-  <Testimonial testimonialsData={reviewsSection} />
   <!-- call to action -->
   <Cta ctaBanner={ctaBanner} />
 </Base>
