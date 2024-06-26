@@ -128,12 +128,6 @@ interface MenuItem {
           ))}
 
           <li class="nav-item mt-2 lg:hidden">
-            <a class="btn btn-primary btn-sm border-border" href={localizeURL("/get-started", currentLanguage)}>
-              {headerButtonsText?.getStarted ? headerButtonsText?.getStarted : "Get Started"}
-            </a>
-          </li>
-
-          <li class="nav-item mt-2 lg:hidden">
             <button class="btn btn-primary btn-sm border-border" id="authLink">
               {headerButtonsText?.login ? headerButtonsText?.login : "Login"}
             </button>
@@ -143,11 +137,7 @@ interface MenuItem {
     }
 
     <div class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
-      <a class="header-cta" href={localizeURL("/get-started", currentLanguage)}
-        >{headerButtonsText?.getStarted ? headerButtonsText?.getStarted : "Get Started"}</a
-      >
       <button class="ml-5 header-cta" id="authLink_desktop">{headerButtonsText?.login ? headerButtonsText?.login : "Login"}</button>
-
       <LanguageSwitcherDropdown currentLanguage={currentLanguage} currentPath={currentPath} client:load />
     </div>
   </nav>
