@@ -8,8 +8,8 @@ const {
 } = Astro.props
 
 ---
-<div>
+{ signUpButton && <div>
     <a class="mt-8 text-primary" href={signUpButtonUrl} target="_blank">
       {signUpButtonText}
     </a>
-</div>
+</div>}
