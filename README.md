@@ -4,7 +4,7 @@
 <!-- installation -->
 ## 🛠️ Installation
 
-After cloning the repo, you have some prerequisites to install. Then you can run it on your localhost. You can view the package.json file to see which scripts are included.
+After cloning the repo, you have some prerequisites to install. Then you can run it on your localhost. You can view the package.json file to see which scripts are included. 
 
 ### Install prerequisites (once for a machine)
 
