@@ -13,8 +13,7 @@ import { Image } from "astro:assets";
 import languageChecker from "@/lib/utils/localizeURL";
 import SignUpButton from "@/partials/SignUpButton.astro"
 
-const { post } = Astro.props;
-const { lang } = Astro.props
+const { post, lang } = Astro.props;
 
 const coursesPageData = await sanityFetch({
   type: "coursesPage",
