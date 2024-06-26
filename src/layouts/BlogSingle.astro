@@ -1,43 +1,25 @@
 ---
-import { sanityFetch } from "@/lib/utils/sanityFetch"
+import dateFormat from "@/lib/utils/dateFormat"
+import { calculateReadTime } from "@/helper/helper.ts"
+import imageUrlBuilder from "@sanity/image-url"
+import { PortableText } from "@portabletext/react"
+import { sanityClient } from "sanity:client"
+const builder = imageUrlBuilder(sanityClient)
 
-import dateFormat from "@/lib/utils/dateFormat";
-import { calculateReadTime } from "@/helper/helper.ts";
-import imageUrlBuilder from "@sanity/image-url";
-import { PortableText } from "@portabletext/react";
-import { sanityClient } from "sanity:client";
-const builder = imageUrlBuilder(sanityClient);
-
-import { FaRegCalendarAlt, FaRegClock, FaRegFolder } from "react-icons/fa";
-import { Image } from "astro:assets";
-import languageChecker from "@/lib/utils/localizeURL";
+import { FaRegCalendarAlt, FaRegClock } from "react-icons/fa"
+import { Image } from "astro:assets"
 import SignUpButton from "@/partials/SignUpButton.astro"
 
-const { post, lang } = Astro.props;
+const { post } = Astro.props
 
-const coursesPageData = await sanityFetch({
-  type: "coursesPage",
-  lang,
-  object: `{
-      ctaBanner,
-      signUpButton
-  }`
-})
-
-const {signUpButton} = coursesPageData[0] || {}
+const { signUpButton } = post
 ---
 
 <section class="section blog-single">
   <div class="container">
     <div class="row justify-center">
       <div class="lg:col-10">
-        <Image
-          class="w-full rounded-xl"
-          src={builder.image(post.image).url()}
-          alt=""
-          width={800}
-          height={500}
-        />
+        <Image class="w-full rounded-xl" src={builder.image(post.image).url()} alt="" width={800} height={500} />
       </div>
       <div class="mt-10 max-w-[810px] lg:col-9">
         <h1 class="h2">
@@ -59,12 +41,7 @@ const {signUpButton} = coursesPageData[0] || {}
         <div class="content">
           {
             post.videoUrl && (
-              <video
-                class="mb-6"
-                controls
-                playsinline
-                poster={builder.image(post.videoPoster).url()}
-              >
+              <video class="mb-6" controls playsinline poster={builder.image(post.videoPoster).url()}>
                 <source src={post.videoUrl} />
               </video>
             )
@@ -72,8 +49,7 @@ const {signUpButton} = coursesPageData[0] || {}
 
           {post && post.content && <PortableText value={post.content} />}
 
-          {signUpButton && <SignUpButton signUpButton={signUpButton} lang={languageChecker}/>}
-
+          {signUpButton && <SignUpButton signUpButton={signUpButton} />}
         </div>
       </div>
     </div>
