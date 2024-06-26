@@ -1,0 +1,16 @@
+---
+const {
+  signUpButton: {
+    lang,
+    signUpButtonText,
+    signUpButtonUrl
+  }
+} = Astro.props
+
+const currentLanguage = Astro.currentLocale
+---
+<div>
+    <a class="mt-8 text-orange-500" href={signUpButtonUrl}>
+      {signUpButtonText}
+    </a>
+</div>

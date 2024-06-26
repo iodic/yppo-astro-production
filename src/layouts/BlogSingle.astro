@@ -1,4 +1,6 @@
 ---
+import { sanityFetch } from "@/lib/utils/sanityFetch"
+
 import dateFormat from "@/lib/utils/dateFormat";
 import { calculateReadTime } from "@/helper/helper.ts";
 import imageUrlBuilder from "@sanity/image-url";
@@ -8,8 +10,22 @@ const builder = imageUrlBuilder(sanityClient);
 
 import { FaRegCalendarAlt, FaRegClock, FaRegFolder } from "react-icons/fa";
 import { Image } from "astro:assets";
+import languageChecker from "@/lib/utils/localizeURL";
+import SignUpButton from "@/partials/SignUpButton.astro"
 
 const { post } = Astro.props;
+const { lang } = Astro.props
+
+const coursesPageData = await sanityFetch({
+  type: "coursesPage",
+  lang,
+  object: `{
+      ctaBanner,
+      signUpButton
+  }`
+})
+
+const {signUpButton} = coursesPageData[0] || {}
 ---
 
 <section class="section blog-single">
@@ -56,6 +72,9 @@ const { post } = Astro.props;
           }
 
           {post && post.content && <PortableText value={post.content} />}
+
+          {signUpButton && <SignUpButton signUpButton={signUpButton} lang={languageChecker}/>}
+
         </div>
       </div>
     </div>
