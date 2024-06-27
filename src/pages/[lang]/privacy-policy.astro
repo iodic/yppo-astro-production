@@ -1,0 +1,26 @@
+---
+import PrivacyPolicyPage from "@/templates/pages/PrivacyPolicyTemplate.astro"
+
+import { i18nConfig } from "@/i18n/i18nConfig"
+
+export async function getStaticPaths() {
+  const paths: any = []
+
+  const { defaultLocale, locales } = i18nConfig
+
+  locales.map((currentLocale: string) => {
+    if (currentLocale !== defaultLocale) {
+      paths.push({
+        params: {
+          lang: currentLocale
+        }
+      })
+    }
+  })
+  return paths
+}
+
+const { lang } = Astro.params
+---
+
+<PrivacyPolicyPage lang={lang} />

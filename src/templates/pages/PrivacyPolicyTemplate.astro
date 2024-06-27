@@ -1,0 +1,58 @@
+---
+import { sanityFetch } from "@/lib/utils/sanityFetch"
+import PrivacyPolicyPortableText from "@/layouts/function-components/PrivacyPolicy"
+
+import localizeURL from "@/lib/utils/localizeURL"
+
+import Base from "@/layouts/Base.astro"
+
+const { lang } = Astro.props
+
+const privacyPolicyPageData = await sanityFetch({
+  type: "privacyPolicyPage",
+  lang,
+  object: `{
+      title,
+      privacyPolicyText,
+      pageData {
+        mainTitle,
+        subtitle,
+      },
+      pageMetadata {
+      ...,
+      "metaImage": metaImage.asset->url,
+    },
+  }`
+})
+
+const { title, pageData, privacyPolicyText , pageMetadata, linkObject, enableLink} = privacyPolicyPageData[0] || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
+const { mainTitle, subtitle } = pageData || {}
+---
+
+<Base title={title && title}
+metaTitle={metaTitle && metaTitle}
+description={metaDescription && metaDescription}
+metaImage={metaImage && metaImage}
+noIndex={noIndex && noIndex}
+canonical={canonicalUrl && canonicalUrl}
+lang={lang}>
+  <section class="section">
+    <div class="container mt-10 max-w-[810px] lg:col-9">
+      <div class="flex flex-col items-center justify-center">
+        <div class="text-center">
+          {mainTitle && <h1 class="mb-4 mainTitle">{mainTitle}</h1>}
+          {subtitle && <h2>{subtitle}</h2>}
+        </div>
+        {
+          enableLink && linkObject && (
+            <a class="mt-4 btn btn-primary" href={localizeURL(linkObject?.url, lang)}>
+              {linkObject?.urlTitle && linkObject?.urlTitle}
+            </a>
+          )
+        }
+      </div>
+      {privacyPolicyText && <PrivacyPolicyPortableText content={privacyPolicyText}  />}
+    </div>
+  </section>
+</Base>
