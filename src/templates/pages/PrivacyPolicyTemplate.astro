@@ -1,0 +1,49 @@
+---
+import { sanityFetch } from "@/lib/utils/sanityFetch"
+import PrivacyPolicyPortableText from "@/layouts/function-components/PrivacyPolicy"
+
+import Base from "@/layouts/Base.astro"
+
+const { lang } = Astro.props
+
+const privacyPolicyPageData = await sanityFetch({
+  type: "privacyPolicyPage",
+  lang,
+  object: `{
+      title,
+      privacyPolicyText,
+      pageData {
+        mainTitle,
+        subtitle,
+      },
+      pageMetadata {
+      ...,
+      "metaImage": metaImage.asset->url,
+    },
+  }`
+})
+
+const { title, pageData, privacyPolicyText , pageMetadata} = privacyPolicyPageData[0] || {}
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
+const { mainTitle, subtitle } = pageData || {}
+---
+
+<Base title={title && title}
+metaTitle={metaTitle && metaTitle}
+description={metaDescription && metaDescription}
+metaImage={metaImage && metaImage}
+noIndex={noIndex && noIndex}
+canonical={canonicalUrl && canonicalUrl}
+lang={lang}>
+  <section class="section">
+    <div class="container mt-10 max-w-[810px] lg:col-9">
+      <div class="flex flex-col items-center justify-center">
+        <div class="text-center">
+          {mainTitle && <h1>{mainTitle}</h1>}
+          {subtitle && <h2 class="mb-10 text-2xl">{subtitle}</h2>}
+        </div>
+      </div>
+      {privacyPolicyText && <PrivacyPolicyPortableText content={privacyPolicyText}  />}
+    </div>
+  </section>
+</Base>

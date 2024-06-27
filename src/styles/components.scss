@@ -445,6 +445,13 @@ select:invalid {
   li > .btn {
     line-height: 36px;
   }
+
+  &-copyright { 
+    p {
+      font-size: 0.7rem;
+      line-height: 1.3;
+    }
+  }
 }
 
 //gradient-number
