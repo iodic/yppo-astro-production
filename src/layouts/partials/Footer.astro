@@ -1,11 +1,11 @@
 ---
 import { Image } from "astro:assets"
 import { sanityFetch } from "@/lib/utils/sanityFetch"
+import { PortableText } from "@portabletext/react";
 
 import SocialItem from "@/components/SocialItem.astro"
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro"
 import localizeURL from "@/lib/utils/localizeURL"
-
 const { lang } = Astro.props
 const currentLanguage = Astro.currentLocale
 
@@ -20,11 +20,13 @@ const footerData = await sanityFetch({
       linksObject,
       contactObject,
       enableCopyright,
+      copyrightText,
       generalText
   }`
 })
 
-const { logoSrc, description, enableLanguageSwitcher, socials, linksObject, contactObject, enableCopyright, generalText } = footerData[0] || {}
+
+const { logoSrc, description, enableLanguageSwitcher, socials, linksObject, contactObject, enableCopyright, copyrightText, generalText } = footerData[0] || {}
 
 interface SocialItem {
   socialsType: string
@@ -146,9 +148,9 @@ interface LinkItem {
 
   {
     enableCopyright && (
-      <div class="container max-w-[1440px]">
-        <div class="footer-copyright mx-auto border-t border-border pb-10 pt-7 text-center">
-          <p class="content text-text">Copyright © {new Date().getFullYear()}</p>
+      <div class="container">
+        <div class="footer-copyright mx-auto border-t border-border py-7 text-center">
+          <PortableText value={copyrightText} />
         </div>
       </div>
     )
