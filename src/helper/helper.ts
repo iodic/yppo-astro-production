@@ -33,7 +33,11 @@ export async function checkStatus(status: string, preview: boolean) {
     const jwt = jwtToken ? parseJwt(jwtToken) : null;
 
     if (preview) {
-      return true;
+      if (jwt && jwt.user) {
+        if (jwt.preview_access) {
+          return true;
+        }
+      }
     }
 
     if ("logged" === status) {
