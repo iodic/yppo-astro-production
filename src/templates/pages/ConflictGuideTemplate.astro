@@ -3,6 +3,7 @@ import { sanityFetch } from "@/lib/utils/sanityFetch"
 
 import Base from "@/layouts/Base.astro"
 import { ConflictGuideContent } from "@/layouts/function-components/ConflictGuideContent"
+import ConflictGuideModal from "@/layouts/function-components/ConflictGuideModal"
 
 const { lang } = Astro.props
 
@@ -15,10 +16,15 @@ const conflictGuidePageData = await sanityFetch({
         ...,
         "metaImage": metaImage.asset->url,
       },
+      termsPopup {
+        termsTitle,
+        termsContent,
+        termsButton,
+      }
   }`
 })
 
-const { title, pageMetadata } = conflictGuidePageData[0] || {}
+const { title, pageMetadata, termsPopup } = conflictGuidePageData[0] || {}
 const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 ---
 
@@ -31,5 +37,11 @@ const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMet
   canonical={canonicalUrl && canonicalUrl}
   lang={lang}
 >
-  <ConflictGuideContent lang={lang} client:only />
+  <div class="relative">
+    <ConflictGuideModal termsPopup={termsPopup} client:only />
+
+    <div class="conflict-guide-wrapper">
+      <ConflictGuideContent lang={lang} client:only />
+    </div>
+  </div>
 </Base>
