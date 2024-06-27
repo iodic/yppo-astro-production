@@ -75,7 +75,7 @@ const SanityConflictPost = ({
       }
 
       if (loadedPost && loadedPost[0]) {
-        const status = await checkStatus(loadedPost[0]?.status);
+        const status = await checkStatus(loadedPost[0]?.status, loadedPost[0]?.enableChapterForPreview);
         setPostStatus(status);
       }
 
@@ -112,7 +112,7 @@ const SanityConflictPost = ({
       });
 
       if (loadedPost && loadedPost[0]) {
-        const status = await checkStatus(loadedPost[0]?.status);
+        const status = await checkStatus(loadedPost[0]?.status, loadedPost[0]?.enableChapterForPreview);
         setPostStatus(status);
       }
 

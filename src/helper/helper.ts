@@ -21,7 +21,7 @@ export function calculateReadTime(content: any) {
   }
 }
 
-export async function checkStatus(status: string) {
+export async function checkStatus(status: string, preview: boolean) {
   if ("free" === status) {
     return true;
   }
@@ -29,6 +29,11 @@ export async function checkStatus(status: string) {
   if (typeof localStorage !== "undefined") {
     const jwtToken = localStorage.getItem('yppo_user_auth');
     const jwt = jwtToken ? parseJwt(jwtToken) : null;
+
+    if (preview) {
+      return true;
+    }
+
     if ("logged" === status) {
       if (jwt && jwt.user) {
         return true;

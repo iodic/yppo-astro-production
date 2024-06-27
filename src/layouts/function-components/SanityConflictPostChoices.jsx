@@ -27,7 +27,7 @@ export const SanityConflictPostChoices = ({
       const ids = [];
 
       for (const choice of choices) {
-        const isNotLocked = await checkStatus(choice.status);
+        const isNotLocked = await checkStatus(choice?.status, choice?.enableChapterForPreview);
 
         if (!isNotLocked) {
           ids.push(choice._id);

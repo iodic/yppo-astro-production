@@ -80,7 +80,7 @@ const SanityConflictInitial = ({
       const ids = [];
 
       for (const post of sanityInitialPosts) {
-        const isNotLocked = await checkStatus(post.status);
+        const isNotLocked = await checkStatus(post?.status, post?.enableChapterForPreview);
 
         if (!isNotLocked) {
           ids.push(post._id);
