@@ -7,7 +7,7 @@ const ContactPageComponent = ({ fieldData }) => {
     inquiryObject,
     inquiryOptions,
     messageObject,
-    buttonString
+    buttonString,
   } = fieldData;
 
   const [formData, setFormData] = useState({
@@ -101,7 +101,11 @@ const ContactPageComponent = ({ fieldData }) => {
                   required
                 >
                   {inquiryOptions?.map((option) => {
-                    return <option key={option} value={option}>{option}</option>;
+                    return (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    );
                   })}
                 </select>
               </div>

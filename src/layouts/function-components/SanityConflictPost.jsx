@@ -75,7 +75,10 @@ const SanityConflictPost = ({
       }
 
       if (loadedPost && loadedPost[0]) {
-        const status = await checkStatus(loadedPost[0]?.status, loadedPost[0]?.enableChapterForPreview);
+        const status = await checkStatus(
+          loadedPost[0]?.status,
+          loadedPost[0]?.enableChapterForPreview,
+        );
         setPostStatus(status);
       }
 
@@ -112,7 +115,10 @@ const SanityConflictPost = ({
       });
 
       if (loadedPost && loadedPost[0]) {
-        const status = await checkStatus(loadedPost[0]?.status, loadedPost[0]?.enableChapterForPreview);
+        const status = await checkStatus(
+          loadedPost[0]?.status,
+          loadedPost[0]?.enableChapterForPreview,
+        );
         setPostStatus(status);
       }
 
@@ -178,26 +184,26 @@ const SanityConflictPost = ({
   const isInitialContent = useMemo(() => {
     return Boolean(
       !selectedChapter &&
-      !initialContentViewed &&
-      (sanityPost?.content || sanityPost?.contentRepeater?.length),
+        !initialContentViewed &&
+        (sanityPost?.content || sanityPost?.contentRepeater?.length),
     );
   }, [selectedChapter, sanityPost, initialContentViewed]);
 
   const isLastChapter = useMemo(() => {
     return Boolean(
       choices?.length &&
-      selectedChapter &&
-      choices.findIndex((choice) => choice?._id === selectedChapter) ===
-      choices.length - 1,
+        selectedChapter &&
+        choices.findIndex((choice) => choice?._id === selectedChapter) ===
+          choices.length - 1,
     );
   }, [choices, selectedChapter]);
 
   const isLastSubChapter = useMemo(() => {
     return Boolean(
       subChoices?.length &&
-      selectedSubChapter &&
-      subChoices.findIndex((choice) => choice?._id === selectedSubChapter) ===
-      subChoices?.length - 1,
+        selectedSubChapter &&
+        subChoices.findIndex((choice) => choice?._id === selectedSubChapter) ===
+          subChoices?.length - 1,
     );
   }, [subChoices, selectedSubChapter]);
 

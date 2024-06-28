@@ -22,7 +22,10 @@ const WikiSingle = ({ post, lang }) => {
 
   useEffect(() => {
     const fetchPostStatus = async () => {
-      const status = await checkStatus(post?.status, post?.enableChapterForPreview);
+      const status = await checkStatus(
+        post?.status,
+        post?.enableChapterForPreview,
+      );
       setPostStatus(status);
     };
 
