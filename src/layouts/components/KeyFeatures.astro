@@ -1,19 +1,18 @@
 ---
-import { Image } from "astro:assets";
+import { Image } from "astro:assets"
 
-import HomapageFeature from "@/layouts/function-components/HomapageFeature";
+import HomapageFeature from "@/layouts/function-components/HomapageFeature"
 
-const { cardsData: { textCard: { title, description }, cards } } = Astro.props;
+const {
+  cardsData: {
+    textCard: { title, description },
+    cards
+  }
+} = Astro.props
 ---
 
 <section class="section key-feature relative pb-0">
-  <Image
-    class="absolute left-0 top-0 -z-[1] -translate-y-1/2"
-    src="/images/feature-shape.png"
-    height={126}
-    width={63}
-    alt=""
-  />
+  <Image class="absolute left-0 top-0 -z-[1] -translate-y-1/2" src="/images/feature-shape.png" height={126} width={63} alt="" />
 
   <div class="container">
     <div class="row justify-between text-center lg:text-start">
