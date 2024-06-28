@@ -49,4 +49,10 @@ asdf shell nodejs 18.14.1
 1. <strong>Locale Addition</strong></br>
    Remember to update both astro.config.mjs and /src/i18n/i18nConfig.ts locales
 
+## 💅 Make code prettier?
+
+```bash
+npx prettier --write src/*.jsx
+```
+
 Happy Coding!
