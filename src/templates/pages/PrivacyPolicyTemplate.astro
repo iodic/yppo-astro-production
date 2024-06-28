@@ -15,6 +15,7 @@ const privacyPolicyPageData = await sanityFetch({
       title,
       _updatedAt,
       privacyPolicyText,
+      lastUpdatedText,
       pageData {
         mainTitle,
         subtitle,
@@ -26,7 +27,7 @@ const privacyPolicyPageData = await sanityFetch({
   }`
 })
 
-const { title, pageData, privacyPolicyText , pageMetadata, _updatedAt} = privacyPolicyPageData[0] || {}
+const { title, pageData, privacyPolicyText , pageMetadata, _updatedAt, lastUpdatedText} = privacyPolicyPageData[0] || {}
 const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 const { mainTitle, subtitle } = pageData || {}
 ---
@@ -44,9 +45,7 @@ lang={lang}>
         <div class="text-left mb-10">
           {mainTitle && <h1>{mainTitle}</h1>}
           {subtitle && <h2 class="text-2xl">{subtitle}</h2>}
-          <span>
-            { `${lang === "es" ? "Última actualización" : "Last Updated"}`}: {dateFormat(_updatedAt)}
-          </span>
+          <span>{lastUpdatedText}: { dateFormat(_updatedAt)}</span>
         </div>
       </div>
       {privacyPolicyText && <PrivacyPolicyPortableText content={privacyPolicyText}  />}
