@@ -1,15 +1,14 @@
 ---
+import { PortableText } from "@portabletext/react";
+
 const {
   signUpButton: {
     signUpButton,
     signUpButtonText,
-    signUpButtonUrl
   }
 } = Astro.props
 
 ---
 { signUpButton && <div>
-    <a class="mt-8 text-primary" href={signUpButtonUrl} target="_blank">
-      {signUpButtonText}
-    </a>
+  <PortableText value={signUpButtonText}/>
 </div>}
