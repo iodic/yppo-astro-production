@@ -10,9 +10,19 @@ const UnderlineComponent = ({ children }) => (
 
 const StrikeThroughComponent = ({ children }) => <del>{children}</del>;
 
-const LinkComponent = ({ children, value }) => (
-  <a href={value?.href}>{children}</a>
-);
+const LinkComponent = ({ children, value }) => {
+  const { blank, href } = value;
+  const target = (value?.href || "").startsWith("http") ? "_blank" : undefined;
+  return (
+    <a
+      href={value?.href}
+      target={target}
+      rel={target === "_blank" && "noindex nofollow"}
+    >
+      {children}
+    </a>
+  );
+}
 
 export default {
   em: EmComponent,
