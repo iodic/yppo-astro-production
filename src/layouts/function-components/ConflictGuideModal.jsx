@@ -47,9 +47,12 @@ const ConflictGuideModal = ({ termsPopup }) => {
       className={`absolute top-0 bottom-0 right-0 left-0 z-20 ${isModalActive ? "" : "hidden"}`}
     >
       <div className="flex flex-col items-center justify-center h-full w-full bg-black/50">
-        <div className="max-w-[600px] m-4 p-6 rounded-xl bg-white">
-          <h3 className="mb-6 font-normal text-center">{termsTitle}</h3>
-          <div ref={textRef} className="overflow-auto h-[400px] px-5 mb-5">
+        <div className="max-w-[500px] m-4 p-6 rounded-xl bg-white">
+          <h4 className="mb-6 font-normal text-center">{termsTitle}</h4>
+          <div
+            ref={textRef}
+            className="overflow-auto h-[300px] px-5 py-3 mb-5 bg-[#f2f2f2] rounded-xl"
+          >
             <PortableText
               value={termsContent}
               components={portableTextComponents}
