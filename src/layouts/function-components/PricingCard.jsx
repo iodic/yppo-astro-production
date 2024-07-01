@@ -91,9 +91,10 @@ const PricingCard = ({ card, generalText }) => {
           </p>
         )}
 
-        {description && <p className="mt-6">{description}</p>}
+        {description && <p className="my-6">{description}</p>}
 
-        {listSection && (
+        {/* Temporarily hidden section */}
+        {/* {listSection && (
           <div className="my-6 border-y border-border py-6">
             <h4 className="h6">{listSection?.listTitle}</h4>
 
@@ -112,7 +113,7 @@ const PricingCard = ({ card, generalText }) => {
               ))}
             </ul>
           </div>
-        )}
+        )} */}
 
         <div className="text-center">
           <a
