@@ -1,6 +1,8 @@
 import { PortableText } from "@portabletext/react";
 import portableTextComponents from "../portable-text-components";
 
+import SlideInImageComponent from "@/layouts/function-components/SlideInImage"
+
 const HomapageFeature = ({ cards }) => {
   return (
     <div className="flex flex-col mt-5">
@@ -13,19 +15,17 @@ const HomapageFeature = ({ cards }) => {
               <h2 className="text-3xl sm:text-4xl text-center sm:text-left mb-5">
                 {title}
               </h2>
-              <img
-                className={`object-contain mb-3 sm:mb-0 sm:w-[48%] md:w-[40%] ${index === 0 ? "sm:float-left sm:mr-6" : "sm:float-right sm:ml-6"}`}
-                alt="card-image"
-                src={cardImage}
-              />
 
-              <div
-                className={`w-[90%] sm:w-auto mx-auto sm:mx-0 ${index === 0 ? "sm:mt-12" : ""}`}
-              >
-                <PortableText
-                  value={description}
-                  components={portableTextComponents}
-                />
+              <div className={`md:flex md:items-center ${index === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                <SlideInImageComponent cardImage={cardImage} />
+                <div
+                  className={`w-[90%] sm:w-auto mx-auto sm:mx-0 ${index === 0 ? "sm:mt-12" : ""}`}
+                >
+                  <PortableText
+                    value={description}
+                    components={portableTextComponents}
+                  />
+                </div>
               </div>
             </div>
           </div>
