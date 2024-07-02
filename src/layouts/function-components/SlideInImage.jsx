@@ -31,7 +31,7 @@ const SlideInImageComponent = ({ index, cardImage }) => {
   return (
     <img
       ref={imageRef}
-      className={`transition-opacity ease-in duration-700 object-contain mb-3 sm:mb-0 sm:w-[48%] md:w-[40%] h-fit"} ${inView ? "opacity-100" : "opacity-0"}`}
+      className={`self-start transition-opacity ease-in duration-700 object-contain mb-3 sm:mb-0 sm:w-full md:w-[40%] h-fit"} ${inView ? "opacity-100" : "opacity-0"}`}
       alt="card-image"
       src={cardImage}
     />
