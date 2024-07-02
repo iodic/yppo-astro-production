@@ -1,19 +1,11 @@
 import React, { useState } from "react";
 
 const ContactPageComponent = ({ fieldData }) => {
-  const {
-    nameObject,
-    emailObject,
-    inquiryObject,
-    inquiryOptions,
-    messageObject,
-    buttonString,
-  } = fieldData;
+  const { nameObject, emailObject, messageObject, buttonString } = fieldData;
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    reason: "",
     message: "",
   });
   const [responseMessage, setResponseMessage] = useState("");
@@ -41,7 +33,6 @@ const ContactPageComponent = ({ fieldData }) => {
     setFormData({
       name: "",
       email: "",
-      reason: "",
       message: "",
     });
   };
@@ -86,28 +77,6 @@ const ContactPageComponent = ({ fieldData }) => {
                   onChange={handleChange}
                   required
                 />
-              </div>
-
-              <div className="form-group mb-5">
-                <label className="form-label" htmlFor="reason">
-                  {inquiryObject?.fieldName ? inquiryObject.fieldName : ""}
-                </label>
-                <select
-                  name="reason"
-                  id="reason"
-                  className="form-select"
-                  value={formData.reason}
-                  onChange={handleChange}
-                  required
-                >
-                  {inquiryOptions?.map((option) => {
-                    return (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    );
-                  })}
-                </select>
               </div>
 
               <div className="form-group mb-5">
