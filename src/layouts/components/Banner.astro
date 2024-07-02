@@ -19,7 +19,11 @@ const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
   <div class="container">
     <div class="row items-center">
       <div class="lg:col-6">
-        <h1 class="banner-title">{title}</h1>
+        <h1 class="banner-title"
+          >{
+            currentLanguage === "en" ? title?.split(" ").map((el: string) => <span class="mr-3 inline-block first-letter:text-[#f96b48]">{el}</span>) : title
+          }</h1
+        >
         <p class="mt-6">{description}</p>
 
         {
