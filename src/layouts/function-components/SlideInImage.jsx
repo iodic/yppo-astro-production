@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const SlideInImageComponent = ({ index, cardImage }) => {
+const SlideInImageComponent = ({ cardImage }) => {
   const imageRef = useRef(null);
   const [inView, setInView] = useState(false);
 
