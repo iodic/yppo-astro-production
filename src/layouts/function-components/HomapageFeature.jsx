@@ -14,7 +14,7 @@ const HomapageFeature = ({ cards }) => {
                 {title}
               </h2>
               <img
-                class={`object-contain mb-3 sm:mb-0 sm:w-[48%] md:w-[40%] ${index === 0 ? "sm:float-left sm:mr-6" : "sm:float-right sm:ml-6"}`}
+                className={`object-contain mb-3 sm:mb-0 sm:w-[48%] md:w-[40%] ${index === 0 ? "sm:float-left sm:mr-6" : "sm:float-right sm:ml-6"}`}
                 alt="card-image"
                 src={cardImage}
               />
