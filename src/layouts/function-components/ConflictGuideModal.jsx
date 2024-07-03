@@ -26,7 +26,7 @@ const ConflictGuideModal = ({ termsPopup }) => {
       textRef.current?.addEventListener("scroll", (event) => {
         if (
           event.target.scrollHeight <=
-          event.target.scrollTop + event.target.clientHeight
+          Math.ceil(event.target.scrollTop + event.target.clientHeight)
         ) {
           setIsButtonDisabled(false);
         }
