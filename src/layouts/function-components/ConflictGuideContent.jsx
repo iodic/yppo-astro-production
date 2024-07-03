@@ -120,10 +120,12 @@ export const ConflictGuideContent = ({ lang }) => {
                     )}
 
                     {introSection.introTitle && (
-                      <PortableText
-                        value={introSection.introTitle}
-                        components={portableTextComponents}
-                      />
+                      <div className="[&>h1]:text-balance">
+                        <PortableText
+                          value={introSection.introTitle}
+                          components={portableTextComponents}
+                        />
+                      </div>
                     )}
                     {introSection.introDescription && (
                       <PortableText
