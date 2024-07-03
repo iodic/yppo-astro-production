@@ -3,7 +3,7 @@ import portableTextComponents from "../portable-text-components";
 
 import SlideInImageComponent from "@/layouts/function-components/SlideInImage"
 
-const HomapageFeature = ({ cards }) => {
+const HomepageFeature = ({ cards }) => {
   return (
     <div className="flex flex-col mt-5">
       {cards.map((item, index) => {
@@ -36,4 +36,4 @@ const HomapageFeature = ({ cards }) => {
   );
 };
 
-export default HomapageFeature;
+export default HomepageFeature;
