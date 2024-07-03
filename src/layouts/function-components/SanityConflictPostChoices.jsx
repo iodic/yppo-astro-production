@@ -115,7 +115,8 @@ export const SanityConflictPostChoices = ({
       <div className="form-navigation clear-both">
         {!articleType && (
           <button
-            className="go btn btn-primary block float-right"
+            className="go btn btn-primary block float-right disabled:bg-none disabled:bg-gray-300 disabled:hover:shadow-none disabled:cursor-default"
+            disabled={!selectedChoice}
             onClick={handleNextAction}
           >
             {generalText?.nextButtonText ? generalText?.nextButtonText : "Next"}

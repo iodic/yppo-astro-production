@@ -158,7 +158,8 @@ const SanityConflictInitial = ({
 
             <div className="form-navigation clear-both">
               <button
-                className="go btn btn-primary mt-10 block float-right"
+                className="go btn btn-primary mt-10 block float-right disabled:bg-none disabled:bg-gray-300 disabled:hover:shadow-none disabled:cursor-default"
+                disabled={!answer}
                 onClick={() =>
                   handlePageChange(() => setSubmitFormAnswer(answer || ""))
                 }
