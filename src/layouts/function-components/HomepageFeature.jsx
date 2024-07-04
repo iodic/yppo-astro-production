@@ -21,10 +21,7 @@ const HomepageFeature = ({ cards }) => {
                     <h2 className="text-3xl sm:text-4xl text-center sm:text-left mb-5">
                       {title}
                     </h2>
-                    <PortableText
-                      value={description}
-                      components={portableTextComponents}
-                    />
+                    <PortableText value={description} components={portableTextComponents} />
                   </div>
                 </div>
               </div>
