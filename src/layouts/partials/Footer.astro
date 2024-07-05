@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets"
 import { sanityFetch } from "@/lib/utils/sanityFetch"
-import { PortableText } from "@portabletext/react";
+import { PortableText } from "@portabletext/react"
 
 import SocialItem from "@/components/SocialItem.astro"
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro"
@@ -24,7 +24,6 @@ const footerData = await sanityFetch({
       generalText
   }`
 })
-
 
 const { logoSrc, description, enableLanguageSwitcher, socials, linksObject, contactObject, enableCopyright, copyrightText, generalText } = footerData[0] || {}
 
@@ -128,14 +127,6 @@ interface LinkItem {
                 <li>
                   <a class="hover:text-primary hover:underline" href={`tel:${contactObject?.phone}`}>
                     {contactObject?.phone}
-                  </a>
-                </li>
-              )}
-
-              {contactObject?.enableContactButton && (
-                <li>
-                  <a href={localizeURL("/contact", currentLanguage)} class="btn btn-white mt-4">
-                    {contactObject?.title && contactObject?.title}
                   </a>
                 </li>
               )}
