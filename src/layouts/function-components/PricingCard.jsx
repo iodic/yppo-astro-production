@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { humanize } from "@/lib/utils/textConverter";
 
-import Dropdown from "./Dropdown";
-
 import * as Icon from "react-feather";
-import { BsPinAngleFill } from "react-icons/bs";
 
 const PricingCard = ({ card, generalText }) => {
   const {
@@ -13,35 +10,60 @@ const PricingCard = ({ card, generalText }) => {
     featured,
     icon: cardIcon,
     priceDetails,
+    entryFee = 0,
     pricePerEmployee,
-    listSection,
   } = card;
 
   const { numberOfEmployeesText, mainButtonText, ctaText } = generalText;
 
   const CardIcon = Icon[humanize(cardIcon)];
 
-  const [selectedPricing, setSelectedPricing] = useState({});
-  const [priceOptions, setPriceOptions] = useState([]);
+  const [numberOfEmployeesValue, setNumberOfEmployeesValue] = useState(1);
+  const [numberOfEmployees, setNumberOfEmployees] = useState(1);
 
   useEffect(() => {
-    if (pricePerEmployee) {
-      setSelectedPricing({
-        value: pricePerEmployee[0].price,
-        label: pricePerEmployee[0]?.employeeRange,
-      });
-
-      pricePerEmployee.map((priceObject) => {
-        setPriceOptions((priceOptions) => [
-          ...priceOptions,
-          {
-            value: priceObject?.price,
-            label: priceObject?.employeeRange,
-          },
-        ]);
-      });
+    if (numberOfEmployeesValue !== undefined) {
+      if (numberOfEmployeesValue !== "") {
+        if (Number(numberOfEmployeesValue) < 1) {
+          setNumberOfEmployees(1);
+          setNumberOfEmployeesValue(1);
+        } else {
+          setNumberOfEmployees(Number(numberOfEmployeesValue));
+        }
+      }
     }
-  }, [card]);
+  }, [numberOfEmployeesValue]);
+
+  const getPriceByIndividualFee = useCallback(() => {
+    if (pricePerEmployee?.length) {
+      const individualFee = pricePerEmployee.find(
+        ({ employeeLimit }, index) => {
+          const nextStartingEmployeeCount =
+            index + 1 <= pricePerEmployee.length - 1
+              ? Number(pricePerEmployee[index + 1]?.employeeLimit)
+              : undefined;
+
+          return (
+            numberOfEmployees >= Number(employeeLimit) &&
+            (!nextStartingEmployeeCount ||
+              numberOfEmployees < nextStartingEmployeeCount)
+          );
+        },
+      )?.individualFee;
+
+      return numberOfEmployees * (individualFee || 0);
+    }
+
+    return 0;
+  }, [numberOfEmployees, pricePerEmployee]);
+
+  const price = useMemo(() => {
+    const newPrice = Number(entryFee) + getPriceByIndividualFee();
+
+    const newPriceDecimal = newPrice.toFixed(2);
+
+    return newPriceDecimal.split(".")[1] === "00" ? newPrice : newPriceDecimal;
+  }, [entryFee, numberOfEmployees, pricePerEmployee]);
 
   return (
     <div
@@ -57,21 +79,26 @@ const PricingCard = ({ card, generalText }) => {
           <div>
             {title && <h2 className="h3">{title}</h2>}
 
-            {priceOptions && (
-              <div className="my-4">
-                <span className="text-sm">
-                  {numberOfEmployeesText
-                    ? numberOfEmployeesText
-                    : "Number of Employees"}
-                </span>
+            <div className="my-4 p-0 form-group bg-transparent border-none">
+              <span
+                htmlFor="number-of-employees"
+                className="text-sm form-label"
+              >
+                {numberOfEmployeesText
+                  ? numberOfEmployeesText
+                  : "Number of Employees"}
+              </span>
 
-                <Dropdown
-                  onSelect={setSelectedPricing}
-                  options={priceOptions}
-                  title={title}
-                />
-              </div>
-            )}
+              <input
+                type="number"
+                id="number-of-employees"
+                className="form-control w-[160px] h-[50px]"
+                value={numberOfEmployeesValue}
+                onChange={(event) =>
+                  setNumberOfEmployeesValue(event.target.value)
+                }
+              />
+            </div>
           </div>
 
           <span
@@ -83,10 +110,10 @@ const PricingCard = ({ card, generalText }) => {
           </span>
         </div>
 
-        {selectedPricing?.value && (
+        {pricePerEmployee?.length && (
           <p className="mt-3 text-2xl text-dark">
             {priceDetails?.pricePrefix}
-            {selectedPricing.value}{" "}
+            {price}
             <span className="text-base">{priceDetails?.priceSuffix}</span>
           </p>
         )}
