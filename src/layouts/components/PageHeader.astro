@@ -1,5 +1,8 @@
 ---
-const { pageData, descriptionClass = "" } = Astro.props || {}
+import { PortableText, type PortableTextReactComponents } from "@portabletext/react"
+import portableTextComponents from "@/layouts/portable-text-components"
+
+const { pageData, descriptionClass = "", isDescriptionPortableText } = Astro.props || {}
 const { title, heroSection } = pageData || {}
 const { textCard, buttonObject } = heroSection || {}
 ---
@@ -23,7 +26,15 @@ const { textCard, buttonObject } = heroSection || {}
   </ul>
 
   {textCard?.title && <h1 class="mb-5 mt-8">{textCard.title}</h1>}
-  {textCard?.description && <p class={`mx-auto max-w-[64ch] mb-6 ${descriptionClass || ""}`}>{textCard?.description}</p>}
+  {
+    isDescriptionPortableText ? (
+      <div class={`mx-auto max-w-[64ch] mb-6 ${descriptionClass || ""}`}>
+        <PortableText value={textCard?.description} components={portableTextComponents as Partial<PortableTextReactComponents>} />
+      </div>
+    ) : (
+      textCard?.description && <p class={`mx-auto max-w-[64ch] mb-6 ${descriptionClass || ""}`}>{textCard?.description}</p>
+    )
+  }
 
   {
     buttonObject?.enableLink && (
