@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 import { getClientId, getRedirectUri, getBaseUri } from "@/helper/auth";
+import { returnStatusMsg } from "@/helper/helper";
 import { PortableText } from "@portabletext/react";
 import portableTextComponents from "../portable-text-components";
 
@@ -21,15 +22,18 @@ const LockedContent = ({ lang }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const statusMessage = await returnStatusMsg();
+
         const pageData = await sanityFetch({
           type: "authorization",
           lang,
           object: `{
-            authorizationBanner {
-              ...,
-              "image": image.asset->url,
-            },
-          }`,
+              ${
+                statusMessage === "free"
+                  ? `authorizationBannerPaid { ..., "image": image.asset->url, },`
+                  : `authorizationBanner { ..., "image": image.asset->url, },`
+              }
+            }`,
         });
 
         setPageContent(pageData);
@@ -41,8 +45,11 @@ const LockedContent = ({ lang }) => {
     fetchData();
   }, []);
 
-  const { authorizationBanner } = pageContent[0] || {};
-  const { title, description, image, buttonText } = authorizationBanner || {};
+  const { authorizationBanner, authorizationBannerPaid } = pageContent[0] || {};
+
+  const { title, description, image, buttonText } = useMemo(() => {
+    return authorizationBanner || authorizationBannerPaid || {};
+  }, [authorizationBanner, authorizationBannerPaid]);
 
   return (
     <div
