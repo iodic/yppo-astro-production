@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 import { getClientId, getRedirectUri, getBaseUri } from "@/helper/auth";
+import { PortableText } from "@portabletext/react";
+import portableTextComponents from "../portable-text-components";
 
 const LockedContent = ({ lang }) => {
   const [pageContent, setPageContent] = useState([]);
@@ -66,11 +68,16 @@ const LockedContent = ({ lang }) => {
           <h2 id="paywall-info" className="lg:text-4xl mb-4">
             {title ? title : "Looks like your account needs an upgrade"}
           </h2>
-          <p className="mb-4">
-            {description
-              ? description
-              : "Please access your account to upgrade in order to view our courses."}
-          </p>
+          <div className="mb-4">
+            {description ? (
+              <PortableText
+                value={description}
+                components={portableTextComponents}
+              />
+            ) : (
+              "Please access your account to upgrade in order to view our courses."
+            )}
+          </div>
           <a
             className="btn btn-outline-header mt-8"
             onClick={handleButtonClick}
