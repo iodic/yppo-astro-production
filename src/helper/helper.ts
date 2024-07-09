@@ -27,7 +27,7 @@ export async function checkStatus(status: string, preview: boolean) {
   }
 
   if (typeof localStorage !== "undefined") {
-    const jwtToken = localStorage.getItem('yppo_user_auth');
+    const jwtToken = localStorage.getItem("yppo_user_auth");
     const jwt = jwtToken ? parseJwt(jwtToken) : null;
 
     if (preview) {
@@ -52,4 +52,21 @@ export async function checkStatus(status: string, preview: boolean) {
   }
 
   return false;
+}
+
+export async function returnStatusMsg() {
+  if (typeof localStorage !== "undefined") {
+    const jwtToken = localStorage.getItem("yppo_user_auth");
+    const jwt = jwtToken ? parseJwt(jwtToken) : null;
+
+    if (jwt?.user?.plan === "paid") {
+      return "paid";
+    }
+
+    if (jwt?.user?.plan === "free") {
+      return "free";
+    }
+  }
+
+  return "logged-out";
 }
