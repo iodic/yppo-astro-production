@@ -8,6 +8,7 @@ import portableTextComponents from "../portable-text-components";
 
 const LockedContent = ({ lang }) => {
   const [pageContent, setPageContent] = useState([]);
+  const [status, setStatus] = useState([]);
 
   const clientId = getClientId();
   const redirectUri = getRedirectUri();
@@ -36,6 +37,7 @@ const LockedContent = ({ lang }) => {
             }`,
         });
 
+        setStatus(statusMessage);
         setPageContent(pageData);
       } catch (error) {
         console.error("Error fetching data");
@@ -85,14 +87,16 @@ const LockedContent = ({ lang }) => {
               "Please access your account to upgrade in order to view our courses."
             )}
           </div>
-          <a
-            className="btn btn-outline-header mt-8"
-            onClick={handleButtonClick}
-            href={authorizationUri}
-            title="Let's go!"
-          >
-            {buttonText ? buttonText : "Let's go!"}
-          </a>
+          {status === "logged-out" && (
+            <a
+              className="btn btn-outline-header mt-8"
+              onClick={handleButtonClick}
+              href={authorizationUri}
+              title="Let's go!"
+            >
+              {buttonText ? buttonText : "Let's go!"}
+            </a>
+          )}
         </div>
       </div>
     </div>
