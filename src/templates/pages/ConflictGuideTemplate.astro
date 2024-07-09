@@ -38,10 +38,10 @@ const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMet
   lang={lang}
 >
   <div class="relative">
-    <ConflictGuideModal termsPopup={termsPopup} client:only />
+    <ConflictGuideModal termsPopup={termsPopup} client:only="react"/>
 
     <div class="conflict-guide-wrapper">
-      <ConflictGuideContent lang={lang} client:only />
+      <ConflictGuideContent lang={lang} client:only="react" />
     </div>
   </div>
 </Base>
