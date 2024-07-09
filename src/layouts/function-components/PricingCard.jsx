@@ -18,8 +18,8 @@ const PricingCard = ({ card, generalText }) => {
 
   const CardIcon = Icon[humanize(cardIcon)];
 
-  const [numberOfEmployeesValue, setNumberOfEmployeesValue] = useState(1);
-  const [numberOfEmployees, setNumberOfEmployees] = useState(1);
+  const [numberOfEmployeesValue, setNumberOfEmployeesValue] = useState(100);
+  const [numberOfEmployees, setNumberOfEmployees] = useState(100);
 
   useEffect(() => {
     if (numberOfEmployeesValue !== undefined) {
@@ -111,9 +111,9 @@ const PricingCard = ({ card, generalText }) => {
         </div>
 
         {pricePerEmployee?.length && (
-          <p className="mt-3 text-2xl text-dark">
+          <p className="mt-3 text-3xl font-medium text-dark">
             {priceDetails?.pricePrefix}
-            {price}
+            {price}{" "}
             <span className="text-base">{priceDetails?.priceSuffix}</span>
           </p>
         )}
