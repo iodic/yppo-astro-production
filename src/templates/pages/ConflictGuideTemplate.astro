@@ -1,11 +1,11 @@
 ---
-import { sanityFetch } from "@/lib/utils/sanityFetch"
+import { sanityFetch } from "@/lib/utils/sanityFetch";
 
-import Base from "@/layouts/Base.astro"
-import { ConflictGuideContent } from "@/layouts/function-components/ConflictGuideContent"
-import ConflictGuideModal from "@/layouts/function-components/ConflictGuideModal"
+import Base from "@/layouts/Base.astro";
+import { ConflictGuideContent } from "@/layouts/function-components/ConflictGuideContent";
+import ConflictGuideModal from "@/layouts/function-components/ConflictGuideModal";
 
-const { lang } = Astro.props
+const { lang } = Astro.props;
 
 const conflictGuidePageData = await sanityFetch({
   type: "conflictGuidePage",
@@ -21,11 +21,12 @@ const conflictGuidePageData = await sanityFetch({
         termsContent,
         termsButton,
       }
-  }`
-})
+  }`,
+});
 
-const { title, pageMetadata, termsPopup } = conflictGuidePageData[0] || {}
-const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
+const { title, pageMetadata, termsPopup } = conflictGuidePageData[0] || {};
+const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } =
+  pageMetadata || {};
 ---
 
 <Base
@@ -38,7 +39,7 @@ const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMet
   lang={lang}
 >
   <div class="relative">
-    <ConflictGuideModal termsPopup={termsPopup} client:only="react"/>
+    <ConflictGuideModal termsPopup={termsPopup} client:only="react" />
 
     <div class="conflict-guide-wrapper">
       <ConflictGuideContent lang={lang} client:only="react" />
