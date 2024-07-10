@@ -20,12 +20,13 @@ const pricingPageData = await sanityFetch({
       },
       heroSection,
       cards,
+      cardAction,
       faqSection,
       generalText,
   }`
 })
 
-const { title, pageMetadata, heroSection, cards, faqSection, generalText } = pricingPageData[0] || {}
+const { title, pageMetadata, heroSection, cards, cardAction, faqSection, generalText } = pricingPageData[0] || {}
 const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 ---
 
@@ -53,7 +54,7 @@ const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMet
   <section class="section mt-12 pt-0">
     <div class="container">
       <div class="row lg:px-10">
-        {cards.map((card: any) => <PricingCard card={card} generalText={generalText} client:load />)}
+        {cards.map((card: any) => <PricingCard card={card} cardAction={cardAction} generalText={generalText} client:load />)}
       </div>
     </div>
   </section>
