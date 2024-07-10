@@ -38,7 +38,6 @@ const featuredPost = await sanityFetch({
 const recentPost = await sanityFetch({
   type: "course",
   query: "featured != true",
-  lang,
   pipe: "order(_createdAt desc)"
 })
 
@@ -54,6 +53,9 @@ postTagsArrays?.map((tagArray: any[]) => {
 
 const totalPages = Math.ceil(recentPost.length / 6)
 const currentPosts = recentPost.slice(0, 6)
+
+const localPosts = currentPosts?.filter((post: any) => post.language === lang)
+const additionalPosts = currentPosts?.filter((post: any) => post.language !== lang)
 ---
 
 <Base
@@ -78,10 +80,19 @@ const currentPosts = recentPost.slice(0, 6)
       {featuredPost?.length ? <FeaturedBlog posts={featuredPost} title={generalText?.featuredPosts} lang={lang} /> : null}
 
       {
-        currentPosts?.length ? (
+        localPosts?.length ? (
           <>
             {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
-            <Blogs posts={currentPosts} lang={lang} />
+            <Blogs posts={localPosts} lang={lang} />
+          </>
+        ) : null
+      }
+
+      {
+        lang !== "en" && additionalPosts?.length ? (
+          <>
+            {generalText?.additionalPostsTitle && <h2 class="h4 mb-4">{generalText?.additionalPostsTitle}</h2>}
+            <Blogs posts={additionalPosts} lang={lang} />
           </>
         ) : null
       }
