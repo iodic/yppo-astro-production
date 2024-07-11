@@ -46,8 +46,8 @@ const ConflictGuideModal = ({ termsPopup }) => {
     <div
       className={`absolute top-0 bottom-0 right-0 left-0 z-20 ${isModalActive ? "" : "hidden"}`}
     >
-      <div className="flex flex-col items-center justify-center h-full w-full bg-black/50">
-        <div className="max-w-[500px] m-4 p-6 rounded-xl bg-white">
+      <div className="flex flex-col items-center h-full w-full bg-black/50">
+        <div className="max-w-[500px] m-4 p-6 rounded-xl bg-white absolute top-[10vh]">
           <h4 className="mb-6 font-normal text-center">{termsTitle}</h4>
           <div
             ref={textRef}
