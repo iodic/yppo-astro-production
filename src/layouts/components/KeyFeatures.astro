@@ -24,6 +24,6 @@ const {
       </div>
     </div>
 
-    <HomepageFeature cards={cards} client:load />
+    {cards?.length && <HomepageFeature cards={cards} client:load />}
   </div>
 </section>
