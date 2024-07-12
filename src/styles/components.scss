@@ -446,7 +446,7 @@ select:invalid {
     line-height: 36px;
   }
 
-  &-copyright { 
+  &-copyright {
     p {
       font-size: 0.7rem;
       line-height: 1.3;
@@ -775,4 +775,8 @@ select:invalid {
       width: 100% !important;
     }
   }
+}
+
+.accent-letter {
+  @apply bg-gradient inline-block text-transparent bg-clip-text;
 }
