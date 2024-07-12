@@ -7,10 +7,9 @@ import languageChecker from "@/lib/utils/localizeURL"
 
 const currentLanguage = Astro.currentLocale
 const {
-  banner: { textCard, videoCard, buttonObject }
+  banner: { titleTop, titleBottom, description, videoCard, buttonObject }
 } = Astro.props
 
-const { title, description } = textCard || {}
 const { videoUrl, videoPoster } = videoCard || {}
 const { enableLink: enableHeroButton, linkObject } = buttonObject || {}
 const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
@@ -28,8 +27,8 @@ const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
 
         <div class="flex flex-col items-start text-5xl font-bold">
           <h1 class="flex flex-col min-h-32 [&_.accent-letter-animation]:animate-letter-color">
-            <TypewriterText text="Your Portable" delay={150} client:only />
-            <TypewriterText text="Personal Ombuds" delay={200} client:only />
+            {titleTop && <TypewriterText text={titleTop} delay={150} client:only />}
+            {titleBottom && <TypewriterText text={titleBottom} delay={200} client:only />}
           </h1>
         </div>
 
