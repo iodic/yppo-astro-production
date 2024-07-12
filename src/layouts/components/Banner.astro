@@ -20,8 +20,14 @@ const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
   <div class="container">
     <div class="row items-center">
       <div class="lg:col-6">
+        <script is:inline>
+          setTimeout(function () {
+            $(".accent-letter").toggleClass("accent-letter-animation")
+          }, 5000)
+        </script>
+
         <div class="flex flex-col items-start text-5xl font-bold">
-          <h1 class="flex flex-col min-h-32">
+          <h1 class="flex flex-col min-h-32 [&_.accent-letter-animation]:animate-letter-color">
             <TypewriterText text="Your Portable" delay={150} client:only />
             <TypewriterText text="Personal Ombuds" delay={200} client:only />
           </h1>
