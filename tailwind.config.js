@@ -91,7 +91,6 @@ module.exports = {
           0: {
             color: "transparent",
           },
-          "85%": { color: "transparent" },
           "100%": {
             color: "#222222",
           },
@@ -101,7 +100,7 @@ module.exports = {
         typing: "typing 6s steps(10) infinite alternate, blink .7s infinite",
         "typing-short": "typing 3s steps(11), blink .7s infinite",
         "typing-long": "typing 4s steps(24), blink .7s infinite",
-        "letter-color": "letter-color 6s normal forwards",
+        "letter-color": "letter-color 1s normal forwards",
       },
     },
   },
