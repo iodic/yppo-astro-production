@@ -7,9 +7,10 @@ import languageChecker from "@/lib/utils/localizeURL"
 
 const currentLanguage = Astro.currentLocale
 const {
-  banner: { titleTop, titleBottom, description, videoCard, buttonObject }
+  banner: { textCard, videoCard, buttonObject }
 } = Astro.props
 
+const { title, description } = textCard || {}
 const { videoUrl, videoPoster } = videoCard || {}
 const { enableLink: enableHeroButton, linkObject } = buttonObject || {}
 const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
@@ -19,19 +20,11 @@ const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
   <div class="container">
     <div class="row items-center">
       <div class="lg:col-6">
-        <script is:inline>
-          setTimeout(function () {
-            $(".accent-letter").toggleClass("accent-letter-animation")
-          }, 5000)
-        </script>
-
-        <div class="flex flex-col items-start text-5xl font-bold">
-          <h1 class="flex flex-col min-h-32 [&_.accent-letter-animation]:animate-letter-color">
-            {titleTop && <TypewriterText text={titleTop} delay={150} client:only />}
-            {titleBottom && <TypewriterText text={titleBottom} delay={200} client:only />}
-          </h1>
-        </div>
-
+        <h1 class="banner-title"
+          >{
+            currentLanguage === "en" ? title?.split(" ").map((el: string) => <span class="mr-3 inline-block first-letter:text-[#f96b48]">{el}</span>) : title
+          }</h1
+        >
         <p class="mt-6">{description}</p>
 
         {
