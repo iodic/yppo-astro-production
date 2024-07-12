@@ -90,10 +90,8 @@ module.exports = {
       },
       animation: {
         typing: "typing 6s steps(10) infinite alternate, blink .7s infinite",
-        "typing-short":
-          "typing 3s steps(7) infinite alternate, blink .7s infinite",
-        "typing-long":
-          "typing 4s steps(24) infinite alternate, blink .7s infinite",
+        "typing-short": "typing 3s steps(11), blink .7s infinite",
+        "typing-long": "typing 4s steps(24), blink .7s infinite",
       },
     },
   },
