@@ -68,19 +68,6 @@ module.exports = {
         primary: ["var(--font-primary)", fontPrimaryType],
         secondary: ["var(--font-secondary)", fontSecondaryType],
       },
-      keyframes: {
-        "letter-color": {
-          0: {
-            color: "transparent",
-          },
-          "100%": {
-            color: "#222222",
-          },
-        },
-      },
-      animation: {
-        "letter-color": "letter-color 1s normal forwards",
-      },
     },
   },
   plugins: [
