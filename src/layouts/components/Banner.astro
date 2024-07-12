@@ -2,6 +2,7 @@
 import { Image } from "astro:assets"
 
 import Video from "@/layouts/shortcodes/Video.jsx"
+import TypewriterText from "../function-components/TypewriterText"
 import languageChecker from "@/lib/utils/localizeURL"
 
 const currentLanguage = Astro.currentLocale
@@ -19,26 +20,19 @@ const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
   <div class="container">
     <div class="row items-center">
       <div class="lg:col-6">
-        <div class="flex items-center">
-          <div class="w-max">
-            <h1 class="animate-typing-short w-fit overflow-hidden whitespace-nowrap border-r-4 border-r-primary pr-5 text-5xl font-bold">
-              <span class="bg-gradient inline-block text-transparent bg-clip-text animate-letter-color">Y</span>our <span
-                class="bg-gradient inline-block text-transparent bg-clip-text animate-letter-color">P</span
-              >ortable
-            </h1>
-            <h1 class="animate-typing-long w-fit overflow-hidden whitespace-nowrap border-r-4 border-r-primary pr-5 text-5xl font-bold"
-              ><span class="bg-gradient inline-block text-transparent bg-clip-text animate-letter-color">P</span>ersonal <span
-                class="bg-gradient inline-block text-transparent bg-clip-text animate-letter-color">O</span
-              >mbuds</h1
-            >
-          </div>
+        <script is:inline>
+          setTimeout(function () {
+            $(".accent-letter").toggleClass("accent-letter-animation")
+          }, 5000)
+        </script>
+
+        <div class="flex flex-col items-start text-5xl font-bold">
+          <h1 class="flex flex-col min-h-32 [&_.accent-letter-animation]:animate-letter-color">
+            <TypewriterText text="Your Portable" delay={150} client:only />
+            <TypewriterText text="Personal Ombuds" delay={200} client:only />
+          </h1>
         </div>
 
-        <!-- <h1 class="banner-title"
-          >{
-            currentLanguage === "en" ? title?.split(" ").map((el: string) => <span class="mr-3 inline-block first-letter:text-[#f96b48]">{el}</span>) : title
-          }</h1
-        > -->
         <p class="mt-6">{description}</p>
 
         {
