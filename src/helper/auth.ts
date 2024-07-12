@@ -27,7 +27,7 @@ export function getClientSecret(): string {
 }
 
 export function getRedirectUri(): string {
-  return "https://dev.personalombuds.com/callback/";
+  return "https://personalombuds.com/callback/";
 }
 
 export function getTokenUri(): string {
