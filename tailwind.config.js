@@ -1,3 +1,4 @@
+const plugin = require("tailwindcss/plugin");
 const theme = require("./src/config/theme.json");
 
 let font_base = Number(theme.fonts.font_size.base.replace("px", ""));
@@ -109,6 +110,20 @@ module.exports = {
         4: "1.5rem",
         5: "3rem",
       },
+    }),
+    plugin(({ matchUtilities, theme }) => {
+      matchUtilities(
+        {
+          "animation-delay": (value) => {
+            return {
+              "animation-delay": value,
+            };
+          },
+        },
+        {
+          values: theme("transitionDelay"),
+        },
+      );
     }),
   ],
 };
