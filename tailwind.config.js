@@ -23,10 +23,10 @@ module.exports = {
   darkMode: "class",
   theme: {
     listStyleType: {
-      none: 'none',
-      disc: 'disc',
-      decimal: 'decimal',
-      circle: 'circle',
+      none: "none",
+      disc: "disc",
+      decimal: "decimal",
+      circle: "circle",
     },
     screens: {
       sm: "540px",
@@ -67,6 +67,32 @@ module.exports = {
       fontFamily: {
         primary: ["var(--font-primary)", fontPrimaryType],
         secondary: ["var(--font-secondary)", fontSecondaryType],
+      },
+      keyframes: {
+        typing: {
+          "0%": {
+            width: "0%",
+            visibility: "hidden",
+          },
+          "100%": {
+            width: "100%",
+          },
+        },
+        blink: {
+          "50%": {
+            borderColor: "transparent",
+          },
+          "100%": {
+            borderColor: "white",
+          },
+        },
+      },
+      animation: {
+        typing: "typing 6s steps(10) infinite alternate, blink .7s infinite",
+        "typing-short":
+          "typing 3s steps(7) infinite alternate, blink .7s infinite",
+        "typing-long":
+          "typing 4s steps(24) infinite alternate, blink .7s infinite",
       },
     },
   },
