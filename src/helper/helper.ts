@@ -30,6 +30,12 @@ export async function checkStatus(status: string, preview: boolean) {
     const jwtToken = localStorage.getItem("yppo_user_auth");
     const jwt = jwtToken ? parseJwt(jwtToken) : null;
 
+    if (jwt && jwt.user) {
+      if (jwt.user.kind === "business") {
+        return true;
+      }
+    }
+
     if (preview) {
       if (jwt && jwt.user) {
         if (jwt.user.plan === "preview_access") {
