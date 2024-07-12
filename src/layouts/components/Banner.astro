@@ -19,11 +19,18 @@ const { urlTitle: heroButtonTitle, url: heroButtonUrl } = linkObject || {}
   <div class="container">
     <div class="row items-center">
       <div class="lg:col-6">
-        <h1 class="banner-title"
+        <div class="flex items-center">
+          <div class="w-max">
+            <h1 class="animate-typing-short w-fit overflow-hidden whitespace-nowrap border-r-4 border-r-primary pr-5 text-5xl font-bold">Your Portable</h1>
+            <h1 class="animate-typing-long w-fit overflow-hidden whitespace-nowrap border-r-4 border-r-primary pr-5 text-5xl font-bold">Personal Ombuds</h1>
+          </div>
+        </div>
+
+        <!-- <h1 class="banner-title"
           >{
             currentLanguage === "en" ? title?.split(" ").map((el: string) => <span class="mr-3 inline-block first-letter:text-[#f96b48]">{el}</span>) : title
           }</h1
-        >
+        > -->
         <p class="mt-6">{description}</p>
 
         {
