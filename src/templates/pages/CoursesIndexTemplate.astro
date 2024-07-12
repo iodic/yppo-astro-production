@@ -1,6 +1,8 @@
 ---
 import { sanityFetch } from "@/lib/utils/sanityFetch"
 
+import config from "@/config/config.json"
+
 import Base from "@/layouts/Base.astro"
 import Shape from "@/components/Shape.astro"
 import PageHeader from "@/components/PageHeader.astro"
@@ -8,6 +10,7 @@ import Blogs from "@/components/Blogs.astro"
 import FeaturedBlog from "@/components/blog/FeaturedBlog.astro"
 import Pagination from "@/layouts/components/Pagination.astro"
 import Cta from "@/partials/Cta.astro"
+import getCoursesData from "@/lib/utils/getCoursesData"
 
 const { lang } = Astro.props
 
@@ -51,11 +54,10 @@ postTagsArrays?.map((tagArray: any[]) => {
   })
 })
 
-const totalPages = Math.ceil(recentPost.length / 6)
-const currentPosts = recentPost.slice(0, 6)
+const { localPosts, additionalPosts, totalPages } = getCoursesData(recentPost, lang)
 
-const localPosts = currentPosts?.filter((post: any) => post.language === lang)
-const additionalPosts = currentPosts?.filter((post: any) => post.language !== lang)
+const currentLocalPosts = localPosts.slice(0, config.settings.pagination)
+const currentAdditionalPosts = additionalPosts.slice(0, config.settings.pagination)
 ---
 
 <Base
@@ -80,24 +82,24 @@ const additionalPosts = currentPosts?.filter((post: any) => post.language !== la
       {featuredPost?.length ? <FeaturedBlog posts={featuredPost} title={generalText?.featuredPosts} lang={lang} /> : null}
 
       {
-        localPosts?.length ? (
+        currentLocalPosts?.length ? (
           <>
             {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
-            <Blogs posts={localPosts} lang={lang} />
+            <Blogs posts={currentLocalPosts} lang={lang} />
           </>
         ) : null
       }
 
       {
-        lang !== "en" && additionalPosts?.length ? (
+        lang !== "en" && currentAdditionalPosts?.length ? (
           <>
             {generalText?.additionalPostsTitle && <h2 class="h4 mb-4">{generalText?.additionalPostsTitle}</h2>}
-            <Blogs posts={additionalPosts} lang={lang} />
+            <Blogs posts={currentAdditionalPosts} lang={lang} usePostLocale />
           </>
         ) : null
       }
 
-      <Pagination section={"courses"} currentPage={1} totalPages={totalPages} textPrevious={generalText?.previous} textNext={generalText?.next} />
+      <Pagination section={"courses"} currentPage={1} totalPages={totalPages} textPrevious={generalText?.previous} textNext={generalText?.next} lang={lang} />
     </div>
   </section>
 

@@ -8,6 +8,7 @@ import Blogs from "@/components/Blogs.astro"
 import PageHeader from "@/components/PageHeader.astro"
 import Shape from "@/components/Shape.astro"
 import Pagination from "@/layouts/components/Pagination.astro"
+import getCoursesData from "@/lib/utils/getCoursesData"
 
 const { slug, lang } = Astro.props
 
@@ -28,13 +29,15 @@ const coursesPageData = await sanityFetch({
 const { title, pageMetadata, heroSection, generalText } = coursesPageData[0] || {}
 const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 
-const recentPost = await sanityFetch({ type: "course", lang, query: "featured != false", pipe: "order(_createdAt desc)" })
+const recentPost = await sanityFetch({ type: "course", query: "featured != true", pipe: "order(_createdAt desc)" })
 
-const totalPages = Math.ceil(recentPost.length / 6)
+const { localPosts, additionalPosts, totalPages } = getCoursesData(recentPost, lang)
+
 const currentPage = slug && !isNaN(Number(slug)) ? Number(slug) : 1
 const indexOfLastPost = currentPage * config.settings.pagination
 const indexOfFirstPost = indexOfLastPost - config.settings.pagination
-const currentPosts = recentPost.slice(indexOfFirstPost, indexOfLastPost)
+const currentLocalPosts = localPosts.slice(indexOfFirstPost, indexOfLastPost)
+const currentAdditionalPosts = additionalPosts.slice(indexOfFirstPost, indexOfLastPost)
 ---
 
 <Base
@@ -56,9 +59,23 @@ const currentPosts = recentPost.slice(indexOfFirstPost, indexOfLastPost)
 
   <section class="section">
     <div class="container">
-      {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
+      {
+        currentLocalPosts?.length ? (
+          <>
+            {generalText?.recentPosts && <h2 class="h4 mb-4">{generalText?.recentPosts}</h2>}
+            <Blogs posts={currentLocalPosts} lang={lang} />
+          </>
+        ) : null
+      }
 
-      <Blogs posts={currentPosts} lang={lang} />
+      {
+        lang !== "en" && currentAdditionalPosts?.length ? (
+          <>
+            {generalText?.additionalPostsTitle && <h2 class="h4 mb-4">{generalText?.additionalPostsTitle}</h2>}
+            <Blogs posts={currentAdditionalPosts} lang={lang} usePostLocale />
+          </>
+        ) : null
+      }
 
       <Pagination
         section={config.settings.blog_folder}
@@ -66,6 +83,7 @@ const currentPosts = recentPost.slice(indexOfFirstPost, indexOfLastPost)
         currentPage={currentPage}
         textPrevious={generalText?.previous}
         textNext={generalText?.next}
+        lang={lang}
       />
     </div>
   </section>

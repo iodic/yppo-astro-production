@@ -12,7 +12,7 @@ import imageUrlBuilder from "@sanity/image-url"
 import { toPlainText } from "@portabletext/react"
 
 const { summary_length } = config.settings
-const { posts, embed, lang } = Astro.props
+const { posts, embed, lang, usePostLocale } = Astro.props
 
 const builder = imageUrlBuilder(sanityClient)
 ---
@@ -36,7 +36,7 @@ const builder = imageUrlBuilder(sanityClient)
           )}
           <div class="card-content">
             <h3 class="h4 card-title">
-              <a href={localizeURL(`/courses/${item.slug.current}`, lang)}>{item.title}</a>
+              <a href={localizeURL(`/courses/${item.slug.current}`, usePostLocale ? item.language : lang)}>{item.title}</a>
             </h3>
             {!embed && <p class="mb-4 text-text">{item.content && plainify(toPlainText(item.content)?.slice(0, Number(summary_length))) + "..."}</p>}
           </div>
