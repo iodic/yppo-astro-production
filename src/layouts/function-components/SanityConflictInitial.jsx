@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { sanityFetch } from "@/lib/utils/sanityFetch";
 import { checkStatus } from "src/helper/helper.ts";
+import { sanityClient } from "sanity:client";
 
 import SanityConflictPost from "@/layouts/function-components/SanityConflictPost.jsx";
 
@@ -12,7 +13,9 @@ const SanityConflictInitial = ({
   changeConflictGuideState,
 }) => {
   const [pageData, setPageData] = useState([]);
+  const fetchedConflictChoices = {};
 
+  const [conflictChoices, setConflictChoices] = useState({});
   const [answer, setAnswer] = useState("");
   const [submitFormAnswer, setSubmitFormAnswer] = useState(
     getConflictGuideState("submitFormAnswer", ""),
@@ -78,6 +81,7 @@ const SanityConflictInitial = ({
 
     const checkPosts = async () => {
       const ids = [];
+      const answerIds = [];
 
       for (const post of sanityInitialPosts) {
         const isNotLocked = await checkStatus(
@@ -88,9 +92,32 @@ const SanityConflictInitial = ({
         if (!isNotLocked) {
           ids.push(post._id);
         }
-      }
 
-      setLockedPosts(ids);
+        if (post?.answers?.length) {
+          const queries = post.answers.reduce(
+            (prev, curr, index) =>
+              `${prev}${prev.length ? "," : ""} "${index}": *[_type == 'conflictType' && _id == '${curr._ref}'][0]`,
+            "",
+          );
+
+          const loadedAnswers = await sanityClient.fetch(`{ ${queries} }`);
+
+          for (let answer of Object.values(loadedAnswers)) {
+
+            console.log(answer)
+            const isAnswerLocked = await checkStatus(
+              answer?.status,
+              answer?.enableChapterForPreview,
+            )
+
+            if (!isAnswerLocked) {
+              answerIds.push(answer._id);
+            }
+          }
+        }
+      }
+      setLockedPosts(ids, answerIds);
+      setConflictChoices(fetchedConflictChoices);
     };
 
     checkPosts();
