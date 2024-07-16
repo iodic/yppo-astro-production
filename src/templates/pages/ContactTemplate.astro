@@ -16,6 +16,7 @@ const contactPageData = await sanityFetch({
         "metaImage": metaImage.asset->url,
       },
       heroSection,
+      showContactForm,
       nameObject,
       emailObject,
       inquiryObject,
@@ -25,7 +26,8 @@ const contactPageData = await sanityFetch({
   }`
 })
 
-const { title, pageMetadata, heroSection, nameObject, emailObject, inquiryObject, inquiryOptions, messageObject, buttonString } = contactPageData[0] || {}
+const { title, pageMetadata, heroSection, showContactForm, nameObject, emailObject, inquiryObject, inquiryOptions, messageObject, buttonString } =
+  contactPageData[0] || {}
 const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMetadata || {}
 ---
 
@@ -43,6 +45,5 @@ const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMet
       <PageHeader pageData={{ title, heroSection }} descriptionClass="!max-w-[55ch] text-left" isDescriptionPortableText />
     </div>
   </section>
-
-  <ContactPageComponent fieldData={{ nameObject, emailObject, inquiryObject, inquiryOptions, messageObject, buttonString }} client:load />
+  {showContactForm && <ContactPageComponent fieldData={{ nameObject, emailObject, inquiryObject, inquiryOptions, messageObject, buttonString }} client:load />}
 </Base>
