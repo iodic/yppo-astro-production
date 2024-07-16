@@ -38,7 +38,7 @@ export async function checkStatus(status: string, preview: boolean) {
 
     if (preview) {
       if (jwt && jwt.user) {
-        if (jwt.user.plan === "preview_access") {
+        if (jwt.user.plan === "preview_access" || jwt.user.preview_org === true) {
           return true;
         }
       }
