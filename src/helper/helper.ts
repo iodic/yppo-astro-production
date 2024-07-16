@@ -31,7 +31,7 @@ export async function checkStatus(status: string, preview: boolean) {
     const jwt = jwtToken ? parseJwt(jwtToken) : null;
 
     if (jwt && jwt.user) {
-      if (jwt.user.kind === "business") {
+      if (jwt.user.kind === "business" && jwt.user.preview_org !== true) {
         return true;
       }
     }
