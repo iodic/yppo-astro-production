@@ -81,15 +81,14 @@ const SanityConflictInitial = ({
 
     const checkPosts = async () => {
       const ids = [];
-      const answerIds = [];
 
       for (const post of sanityInitialPosts) {
-        const isNotLocked = await checkStatus(
+        const isUnlocked = await checkStatus(
           post?.status,
           post?.enableChapterForPreview,
         );
 
-        if (!isNotLocked) {
+        if (!isUnlocked) {
           ids.push(post._id);
         }
 
@@ -101,22 +100,26 @@ const SanityConflictInitial = ({
           );
 
           const loadedAnswers = await sanityClient.fetch(`{ ${queries} }`);
+          let isAllContentLocked = true;
 
           for (let answer of Object.values(loadedAnswers)) {
-
-            console.log(answer)
-            const isAnswerLocked = await checkStatus(
+            const isAnswerUnlocked = await checkStatus(
               answer?.status,
               answer?.enableChapterForPreview,
-            )
+            );
 
-            if (!isAnswerLocked) {
-              answerIds.push(answer._id);
+            if (isAnswerUnlocked) {
+              isAllContentLocked = false;
             }
+          }
+
+          if (isAllContentLocked) {
+            ids.push(post._id);
           }
         }
       }
-      setLockedPosts(ids, answerIds);
+
+      setLockedPosts(ids);
       setConflictChoices(fetchedConflictChoices);
     };
 
