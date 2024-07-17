@@ -42,7 +42,7 @@ const { metaTitle, metaDescription, metaImage, noIndex, canonicalUrl } = pageMet
 >
   <section class="page-hero pb-6 pt-16">
     <div class="container">
-      <PageHeader pageData={{ title, heroSection }} descriptionClass="!max-w-[55ch] text-left" isDescriptionPortableText />
+      <PageHeader pageData={{ title, heroSection }} descriptionClass={`!max-w-[55ch] text-left ${showContactForm ? "" : "mt-10"}`} isDescriptionPortableText />
     </div>
   </section>
   {showContactForm && <ContactPageComponent fieldData={{ nameObject, emailObject, inquiryObject, inquiryOptions, messageObject, buttonString }} client:load />}
