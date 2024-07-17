@@ -22,8 +22,18 @@ export async function getStaticPaths() {
 
 const { post, lang } = Astro.props
 const { title, description, image } = post
+
+const coursesPageData = await sanityFetch({
+  type: "coursesPage",
+  lang,
+  object: `{
+      generalText,
+  }`
+})
+
+const { generalText } = coursesPageData[0]
 ---
 
 <Base title={title} description={description} metaImage={image} lang={lang}>
-  <BlogSingle post={post} lang={lang} />
+  <BlogSingle post={post} lang={lang} generalText={generalText} />
 </Base>

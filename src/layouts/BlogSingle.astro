@@ -1,16 +1,13 @@
 ---
-import dateFormat from "@/lib/utils/dateFormat"
-import { calculateReadTime } from "@/helper/helper.ts"
 import imageUrlBuilder from "@sanity/image-url"
 import { PortableText } from "@portabletext/react"
 import { sanityClient } from "sanity:client"
 const builder = imageUrlBuilder(sanityClient)
 
-import { FaRegCalendarAlt, FaRegClock } from "react-icons/fa"
 import { Image } from "astro:assets"
 import SignUpButton from "@/partials/SignUpButton.astro"
 
-const { post } = Astro.props
+const { post, generalText } = Astro.props
 
 const { signUpButton } = post
 ---
@@ -39,7 +36,15 @@ const { signUpButton } = post
 
           {signUpButton && <SignUpButton signUpButton={signUpButton} />}
         </div>
+        <button class="btn border-0 pl-0 pr-0 back-button">
+          {generalText?.backToCoursesButton ? generalText?.backToCoursesButton : "← Back"}
+        </button>
       </div>
     </div>
   </div>
+  <script is:inline>
+    document.querySelector(".back-button").addEventListener("click", () => {
+      window.history.go(-1)
+    })
+  </script>
 </section>
