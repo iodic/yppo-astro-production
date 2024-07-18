@@ -88,13 +88,14 @@ export const SanityConflictPostChoices = ({
                 <div
                   className="form-group flex w-full items-baseline rounded"
                   key={post._id}
+                  onClick={() => setSelectedChoice(post._id)}
                 >
                   <input
                     type="radio"
                     name="issue-type"
                     id={post._id}
                     className="top-[3px] relative"
-                    onChange={() => setSelectedChoice(post._id)}
+                    checked={selectedChoice === post._id}
                   />
                   <label
                     className="ml-2 real-deal chapter-choice"

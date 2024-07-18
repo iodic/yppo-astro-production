@@ -163,13 +163,14 @@ const SanityConflictInitial = ({
                 <div
                   className="form-group flex w-full items-baseline rounded"
                   key={post._id}
+                  onClick={() => setAnswer(post._id)}
                 >
                   <input
                     type="radio"
                     name="issue-type"
                     id={post._id}
                     className="top-[3px] relative"
-                    onChange={() => setAnswer(post._id)}
+                    checked={answer === post._id}
                   />
                   <label
                     className="ml-2 real-deal chapter-choice"
