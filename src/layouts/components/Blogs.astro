@@ -22,7 +22,11 @@ const builder = imageUrlBuilder(sanityClient)
     posts.map((item: any) => (
       <div class={`mb-8 ${embed ? "col-12" : "md:col-6 lg:col-4"}`}>
         <div class="card relative">
-          {item.image && <Image class="card-img" width={335} height={210} src={builder.image(item.image).url()} alt={item.title} />}
+          {item.image && (
+            <a href={localizeURL(`/courses/${item.slug.current}`, usePostLocale ? item.language : lang)}>
+              <Image class="card-img" width={335} height={210} src={builder.image(item.image).url()} alt={item.title} />
+            </a>
+          )}
           {embed && (
             <span class="absolute right-7 top-7 bg-white inline-flex items-center text-sm px-4 py-2 rounded text-[#666]">
               <svg class="mr-1.5" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
