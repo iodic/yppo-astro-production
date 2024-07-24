@@ -19,21 +19,21 @@ export function parseJwt(token: string) {
 }
 
 export function getClientId(): string {
-  return "Jtx8pKWLU54C7IMfz8xmAxt7tG4Ourj0jHM5KIDUrXg";
+  return "bis6Y4b7REyhK-tt1-n98hG2ZnnlYZfNgKTWVWpUSbU";
 }
 
 export function getClientSecret(): string {
-  return "Q4A525OFRsYM4ryOapQ-Oth65139lcshVg-q0vBRSWw";
+  return "weFWPtH6tBwgvyXCurj75CXH1qnQvBP2rQoQLFssNbU";
 }
 
 export function getRedirectUri(): string {
-  return "https://yppo.websitetotal.com/callback/";
+  return "https://dev.personalombuds.com/callback/";
 }
 
 export function getTokenUri(): string {
-  return "https://yppousers.websitetotal.com/oauth/token";
+  return "https://users.personalombuds.com/oauth/token";
 }
 
 export function getBaseUri(): string {
-  return "https://yppousers.websitetotal.com";
+  return "https://users.personalombuds.com";
 }
