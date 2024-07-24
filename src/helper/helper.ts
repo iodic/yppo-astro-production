@@ -78,30 +78,32 @@ export async function returnStatusMsg() {
 }
 
 (function() {
-  const jwtToken = localStorage.getItem("yppo_user_auth");
-  const jwt = jwtToken ? parseJwt(jwtToken) : null;
+  if (typeof localStorage !== "undefined") {
+    const jwtToken = localStorage.getItem("yppo_user_auth");
+    const jwt = jwtToken ? parseJwt(jwtToken) : null;
 
-  if (jwt && jwt.user) {
-    const data = {
-      domain: jwt.user.domain,
-      uri: window.location.href,
-      ipAddress: window.location.hostname,
-      organization: jwt.user.organization_id
-    };
+    if (jwt && jwt.user) {
+      const data = {
+        domain: jwt.user.domain,
+        uri: window.location.href,
+        ipAddress: window.location.hostname,
+        organization: jwt.user.organization_id
+      };
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://users.personalombuds.com/admins/statistics/create', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(data));
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://users.personalombuds.com/admins/statistics/create', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify(data));
 
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        console.log('Data sent successfully');
-      } else {
-        console.log('Error sending data');
-      }
-    };
-  } else {
-    console.log('JWT token is missing or invalid');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          console.log('Data sent successfully');
+        } else {
+          console.log('Error sending data');
+        }
+      };
+    } else {
+      console.log('JWT token is missing or invalid');
+    }
   }
 })();
