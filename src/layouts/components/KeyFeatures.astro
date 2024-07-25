@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets"
-
+import { PortableText } from "@portabletext/react";
 import HomepageFeature from "@/layouts/function-components/HomepageFeature"
 
 const {
@@ -20,7 +20,7 @@ const {
         <h2>{title}</h2>
       </div>
       <div class="mt-6 lg:col-5 lg:mt-0">
-        <p>{description}</p>
+       <PortableText value={description} />
       </div>
     </div>
 
