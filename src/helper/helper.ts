@@ -86,12 +86,11 @@ export async function returnStatusMsg() {
       const data = {
         domain: jwt.user.domain,
         uri: window.location.href,
-        ipAddress: window.location.hostname,
-        organization: jwt.user.organization_id
+        ipAddress: window.location.hostname
       };
 
       const xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://users.personalombuds.com/admins/statistics/create', true);
+      xhr.open('POST', 'https://users.personalombuds.com/analytics', true);
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.send(JSON.stringify(data));
 
