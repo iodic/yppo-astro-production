@@ -87,16 +87,6 @@ const LockedContent = ({ lang }) => {
               "Please access your account to upgrade in order to view our courses."
             )}
           </div>
-          {status === "logged-out" && (
-            <a
-              className="btn btn-outline-header mt-8"
-              onClick={handleButtonClick}
-              href={authorizationUri}
-              title="Let's go!"
-            >
-              {buttonText ? buttonText : "Let's go!"}
-            </a>
-          )}
         </div>
       </div>
     </div>
