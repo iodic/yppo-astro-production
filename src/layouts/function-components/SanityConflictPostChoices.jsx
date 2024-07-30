@@ -11,7 +11,7 @@ export const SanityConflictPostChoices = ({
   handleBackAction,
   selectedChapterNumber,
 }) => {
-  const [selectedChoice, setSelectedChoice] = useState();
+  const [selectedChoice, setSelectedChoice] = useState(null);
   const [lockedChoices, setLockedChoices] = useState([]);
 
   const handleNextAction = () => {
@@ -52,7 +52,7 @@ export const SanityConflictPostChoices = ({
               {articleType ? (
                 <div key={`nest_${post._id}`}>
                   <div
-                    className={`form-group reading-group flex items-center w-full rounded ${selectedChoice === post._id ? "card-highlight" : ""}`}
+                    className={`form-group reading-group flex items-center w-full rounded ${selectedChoice?._id === post._id ? "card-highlight" : ""}`}
                     key={`question_${post._id}`}
                   >
                     <span className="relative w-10 min-w-10 h-10 flex items-center justify-center border-2 border-circle-gray rounded-full text-center bg-white">
@@ -70,10 +70,10 @@ export const SanityConflictPostChoices = ({
                       id={post._id}
                       className="hidden"
                       onChange={() => {
-                        setSelectedChoice(post._id);
+                        setSelectedChoice(post);
 
-                        if (articleType && !selectedChapter) {
-                          setSelectedChapter(post._id);
+                        if (articleType && !selectedChapter?._id) {
+                          setSelectedChapter(post);
                         }
                       }}
                     />
@@ -88,14 +88,14 @@ export const SanityConflictPostChoices = ({
                 <div
                   className="form-group flex w-full items-baseline rounded"
                   key={post._id}
-                  onClick={() => setSelectedChoice(post._id)}
+                  onClick={() => setSelectedChoice(post)}
                 >
                   <input
                     type="radio"
                     name="issue-type"
                     id={post._id}
                     className="top-[3px] relative"
-                    checked={selectedChoice === post._id}
+                    checked={selectedChoice?._id === post._id}
                   />
                   <label
                     className="ml-2 real-deal chapter-choice"
@@ -117,7 +117,7 @@ export const SanityConflictPostChoices = ({
         {!articleType && (
           <button
             className="go btn btn-primary block float-right disabled:bg-none disabled:bg-gray-300 disabled:hover:shadow-none disabled:cursor-default"
-            disabled={!selectedChoice}
+            disabled={!selectedChoice?._id}
             onClick={handleNextAction}
           >
             {generalText?.nextButtonText ? generalText?.nextButtonText : "Next"}

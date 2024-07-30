@@ -13,12 +13,9 @@ const SanityConflictInitial = ({
   changeConflictGuideState,
 }) => {
   const [pageData, setPageData] = useState([]);
-  const fetchedConflictChoices = {};
-
-  const [conflictChoices, setConflictChoices] = useState({});
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState(null);
   const [submitFormAnswer, setSubmitFormAnswer] = useState(
-    getConflictGuideState("submitFormAnswer", ""),
+    getConflictGuideState("submitFormAnswer", null),
   );
   const [sanityInitialPosts, setSanityInitialPosts] = useState([]);
   const [error, setError] = useState(null);
@@ -73,7 +70,14 @@ const SanityConflictInitial = ({
   }, []);
 
   useEffect(() => {
-    changeConflictGuideState({ submitFormAnswer });
+    changeConflictGuideState({
+      submitFormAnswer: submitFormAnswer
+        ? {
+            _id: submitFormAnswer?._id,
+            title: submitFormAnswer?.title,
+          }
+        : null,
+    });
   }, [submitFormAnswer]);
 
   useEffect(() => {
@@ -120,7 +124,6 @@ const SanityConflictInitial = ({
       }
 
       setLockedPosts(ids);
-      setConflictChoices(fetchedConflictChoices);
     };
 
     checkPosts();
@@ -128,20 +131,20 @@ const SanityConflictInitial = ({
 
   const backToIntro = () => {
     showIntro();
-    setAnswer("");
-    setSubmitFormAnswer("");
-    localStorage.setItem("conflict-guide-state", "{}");
+    setAnswer(null);
+    setSubmitFormAnswer(null);
+    localStorage.setItem("conflict-guide-state", "null");
   };
 
   return (
     <div>
       {error && <div>Error: {error}</div>}
 
-      {submitFormAnswer ? (
+      {submitFormAnswer?._id ? (
         <SanityConflictPost
-          initialId={submitFormAnswer}
+          initialState={submitFormAnswer}
           backToInitialForm={() =>
-            handlePageChange(() => setSubmitFormAnswer(""))
+            handlePageChange(() => setSubmitFormAnswer(null))
           }
           handlePageChange={handlePageChange}
           lang={lang}
@@ -163,14 +166,14 @@ const SanityConflictInitial = ({
                 <div
                   className="form-group flex w-full items-baseline rounded"
                   key={post._id}
-                  onClick={() => setAnswer(post._id)}
+                  onClick={() => setAnswer(post)}
                 >
                   <input
                     type="radio"
                     name="issue-type"
                     id={post._id}
                     className="top-[3px] relative"
-                    checked={answer === post._id}
+                    checked={answer?._id === post._id}
                   />
                   <label
                     className="ml-2 real-deal chapter-choice"
@@ -190,9 +193,9 @@ const SanityConflictInitial = ({
             <div className="form-navigation clear-both">
               <button
                 className="go btn btn-primary mt-10 block float-right disabled:bg-none disabled:bg-gray-300 disabled:hover:shadow-none disabled:cursor-default"
-                disabled={!answer}
+                disabled={!answer?._id}
                 onClick={() =>
-                  handlePageChange(() => setSubmitFormAnswer(answer || ""))
+                  handlePageChange(() => setSubmitFormAnswer(answer || null))
                 }
               >
                 {generalText?.nextButtonText

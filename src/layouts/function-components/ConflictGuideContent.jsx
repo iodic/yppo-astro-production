@@ -5,18 +5,83 @@ import { PortableText } from "@portabletext/react";
 import portableTextComponents from "@/layouts/portable-text-components";
 import SigninSlider from "@/layouts/function-components/SigninSlider.jsx";
 import SanityConflictInitial from "@/layouts/function-components/SanityConflictInitial.jsx";
+import { sendAnalytics } from "@/helper/analytics";
 
 export const ConflictGuideContent = ({ lang }) => {
+  const [analyticsUri, setAnalyticsUri] = useState("");
+
   const changeConflictGuideState = (newState) => {
     const conflictGuideState = JSON.parse(
       localStorage.getItem("conflict-guide-state") || "{}",
     );
+    const newConflictGuideState = { ...conflictGuideState, ...newState };
+    const newAnalyticsUri = [];
 
     localStorage.setItem(
       "conflict-guide-state",
-      JSON.stringify({ ...conflictGuideState, ...newState }),
+      JSON.stringify(newConflictGuideState),
     );
+
+    if (newConflictGuideState.submitFormAnswer?.title) {
+      newAnalyticsUri.push(
+        newConflictGuideState.submitFormAnswer?.title.trim(),
+      );
+
+      if (
+        newConflictGuideState.confirmedChoice?._id !==
+          newConflictGuideState.submitFormAnswer._id &&
+        newConflictGuideState.confirmedChoice?.title
+      ) {
+        newAnalyticsUri.push(
+          newConflictGuideState.confirmedChoice?.title.trim(),
+        );
+
+        if (newConflictGuideState.selectedChapter?.title) {
+          newAnalyticsUri.push(
+            newConflictGuideState.selectedChapter?.title.trim(),
+          );
+
+          if (
+            newConflictGuideState.currentRepeaterIndex !== undefined &&
+            newConflictGuideState.currentRepeaterIndex !== null
+          ) {
+            newAnalyticsUri.push(
+              newConflictGuideState.currentRepeaterIndex + 1,
+            );
+          }
+
+          if (newConflictGuideState.selectedSubChapter?.title) {
+            newAnalyticsUri.push(
+              newConflictGuideState.selectedSubChapter?.title.trim(),
+            );
+
+            if (
+              newConflictGuideState.currentSubRepeaterIndex !== undefined &&
+              newConflictGuideState.currentSubRepeaterIndex !== null
+            ) {
+              newAnalyticsUri.push(
+                newConflictGuideState.currentSubRepeaterIndex + 1,
+              );
+            }
+          }
+        }
+      }
+    }
+
+    if (newAnalyticsUri.length) {
+      setAnalyticsUri(
+        newAnalyticsUri.join("/").toLocaleLowerCase().replaceAll(" ", "-"),
+      );
+    } else {
+      setAnalyticsUri("");
+    }
   };
+
+  useEffect(() => {
+    if (window.location.hostname !== "localhost" && analyticsUri) {
+      sendAnalytics(`${window.location.href}/${analyticsUri}`);
+    }
+  }, [analyticsUri]);
 
   const getConflictGuideState = (key, defaultValue) => {
     const conflictGuideState = JSON.parse(
