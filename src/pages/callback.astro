@@ -14,12 +14,24 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const code = urlParams.get("code");
+        const error = urlParams.get("error");
+        const errorDescription = urlParams.get("error_description");
 
         if (code) {
           exchangeCodeForToken(code);
+        } else if (error) {
+          handleAuthError(error, errorDescription);
         } else {
           console.error("Error: Authorization code not received.");
         }
+      }
+
+      function handleAuthError(error:any, errorDescription:any) {
+        console.error("OAuth Error:", error, errorDescription);
+
+        const originalURL = localStorage.getItem('originalURL') || '/';
+
+        window.location.href = `${originalURL}?error=${encodeURIComponent(error)}&error_description=${encodeURIComponent(errorDescription || '')}`;
       }
 
       function exchangeCodeForToken(code:any) {
