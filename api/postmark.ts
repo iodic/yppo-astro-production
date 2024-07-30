@@ -14,7 +14,6 @@ export default function handler(req:any, res:any) {
     TextBody: `
       Name: ${body.name}
       Email: ${body.email}
-      Reason: ${body.reason}
       Message: ${body.message}
     `,
   };
