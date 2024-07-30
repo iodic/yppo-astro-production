@@ -58,9 +58,9 @@ const LockedContent = ({ lang }) => {
       className="container lg:gx-5 row items-center hidden-paywall"
       id="hidden-paywall"
     >
-      <div className="lg:col-7 lg:order-1 hidden-paywall-image-container">
-        <div className="relative">
-          {image && (
+      {image && (
+        <div className="lg:col-7 lg:order-1 hidden-paywall-image-container">
+          <div className="relative">
             <img
               className="w-full object-contain"
               alt=""
@@ -68,9 +68,9 @@ const LockedContent = ({ lang }) => {
               height="286"
               src={image}
             />
-          )}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="mt-6 lg:col-5 lg:mt-0 lg:order-0 hidden-paywall-text-container">
         <div className="text-container">
