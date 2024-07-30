@@ -67,7 +67,7 @@ const ContactPageComponent = ({ fieldData }) => {
                 </label>
                 <input
                   className="form-control"
-                  type="text"
+                  type="email"
                   id="email"
                   name="email"
                   placeholder={
