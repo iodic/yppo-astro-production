@@ -26,14 +26,6 @@
         }
       }
 
-      function handleAuthError(error:any, errorDescription:any) {
-        console.error("OAuth Error:", error, errorDescription);
-
-        const originalURL = localStorage.getItem('originalURL') || '/';
-
-        window.location.href = `${originalURL}?error=${encodeURIComponent(error)}&error_description=${encodeURIComponent(errorDescription || '')}`;
-      }
-
       function exchangeCodeForToken(code:any) {
         const body = `grant_type=authorization_code&code=${code}&redirect_uri=${redirectUri}&client_id=${clientId}&client_secret=${clientSecret}`;
 
@@ -55,9 +47,14 @@
           });
       }
 
-      if (window.location.search.includes("code=")) {
-        handleAuthCallback();
+      function handleAuthError(error:any, errorDescription:any) {
+        alert(`Authorization Error: ${error}\nDescription: ${errorDescription}`);
+        const originalURL = localStorage.getItem('yppoCurrentUrl');
+        window.location.href = originalURL ? originalURL : '/';
       }
+
+      handleAuthCallback();
+
     </script>
   </body>
 </html>
