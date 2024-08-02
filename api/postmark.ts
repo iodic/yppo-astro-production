@@ -8,8 +8,9 @@ export default function handler(req:any, res:any) {
   );
 
   const message = {
-    To: "mr@stuntcoders.com",
-    From: "yppo@stuntcoders.com",
+    To: "yppo@personalombuds.com",
+    Bcc: "mr@stuntcoders.com",
+    From: `${body.email}`,
     Subject: "New Contact Form Submission",
     TextBody: `
       Name: ${body.name}
