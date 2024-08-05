@@ -17,5 +17,11 @@ export default function handler(req:any, res:any) {
       "email": `${body.email}`,
       "message": `${body.message}`,
     }
-  });
+  }).then(() => {
+    res.send(`Email sent successfully`);
+  })
+  .catch((error) => {
+    console.error("Error sending email:", error);
+    res.send(`Error sending email`);
+  });;
 }
