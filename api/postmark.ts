@@ -14,8 +14,8 @@ export default function handler(req:any, res:any) {
     "TemplateAlias": "welcome",
     "TemplateModel": {
       "name": `${body.name}`,
-      "email": ` ${body.email}`,
-      "body": `${body.message}`,
+      "email": `${body.email}`,
+      "message": `${body.message}`,
     }
   });
 }
