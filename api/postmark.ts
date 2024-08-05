@@ -9,7 +9,7 @@ export default function handler(req:any, res:any) {
 
   client.sendEmailWithTemplate({
     From: `${body.email}`,
-    Bcc: "mr@stuntcoders.com",
+    Bcc: "marijac@stuntcoders.com",
     To: "yppo@personalombuds.com",
     "TemplateAlias": "welcome",
     "TemplateModel": {
