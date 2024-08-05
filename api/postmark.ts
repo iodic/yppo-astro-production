@@ -7,25 +7,15 @@ export default function handler(req:any, res:any) {
     "20117eea-da45-43d0-a313-b55475dee001",
   );
 
-  const message = {
-    To: "yppo@personalombuds.com",
-    Bcc: "mr@stuntcoders.com",
+  client.sendEmailWithTemplate({
     From: `${body.email}`,
-    Subject: "New Contact Form Submission",
-    TextBody: `
-      Name: ${body.name}
-      Email: ${body.email}
-      Message: ${body.message}
-    `,
-  };
-
-  client
-    .sendEmail(message)
-    .then(() => {
-      res.send(`Email sent successfully`);
-    })
-    .catch((error) => {
-      console.error("Error sending email:", error);
-      res.send(`Error sending email`);
-    });
+    Bcc: "mr@stuntcoders.com",
+    To: "yppo@personalombuds.com",
+    "TemplateAlias": "welcome",
+    "TemplateModel": {
+      "name": `${body.name}`,
+      "email": ` ${body.email}`,
+      "body": `${body.message}`,
+    }
+  });
 }
