@@ -8,7 +8,7 @@ export default function handler(req:any, res:any) {
   );
 
   client.sendEmailWithTemplate({
-    From: `${body.email}`,
+    From: `${body.name} ${body.email}`,
     To: "marijac@stuntcoders.com",
     "TemplateAlias": "welcome",
     "TemplateModel": {
