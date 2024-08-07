@@ -8,7 +8,7 @@ export default function handler(req:any, res:any) {
   );
 
   client.sendEmailWithTemplate({
-    From: `YPPO <yppo@stuntcoders.com>`,
+    From: `YPPO <yppo@personalombuds.com>`,
     To: "yppo@personalombuds.com",
     Bcc: "mr@stuntcoders.com, secreatariat@dialoguethroughconflict.org",
     ReplyTo: `${body.name} ${body.email}`,
